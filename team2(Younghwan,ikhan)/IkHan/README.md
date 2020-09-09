@@ -51,6 +51,10 @@ Conv2D(
 # https://datascienceschool.net/view-notebook/8fe08ad706984c3c8acaa44b787dcac0/
 
 model.add(layers.MaxPooling2D((2, 2)))
-# 2*2 행렬에서 최대값만 적용
+# 2*2 행렬에서 최대값을 추출하여 1*1로 만듬
+
+Flatteen()
+# 2~3차원 배열을 1차원 배열로 변경 => 파일의 크기를 줄 일 수 있음
+# 한 번 진행 후 레이어 편집 불가능 => 마지막 부분에 실행 함. 
 ```
 
