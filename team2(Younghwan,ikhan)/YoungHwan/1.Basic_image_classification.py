@@ -1,3 +1,5 @@
+# 참고 : https://www.tensorflow.org/tutorials/keras/classification
+
 # tensorflow와 tf.keras를 임포트합니다
 import tensorflow as tf
 from tensorflow import keras
