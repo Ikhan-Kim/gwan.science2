@@ -41,6 +41,13 @@ model = keras.Sequential([
     keras.layers.Dense(128, activation='relu'),
     keras.layers.Dense(10, activation='softmax')
 ])
+
+# 위와 동일한 코드
+# 아래와 같이 add를 이용하면 정의된 후에 층을 추가할 수도 있다.
+model = keras.Sequential()
+model.add(Flatten(input_shape=(28, 28)))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 ```
 
 #### Flatten()
@@ -121,13 +128,21 @@ model.compile(optimizer='adam',
 ```python
 # 모델 훈련 예시
 model.fit(
-  train_ds,
-  validation_data=val_ds,
-  epochs=3
+    train_ds,
+    validation_data=val_ds,
+    epochs=3
+)
+# 예시2
+model.fit(
+    train_ds,
+    train2_ds,
+    validation_data=(val_ds, val2_ds),
+    epochs=3,
+    batch_size=10
 )
 ```
 
-예시에는 없지만 batch_sized의 default 값은 32 이다.
+batch_sized의 default 값은 32 이다.
 
 훈련하는동안 epoch 단위로 손실률(loss), 정확도(accuracy) 등의 정보가 출력된다.
 
