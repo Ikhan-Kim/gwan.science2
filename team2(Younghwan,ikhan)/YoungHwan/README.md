@@ -41,6 +41,13 @@ model = keras.Sequential([
     keras.layers.Dense(128, activation='relu'),
     keras.layers.Dense(10, activation='softmax')
 ])
+
+# 위와 동일한 코드
+# 아래와 같이 add를 이용하면 정의된 후에 층을 추가할 수도 있다.
+model = keras.Sequential()
+model.add(Flatten(input_shape=(28, 28)))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(10, activation='softmax'))
 ```
 
 #### Flatten()
@@ -104,7 +111,7 @@ model.compile(optimizer='adam',
 
 
 
-## 모델 훈련
+## 모델 훈련 및 정확도 평가
 
 ### batch size와 epoch
 
@@ -117,3 +124,46 @@ model.compile(optimizer='adam',
 1epoch = 10(batch_size) * 100(step)
 
 즉, batch_size가 커지면 한번에 많은량을 학습하기 때문에 train과정이 빨라질수 있으나 컴퓨터의 메모리 문제 때문에 나눠서 하는 것이다.
+
+```python
+# 모델 훈련 예시
+model.fit(
+    train_ds,
+    validation_data=val_ds,
+    epochs=3
+)
+# 예시2
+model.fit(
+    train_ds,
+    train2_ds,
+    validation_data=(val_ds, val2_ds),
+    epochs=3,
+    batch_size=10
+)
+```
+
+batch_sized의 default 값은 32 이다.
+
+훈련하는동안 epoch 단위로 손실률(loss), 정확도(accuracy) 등의 정보가 출력된다.
+
+### 정확도 평가
+
+```python
+test_loss, test_acc = model.evaluate(test_ds, verbose=2)
+
+print('\n테스트 정확도:', test_acc)
+```
+
+model.evaluate() 함수는 손실과 정확도를 반환한다.
+
+
+
+## 학습된 모델 저장 및 불러오기
+
+```python
+from keras.models import load_model
+
+model.save('file_name') # 저장
+model = load_model('file_name') # 불러오기
+```
+
