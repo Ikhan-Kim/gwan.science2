@@ -46,13 +46,184 @@ Sub PJT 1 에서 학습한 인공신경망을 확장시켜 이미지 데이터�
 >
 > https://excelsior-cjh.tistory.com/180
 
+- 합성곱층(Convolutional Layer) : 입력 데이터의 형상 유지. => 이미지 데이터처럼 형상을 가지는 데이터를 제대로 학습할 가능성이 높음
 
+- 필터 : 합성곱층에서의 수용영역.
+
+- CNN의 합성곱층은 "교차상관"을 사용 (텐서플로우 등)
+
+- 텐서플로우에서의 **합성곱층**
+
+  : 텐서플로에서 각 입력이미지는 `[높이, 너비, 채널] = [H, W, CH]`형태의 3D 텐서([Tensor](http://excelsior-cjh.tistory.com/148?category=940399))로 표현되며, 미니배치(mini-batch)는 `[batch, H, W, CH]` 형태의 4D 텐서로 표현됨
+
+  <텐서플로에서 합성곱층을 구현할 수 있는 함수>
+
+  📌 `tf.nn.conv2d()`
+
+  - 인자값
+
+    ```python
+    tf.nn.conv2d(
+       input,
+       filter, # 사용자가 직접 [FH, FW, In_CH, Out_CH] 형태의 4D 텐서로 만들어 주어야 함
+       strides,
+       padding, # same 혹은 valid로 설정할 수 있음
+       use_cudnn_on_gpu=True,
+       data_format='NHWC', # 채널의 위치를 앞에다 할 것인지, 뒤에다가 할 것인지 / 디폴트는 NHWC, 채널을 앞으로 하고 싶은 경우 NCHW로 변경
+       dilations=[1, 1, 1, 1],
+       name=None
+    )
+    ```
+
+  - 예시
+
+    ```python
+    filter = tf.get_variable(name='W1', shape=[3, 3, 1, 32],  # [FH, FW, in_ch, out_ch]
+                            initializer=tf.contrib.layers.xavier_initializer_conv2d())
+    conv = tf.nn.conv2d(inputs, filter, strides=[1, 1, 1, 1], padding='SAME')
+    ```
+
+    
+
+  📌 `tf.layers.conv2d()`
+
+  - 인자값
+
+    ```python
+    tf.layers.conv2d(
+       inputs,
+       filters, # 필터를 간단하게 만들어 바로 합성곱층을 구현할 수 있음
+       kernel_size,
+       strides=(1, 1),
+       padding='valid',
+       data_format='channels_last',
+       dilation_rate=(1, 1),
+       activation=None,
+       use_bias=True,
+       kernel_initializer=None,
+       bias_initializer=tf.zeros_initializer(),
+       kernel_regularizer=None,
+       bias_regularizer=None,
+       activity_regularizer=None,
+       kernel_constraint=None,
+       bias_constraint=None,
+       trainable=True,
+       name=None,
+       reuse=None
+    )
+    ```
+
+  - 예시
+
+    ```python
+    conv = tf.layers.conv2d(inputs, filters=32, kernel_size=3,  # or kernel_size=[3, 3]
+                           padding='SAME')
+    ```
+
+    
+
+- 텐서플로에서의 풀링층
+
+  > 풀링층 : 차례로 처리되는 데이터의 크기를 줄임 (모델 전체 매개변수의 수를 크게 줄임)
+  >
+  > - Max-pooling : 해당 영역에서 최대값 ✔ 이미지 인식 분야에서 주로 사용
+  > - Average pooling : 해당영역의 평균값을 계산
+
+  < Max-Pooling 구현 방법>
+
+  📌 `tf.nn.max_pool()` 
+
+  - 인자값
+
+    ```python
+    tf.nn.max_pool(
+       value,
+       ksize,	# 풀링크기를 지정, [batch, H, W, C] 형태로 풀링 크기 지정
+       strides,
+       padding,
+       data_format='NHWC',
+       name=None
+    )
+    ```
+
+  - 예시
+
+    ```python
+    tf.nn.max_pool(inputs, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+    ```
+
+    
+
+  📌 `tf.layers.max_pooling2d()` 
+
+  - 인자값
+
+    ```python
+    tf.layers.max_pooling2d(
+       inputs,
+       pool_size,
+       strides,
+       padding='valid',
+       data_format='channels_last',
+       name=None
+    )
+    ```
+
+  - 예시
+
+    ```python
+    tf.layers.max_pooling2d(inputs, pool_size=[2, 2], strides=[2, 2], padding='same')
+    ```
+
+    
 
 ② 강의 및 TF 예시 코드
 
 > 컨볼루션 연산에 대한 설명과 이를 텐서플로우로 구현하는 방법
 >
 > https://www.youtube.com/watch?v=9fldE3-yJpg&list=PLQ28Nx3M4Jrguyuwg4xe9d9t2XE639e5C&index=34
+>
+> - 실습코드 : https://github.com/deeplearningzerotoall/TensorFlow
+
+
+
+- 3가지 레이어
+
+  - convolution layer, pooling layer (앞) : feature extraction
+  - fully-connected layer : classfication => 실제 판단하는 레이어
+
+- Convolution Layer
+
+  ![image-20200909235034339](image/image-20200909235034339.png)
+
+  - 채널 : 3인경우 RGB
+  - 컨볼루션으로 입력으로 들어오는 채널과 필터의 채널과 같아야 한다 !!
+
+  ![image-20200909235611410](image/image-20200909235611410.png)
+
+  ![image-20200909235643627](image/image-20200909235643627.png)
+
+  ![image-20200909235707277](image/image-20200909235707277.png)
+
+  ![image-20200909235808973](image/image-20200909235808973.png)
+
+![image-20200909235949348](image/image-20200909235949348.png)
+
+
+
+📌 tf.keras.layer.Conv2D
+
+![image-20200910000410880](image/image-20200910000410880.png)
+
+- filters : convolution 필터의 수
+- kernel_size : 필터의 사이즈 (ex, 3, [3,3])
+- stride
+- padding
+  - valid : padding 안하는 것
+  - same : 입력과 출력의 사이즈가 같아지도록 하는 것
+- date_format
+  - channels_last(dafault) : [batch, height, width, channels]
+  - channels_first : [batch, caheenls, height, width]
 
 
 
@@ -72,6 +243,24 @@ Sub PJT 1 에서 학습한 인공신경망을 확장시켜 이미지 데이터�
 >
 > https://www.sallys.space/blog/2018/01/26/cnn-imagenet/
 
+**📌 VGG16, 19**
+
+: 각 16, 19 개의 레이어를 가지고 있는 모델
+
+- Conv, Pooling, FC layer로만 이루어져 있기 때문에 코딩하기가 비교적 쉬움
+- small filter, Deeper networks
+- 단점 : 학습이 매우 느림, 용량이 엄청나게 큼 (이유 : 파라미터가 많음)
+
+
+
+**📌 Inception V3** : multi level feature extracting 을 하는 모듈
+
+
+
+**📌 ResNet**
+
+- 레이어 수를 늘려서 depth를 깊게..
+
 
 
 ② 이미지넷 챌린지 및 발전과정
@@ -80,6 +269,10 @@ Sub PJT 1 에서 학습한 인공신경망을 확장시켜 이미지 데이터�
 >
 > https://github.com/GunhoChoi/PyTorch-FastCampus/blob/master/04_CNN_Advanced/CNN_Advanced.pdf
 
+![image-20200910003311725](image/image-20200910003311725.png)
+
+![image-20200910003327421](image/image-20200910003327421.png)
+
 
 
 ③ DenseNet
@@ -87,6 +280,32 @@ Sub PJT 1 에서 학습한 인공신경망을 확장시켜 이미지 데이터�
 > 덴스넷 모델에 대한 설명
 >
 > https://www.youtube.com/watch?v=fe2Vn0mwALI
+
+![image-20200910003343240](image/image-20200910003343240.png)
+
+![image-20200910003352944](image/image-20200910003352944.png)
+
+![image-20200910003420472](image/image-20200910003420472.png)
+
+![image-20200910003433222](image/image-20200910003433222.png)
+
+![image-20200910003501745](image/image-20200910003501745.png)
+
+![image-20200910003533191](image/image-20200910003533191.png)
+
+![image-20200910003602495](image/image-20200910003602495.png)
+
+- 장점 : 학습이 잘 됨 / 버리는 것 없이 사용 => 효율적
+
+![image-20200910003954555](image/image-20200910003954555.png)
+
+![image-20200910004003763](image/image-20200910004003763.png)
+
+![image-20200910004047467](image/image-20200910004047467.png)
+
+![image-20200910004057977](image/image-20200910004057977.png)
+
+![image-20200910004117895](image/image-20200910004117895.png)
 
 
 
