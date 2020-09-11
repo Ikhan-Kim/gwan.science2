@@ -18,15 +18,78 @@ plt.show() # 시각화
 plt.figure(figsize=(10,10))
 for i in range(25):
     plt.subplot(5,5,i+1) # 가로 5등분 세로 5등분 후 i+1 번째 칸에 출력
-    plt.xticks([])
-    plt.yticks([])
+    plt.xticks([]) # x축 눈금 값 설정(예시와 같이 빈 배열로 지정하면 눈금이 제거됨)
+    plt.yticks([]) # y축 눈금 값 설정
     plt.grid(False)
     plt.imshow(train_images[i], cmap=plt.cm.binary)
     plt.xlabel(class_names[train_labels[i]])
 plt.show()
 ```
 
+```python
+def plot_value_array(i, predictions_array, true_label):
+  predictions_array, true_label = predictions_array[i], true_label[i]
+  plt.grid(False)
+  plt.xticks([])
+  plt.yticks([])
+  thisplot = plt.bar(range(10), predictions_array, color="#777777") # bar: 막대그래프
+  plt.ylim([0, 1]) # y축 범위 제한
+  predicted_label = np.argmax(predictions_array)
 
+  thisplot[predicted_label].set_color('red')
+  thisplot[true_label].set_color('blue')
+
+plot_value_array(0, predictions_single, test_labels)
+_ = plt.xticks(range(10), class_names, rotation=45)
+plt.show()
+```
+
+
+
+
+
+# 케라스를 이용한 딥러닝 모델링
+
+## 순서
+
+1. 데이터셋 생성하기
+
+   - 원본 데이터를 불러오거나 시뮬레이션을 통해 데이터를 생성합니다.
+   - 데이터로부터 훈련셋, 검증셋, 시험셋을 생성합니다.
+   - 이 때 딥러닝 모델의 학습 및 평가를 할 수 있도록 포맷 변환을 합니다.
+
+2. 모델 구성하기
+
+   - 시퀀스 모델을 생성한 뒤 필요한 레이어를 추가하여 구성합니다.
+   - 좀 더 복잡한 모델이 필요할 때는 케라스 함수 API를 사용합니다.
+
+3. 모델 학습과정 설정하기
+
+   - 학습하기 전에 학습에 대한 설정을 수행합니다.
+   - 손실 함수 및 최적화 방법을 정의합니다.
+   - 케라스에서는 compile() 함수를 사용합니다.
+
+4. 모델 학습시키기
+
+   - 훈련셋을 이용하여 구성한 모델로 학습시킵니다.
+   - 케라스에서는 fit() 함수를 사용합니다.
+
+5. 학습과정 살펴보기
+
+   - 모델 학습 시 훈련셋, 검증셋의 손실 및 정확도를 측정합니다.
+   - 반복횟수에 따른 손실 및 정확도 추이를 보면서 학습 상황을 판단합니다.
+
+6. 모델 평가하기
+
+   - 준비된 시험셋으로 학습한 모델을 평가합니다.
+   - 케라스에서는 evaluate() 함수를 사용합니다.
+
+7. 모델 사용하기
+
+   - 임의의 입력으로 모델의 출력을 얻습니다.
+   - 케라스에서는 predict() 함수를 사용합니다.
+
+   
 
 ## 모델 작성법
 
@@ -165,5 +228,54 @@ from keras.models import load_model
 
 model.save('file_name') # 저장
 model = load_model('file_name') # 불러오기
+```
+
+
+
+## 모델 예측 만들기
+
+```python
+# 1.Basic_image_classification.py 참고
+
+fashion_mnist = keras.datasets.fashion_mnist
+(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+
+# 값의 범위를 0~1 사이로 조정
+train_images = train_images / 255.0
+test_images = test_images / 255.0
+
+### 모델 생성, 컴파일, 훈련 생략 ###
+
+# 예측 만들기
+predictions = model.predict(test_images)
+predictions[0]
+np.argmax(predictions[0])
+test_labels[0]
+
+# 테스트 세트에서 이미지 하나를 선택
+img = test_images[0]
+img.shape # (28, 28)
+
+# tf.keras 모델은 한 번에 샘플의 묶음 또는 배치(batch)로 예측을 만드는데 최적화되어 있다. 하나의 이미지를 사용할 때에도 2차원 배열로 만들어야 합니다:
+img = (np.expand_dims(img,0))
+img.shape # (1, 28, 28)
+
+def plot_value_array(i, predictions_array, true_label):
+  predictions_array, true_label = predictions_array[i], true_label[i]
+  plt.grid(False)
+  plt.xticks([])
+  plt.yticks([])
+  thisplot = plt.bar(range(10), predictions_array, color="#777777")
+  plt.ylim([0, 1])
+  predicted_label = np.argmax(predictions_array)
+
+  thisplot[predicted_label].set_color('red')
+  thisplot[true_label].set_color('blue')
+
+# 이미지 예측 만들기
+predictions_single = model.predict(img)
+plot_value_array(0, predictions_single, test_labels)
+_ = plt.xticks(range(10), class_names, rotation=45)
+plt.show()
 ```
 
