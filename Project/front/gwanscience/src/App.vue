@@ -1,12 +1,17 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/face-reading">Face Reading</router-link>
+      <router-link to="/">홈</router-link> |
+      <router-link to="/face-reading">관상</router-link> |
+      <router-link to="/inputName">이름 궁합</router-link> |
+      <router-link to="/result">결과</router-link>
     </div>
     <router-view/>
   </div>
+
+
 </template>
+
 
 <style>
 #app {
