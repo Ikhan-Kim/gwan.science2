@@ -1,0 +1,2222 @@
+> 필수지식학습 중 2. 자연어처리(NLP, RNN)에 관한 내용
+>
+> (명세서 학습 링크 페이지)
+
+# PJT2_Sub2 필수지식학습
+
+## 2. 자연어 처리 
+
+## (1) NLP
+
+
+
+## ① 토큰화(Tokenization)
+
+> 토큰화에 대한 설명 https://wikidocs.net/21698
+
+> 자연어 처리에서 크롤링 등으로 얻어낸 코퍼스 데이터가 필요에 맞게 전처리되지 않은 상태라면, 해당 **데이터를 사용하고자하는 용도에 맞게 토큰화(tokenization) & 정제(cleaning) & 정규화(normalization)하는 일**을 하게됨
+
+- 토큰화 : 주어진 코퍼스(corpus)에서 토큰(token)이라 불리는 단위로 나누는 작업
+
+  토큰의 단위가 상황에 따라 다르지만, 보통 의미있는 단위로 토큰을 정의.
+
+- 이 챕터에서는 토큰화에 대한 발생할 수 있는 여러가지 상황에 대해서 언급하여 토큰화에 대한 개념을 이해
+
+- 뒤에서 파이썬과 NLTK 패키지, KoNLPY를 통해 실습을 진행하며 직접 토큰화를 수행
+
+
+
+### **1.1. 단어 토큰화(Word Tokenization)**
+
+: **토큰의 기준을 단어(word)로 하는 경우**, 단어 토큰화(word tokenization)라고 함
+
+다만, 여기서 단어(word)는 단어 단위 외에도 단어구, 의미를 갖는 문자열로도 간주되기도 함
+
+
+
+```
+(예) 아래의 입력으로부터 구두점(punctuation)과 같은 문자는 제외시키는 간단한 단어 토큰화 작업
+
+(구두점이란, 온점(.), 컴마(,), 물음표(?), 세미콜론(;), 느낌표(!) 등과 같은 기호)
+
+=> 입력: **Time is an illusion. Lunchtime double so!**
+
+이러한 입력으로부터 구두점을 제외시킨 토큰화 작업의 결과
+
+=> 출력 : **"Time", "is", "an", "illustion", "Lunchtime", "double", "so"**
+
+
+<작업과정>
+
+구두점을 지운 뒤에 띄어쓰기(whitespace)를 기준으로 잘라냄
+```
+
+
+
+✔ 주의
+
+- 보통 토큰화 작업은 단순히 구두점이나 특수문자를 전부 제거하는 정제(cleaning) 작업을 수행하는 것만으로 해결되지 않음
+- 구두점이나 특수문자를 전부 제거하면 토큰이 의미를 잃어버리는 경우가 발생하기도 함
+- 심지어 띄어쓰기 단위로 자르면 사실상 단어 토큰이 구분되는 영어와 달리, 한국어는 띄어쓰기만으로는 단어 토큰을 구분하기 어려움
+
+
+
+### **1.2. 토큰화 중 생기는 선택의 순간**
+
+> 예상하지 못한 경우가 있어서 토큰화의 기준을 생각해봐야 하는 경우
+>
+> 이러한 선택은 해당 데이터를 가지고 어떤 용도로 사용할 것인지에 따라, 그 용도에 영향이 없는 기준으로 정하면 됨.
+
+
+
+(예)  영어권 언어에서 아포스트로피를(')가 들어가있는 단어는 어떻게 토큰으로 분류해야할까 
+
+**Don't be fooled by the dark sounding name, Mr. Jone's Orphanage is as cheery as cheery goes for a pastry shop.**
+
+아포스트로피가 들어간 상황에서 Don't와 Jone's는 어떻게 토큰화할 수 있을까요?
+
+- Don't / Don t / Dont / Do n't
+- Jone's / Jone s / Jone / Jones
+
+원하는 결과가 나오도록 토큰화 도구를 직접 설계할 수도 있겠지만, 기존에 공개된 도구들을 사용하였을 때의 결과가 사용자의 목적과 일치한다면 해당 도구를 사용할 수도 있을 것입니다. 
+
+<u>**📌 NLTK**는 **영어 코퍼스를 토큰화하기 위한 도구들을 제공**</u>
+
+그 중 **<u>word_tokenize</u>**와 **<u>WordPunctTokenizer</u>**를 사용해서 NLTK에서는 아포스트로피를 어떻게 처리하는지 확인해보겠습니다.
+
+```python
+from nltk.tokenize import word_tokenize
+
+print(word_tokenize("Don't be fooled by the dark sounding name, Mr. Jone's Orphanage is as cheery as cheery goes for a pastry shop."))
+
+# 결과
+['Do', "n't", 'be', 'fooled', 'by', 'the', 'dark', 'sounding', 'name', ',', 'Mr.', 'Jone', "'s", 'Orphanage', 'is', 'as', 'cheery', 'as', 'cheery', 'goes', 'for', 'a', 'pastry', 'shop', '.']  
+```
+
+**word_tokenize**는 Don't를 Do와 n't로 분리하였으며, 반면 Jone's는 Jone과 's로 분리한 것을 확인할 수 있습니다.
+
+
+
+그렇다면, wordPunctTokenizer는 아포스트로피가 들어간 코퍼스를 어떻게 처리할까요?
+
+```python
+from nltk.tokenize import WordPunctTokenizer  
+
+print(WordPunctTokenizer().tokenize("Don't be fooled by the dark sounding name, Mr. Jone's Orphanage is as cheery as cheery goes for a pastry shop."))
+
+# 결과
+['Don', "'", 't', 'be', 'fooled', 'by', 'the', 'dark', 'sounding', 'name', ',', 'Mr', '.', 'Jone', "'", 's', 'Orphanage', 'is', 'as', 'cheery', 'as', 'cheery', 'goes', 'for', 'a', 'pastry', 'shop', '.']  
+```
+
+**WordPunctTokenizer**는 <u>구두점을 별도로 분류하는 특징</u>을 갖고 있음
+
+앞서 확인했던 word_tokenize와는 달리 Don't를 Don과 '와 t로 분리하였으며, 이와 마찬가지로 Jone's를 Jone과 '와 s로 분리한 것을 확인할 수 있습니다.
+
+
+
+**<u>📌케라스</u>** 또한 토큰화 도구로서 **<u>text_to_word_sequence</u>**를 지원
+
+```python
+from tensorflow.keras.preprocessing.text import text_to_word_sequence
+
+print(text_to_word_sequence("Don't be fooled by the dark sounding name, Mr. Jone's Orphanage is as cheery as cheery goes for a pastry shop."))
+
+#결과
+["don't", 'be', 'fooled', 'by', 'the', 'dark', 'sounding', 'name', 'mr', "jone's", 'orphanage', 'is', 'as', 'cheery', 'as', 'cheery', 'goes', 'for', 'a', 'pastry', 'shop']
+```
+
+케라스의 **text_to_word_sequence**는 기본적으로 <u>모든 알파벳을 소문자로 바꾸면서 온점이나 컴마, 느낌표 등의 구두점을 제거</u>
+
+그러나 don't나 jone's와 같은 경우 아포스트로피는 보존하는 것을 볼 수 있습니다.
+
+
+
+### **1.3. 토큰화에서 고려해야할 사항**
+
+토큰화 작업을 단순하게 코퍼스에서 구두점을 제외하고 공백 기준으로 잘라내는 작업이라고 간주할 수는 없습니다.
+
+이러한 일은 보다 섬세한 알고리즘이 필요한데, 왜 섬세해야하는지 지금부터 그 이유를 정리해봅니다.
+
+
+
+#### 1.3.1 구두점이나 특수 문자를 단순 제외해서는 안 된다.
+
+갖고있는 코퍼스에서 단어들을 걸러낼 때, 구두점이나 특수 문자를 단순히 제외하는 것은 옳지 않습니다. 
+
+코퍼스에 대한 정제 작업을 진행하다보면, 구두점조차도 하나의 토큰으로 분류하기도 합니다. 
+
+(예1) 온점(.)과 같은 경우는 문장의 경계를 알 수 있는데 도움이 되므로 단어를 뽑아낼 때, 온점(.)을 제외하지 않을 수 있습니다.
+
+(예2) 단어 자체에서 구두점을 갖고 있는 경우도 있는데, m.p.h나 Ph.D나 AT&T 같은 경우가 있습니다. 
+
+(예3) 특수 문자의 달러(![img](https://wikidocs.net/images/page/21693/%EB%8B%AC%EB%9F%AC.PNG))나 슬래시(/)로 예를 들어보면, $45.55와 같은 가격을 의미 하기도 하고, 01/02/06은 날짜를 의미하기도 합니다. 보통 이런 경우 45.55를 하나로 취급해야하지, 45와 55로 따로 분류하고 싶지는 않을 것입니다.
+
+(예4) 숫자 사이에 컴마(,)가 들어가는 경우도 있습니다. 가령 보통 수치를 표현할 때는 123,456,789와 같이 세 자리 단위로 컴마가 들어갑니다.
+
+
+
+#### 1.3.2 줄임말과 단어 내에 띄어쓰기가 있는 경우.
+
+토큰화 작업에서 종종 영어권 언어의 아포스트로피(')는 압축된 단어를 다시 펼치는 역할을 하기도 합니다.
+
+(예) what're는 what are의 줄임말이며, we're는 we are의 줄임말입니다. 위의 예에서 re를 접어(clitic)이라고 합니다. 즉, 단어가 줄임말로 쓰일 때 생기는 형태를 말합니다. 가령 I am을 줄인 I'm이 있을 때, m을 접어라고 합니다.
+
+New York이라는 단어나 rock 'n' roll이라는 단어를 봅시다. 이 단어들은 하나의 단어이지만 중간에 띄어쓰기가 존재합니다.
+
+사용 용도에 따라서, 하나의 단어 사이에 띄어쓰기가 있는 경우에도 하나의 토큰으로 봐야하는 경우도 있을 수 있으므로, 토큰화 작업은 저러한 단어를 하나로 인식할 수 있는 능력도 가져야합니다.
+
+
+
+#### 1.3.3 표준 토큰화 예제
+
+이해를 돕기 위해, 표준으로 쓰이고 있는 토큰화 방법 중 하나인 📌**<u>Penn Treebank Tokenization의 규칙</u>**에 대해서 소개하고, 토큰화의 결과를 보도록 하겠습니다.
+
+<u>규칙 1. 하이푼으로 구성된 단어는 하나로 유지한다.</u>
+<u>규칙 2. doesn't와 같이 아포스트로피로 '접어'가 함께하는 단어는 분리해준다.</u>
+
+해당 표준에 아래의 문장을 input으로 넣어봅니다.
+"Starting a home-based restaurant may be an ideal. it doesn't have a food chain or restaurant of their own."
+
+```python
+from nltk.tokenize import TreebankWordTokenizer
+
+tokenizer=TreebankWordTokenizer()
+text="Starting a home-based restaurant may be an ideal. it doesn't have a food chain or restaurant of their own."
+print(tokenizer.tokenize(text))
+
+# 결과
+['Starting', 'a', 'home-based', 'restaurant', 'may', 'be', 'an', 'ideal.', 'it', 'does', "n't", 'have', 'a', 'food', 'chain', 'or', 'restaurant', 'of', 'their', 'own', '.'] 
+```
+
+결과를 보면, 각각 규칙1과 규칙2에 따라서 home-based는 하나의 토큰으로 취급하고 있으며, dosen't의 경우 does와 n't는 분리되었음을 볼 수 있습니다.
+
+
+
+### 1.4. 문장 토큰화(Sentence Tokenization)
+
+이번에는 토큰의 단위가 문장(sentence)일 때, 어떻게 토큰화를 수행해야할지 논의해보도록 하겠습니다. 
+
+이 작업은 갖고있는 코퍼스 내에서 문장 단위로 구분하는 작업으로 때로는 **문장 분류(sentence segmentation)**라고도 부릅니다.
+
+보통 갖고있는 코퍼스가 정제되지 않은 상태라면, 코퍼스는 문장 단위로 구분되어있지 않을 가능성이 높습니다. 이를 사용하고자 하는 용도에 맞게 하기 위해서는 문장 토큰화가 필요할 수 있습니다.
+
+어떻게 주어진 코퍼스로부터 문장 단위로 분류할 수 있을까요? 직관적으로 생각해봤을 때는 ?나 온점(.)이나 ! 기준으로 문장을 잘라내면 되지 않을까라고 생각할 수 있지만, 꼭 그렇지만은 않습니다. !나 ?는 문장의 구분을 위한 꽤 명확한 구분자(boundary) 역할을 하지만 온점은 꼭 그렇지 않기 때문입니다. 다시 말해, 온점은 문장의 끝이 아니더라도 등장할 수 있습니다.
+
+**EX1) IP 192.168.56.31 서버에 들어가서 로그 파일 저장해서 ukairia777@gmail.com로 결과 좀 보내줘. 그러고나서 점심 먹으러 가자.**
+
+**EX2) Since I'm actively looking for Ph.D. students, I get the same question a dozen times every year.**
+
+예를 들어 위의 예제들에 온점을 기준으로 문장 토큰화를 적용해본다면 어떨까요? 첫번째 예제에서는 보내줘.에서 그리고 두번째 예제에서는 year.에서 처음으로 문장이 끝난 것으로 인식하는 것이 제대로 문장의 끝을 예측했다고 볼 수 있을 것입니다. 하지만 단순히 온점(.)으로 문장을 구분짓는다고 가정하면, 문장의 끝이 나오기 전에 이미 온점이 여러번 등장하여 예상한 결과가 나오지 않게 됩니다.
+
+그렇기 때문에 사용하는 코퍼스가 어떤 국적의 언어인지, 또는 해당 코퍼스 내에서 특수문자들이 어떻게 사용되고 있는지에 따라서 직접 규칙들을 정의해볼 수 있겠습니다. 물론, 100% 정확도를 얻는 일은 쉬운 일이 아닙니다. 갖고있는 코퍼스 데이터에 오타나, 문장의 구성이 엉망이라면 정해놓은 규칙이 소용이 없을 수 있기 때문입니다.
+
+**📌 NLTK에서는 영어 문장의 토큰화를 수행하는 sent_tokenize**를 지원하고 있습니다. NLTK를 통해 문장 토큰화를 실습해보고, 문장 토큰화에 대해 이해해보도록 하겠습니다.
+
+```python
+from nltk.tokenize import sent_tokenize
+
+text="His barber kept his word. But keeping such a huge secret to himself was driving him crazy. Finally, the barber went up a mountain and almost to the edge of a cliff. He dug a hole in the midst of some reeds. He looked about, to mae sure no one was near."
+
+print(sent_tokenize(text))
+
+#결과
+['His barber kept his word.', 'But keeping such a huge secret to himself was driving him crazy.', 'Finally, the barber went up a mountain and almost to the edge of a cliff.', 'He dug a hole in the midst of some reeds.', 'He looked about, to mae sure no one was near.']
+```
+
+위 코드는 text에 저장된 여러 개의 문장들로부터 문장을 구분하는 코드입니다. 출력 결과를 보면 성공적으로 모든 문장을 구분해내었음을 볼 수 있습니다. 그렇다면, 이번에는 언급했던 문장 중간에 온점이 여러번 등장하는 경우에 대해서도 실습해보도록 하겠습니다.
+
+```python
+from nltk.tokenize import sent_tokenize
+
+text="I am actively looking for Ph.D. students. and you are a Ph.D student."
+print(sent_tokenize(text))
+
+# 결과
+['I am actively looking for Ph.D. students.', 'and you are a Ph.D student.']
+```
+
+NLTK는 단순히 온점을 구분자로 하여 문장을 구분하지 않았기 때문에, Ph.D.를 문장 내의 단어로 인식하여 성공적으로 인식하는 것을 볼 수 있습니다.
+
+
+
+물론, **한국어에 대한 문장 토큰화 도구**가 존재합니다. 한국어에 대한 문장 토큰화 도구가 여럿있지만, 여기에서는 박상길님이 개발한 **KSS(Korean Sentence Splitter)**를 소개합니다.
+
+```
+pip install kss
+```
+
+- kss는 윈도우에 사용할 때는 C extension인 Cython (pip install cython)과 visual studio c++를 설치해주어야 합니다. kss 설치 문의는 도와드리기 어렵습니다. 가급적 리눅스 환경이나 Colab을 사용 권장드립니다.
+
+이제 KSS를 통해서 문장 토큰화를 진행해보겠습니다.
+
+```python
+import kss
+text='딥 러닝 자연어 처리가 재미있기는 합니다. 그런데 문제는 영어보다 한국어로 할 때 너무 어려워요. 농담아니에요. 이제 해보면 알걸요?'
+print(kss.split_sentences(text))
+
+# 결과
+['딥 러닝 자연어 처리가 재미있기는 합니다.', '그런데 문제는 영어보다 한국어로 할 때 너무 어려워요.', '농담아니에요.', '이제 해보면 알걸요?']
+```
+
+출력 결과는 정상적으로 모든 문장이 분리된 결과를 보여줍니다.
+
+
+
+### **1.5. 이진 분류기(Binary Classifier)**
+
+문장 토큰화에서의 예외 사항을 발생시키는 온점의 처리를 위해서 입력에 따라 두 개의 클래스로 분류하는 이진 분류기(binary classifier)를 사용하기도 합니다.
+
+물론, 여기서 말하는 두 개의 클래스는
+\1. 온점(.)이 단어의 일부분일 경우. 즉, 온점이 약어(abbreivation)로 쓰이는 경우
+\2. 온점(.)이 정말로 문장의 구분자(boundary)일 경우를 의미할 것입니다.
+
+이진 분류기는 앞서 언급했듯이, 임의로 정한 여러가지 규칙을 코딩한 함수일 수도 있으며, 머신 러닝을 통해 이진 분류기를 구현하기도 합니다.
+
+온점(.)이 어떤 클래스에 속하는지 결정을 위해서는 어떤 온점이 주로 약어(abbreviation)으로 쓰이는 지 알아야합니다. 그렇기 때문에, 이진 분류기 구현에서 약어 사전(abbreviation dictionary)는 유용하게 쓰입니다. 영어권 언어의 경우에 있어 https://public.oed.com/how-to-use-the-oed/abbreviations/
+해당 링크는 약어 사전의 예라고 볼 수 있습니다.
+
+이러한 문장 토큰화를 수행하는 오픈 소스로는 NLTK, OpenNLP, 스탠포드 CoreNLP, splitta, LingPipe 등이 있습니다. 문장 토큰화 규칙을 짤 때, 발생할 수 있는 여러가지 예외사항을 다룬 참고 자료로 아래 링크를 보면 좋습니다.
+https://tech.grammarly.com/blog/posts/How-to-Split-Sentences.html
+
+
+
+### **1.6. 한국어에서의 토큰화의 어려움.**
+
+영어는 New York과 같은 합성어나 he's 와 같이 줄임말에 대한 예외처리만 한다면, 띄어쓰기(whitespace)를 기준으로 하는 띄어쓰기 토큰화를 수행해도 단어 토큰화가 잘 작동합니다. 거의 대부분의 경우에서 단어 단위로 띄어쓰기가 이루어지기 때문에 띄어쓰기 토큰화와 단어 토큰화가 거의 같기 때문입니다.
+
+하지만 한국어는 영어와는 달리 띄어쓰기만으로는 토큰화를 하기에 부족합니다. 한국어의 경우에는 띄어쓰기 단위가 되는 단위를 '어절'이라고 하는데 즉, 어절 토큰화는 한국어 NLP에서 지양되고 있습니다. 어절 토큰화와 단어 토큰화가 같지 않기 때문입니다. 그 근본적인 이유는 한국어가 영어와는 다른 형태를 가지는 언어인 교착어라는 점에서 기인합니다. 교착어란 조사, 어미 등을 붙여서 말을 만드는 언어를 말합니다.
+
+#### **1.6.1 한국어는 교착어이다.**
+
+좀 더 자세히 설명하기 전에 간단한 예를 들어 봅시다. 영어와는 달리 한국어에는 조사라는 것이 존재합니다. 
+
+(예) 그(he/him)라는 주어나 목적어가 들어간 문장이 있다고 합시다. 이 경우, 그라는 단어 하나에도 '그가', '그에게', '그를', '그와', '그는'과 같이 다양한 조사가 '그'라는 글자 뒤에 띄어쓰기 없이 바로 붙게됩니다. 자연어 처리를 하다보면 같은 단어임에도 서로 다른 조사가 붙어서 다른 단어로 인식이 되면 자연어 처리가 힘들고 번거로워지는 경우가 많습니다. 대부분의 한국어 NLP에서 조사는 분리해줄 필요가 있습니다.
+
+즉, 띄어쓰기 단위가 영어처럼 독립적인 단어라면 띄어쓰기 단위로 토큰화를 하면 되겠지만 한국어는 어절이 독립적인 단어로 구성되는 것이 아니라 조사 등의 무언가가 붙어있는 경우가 많아서 이를 전부 분리해줘야 한다는 의미입니다.
+
+좀 더 자세히 설명해보겠습니다. 한국어 토큰화에서는 **형태소(morpheme)**란 개념을 반드시 이해해야 합니다. 형태소(morpheme)란 뜻을 가진 가장 작은 말의 단위를 말합니다. 이 형태소에는 두 가지 형태소가 있는데 자립 형태소와 의존 형태소입니다.
+
+**자립 형태소** : 접사, 어미, 조사와 상관없이 자립하여 사용할 수 있는 형태소. 그 자체로 단어가 된다. 체언(명사, 대명사, 수사), 수식언(관형사, 부사), 감탄사 등이 있다.
+**의존 형태소** : 다른 형태소와 결합하여 사용되는 형태소. 접사, 어미, 조사, 어간를 말한다.
+
+예를 들어 다음과 같은 문장이 있다고 합시다.
+
+- 문장 : 에디가 딥러닝책을 읽었다
+
+이를 형태소 단위로 분해하면 다음과 같습니다.
+
+자립 형태소 : 에디, 딥러닝책
+의존 형태소 : -가, -을, 읽-, -었, -다
+
+이를 통해 유추할 수 있는 것은 한국어에서 영어에서의 단어 토큰화와 유사한 형태를 얻으려면 어절 토큰화가 아니라 형태소 토큰화를 수행해야한다는 겁니다.
+
+
+
+#### **1.6.2 한국어는 띄어쓰기가 영어보다 잘 지켜지지 않는다.**
+
+사용하는 한국어 코퍼스가 뉴스 기사와 같이 띄어쓰기를 철저하게 지키려고 노력하는 글이라면 좋겠지만, 많은 경우에 띄어쓰기가 틀렸거나, 지켜지지 않는 코퍼스가 많습니다.
+
+한국어는 영어권 언어와 비교하여 띄어쓰기가 어렵고, 또 잘 지켜지지 않는 경향이 있습니다. 그 이유는 여러 견해가 있으나, 가장 기본적인 견해는 한국어의 경우 띄어쓰기가 지켜지지 않아도 글을 쉽게 이해할 수 있는 언어라는 점입니다. 사실, 띄어쓰기가 없던 한국어에 띄어쓰기가 보편화된 것도 근대(1933년, 한글맞춤법통일안)의 일입니다.
+
+**EX1) 제가이렇게띄어쓰기를전혀하지않고글을썼다고하더라도글을이해할수있습니다.**
+
+**EX2) Tobeornottobethatisthequestion**
+
+반면, 영어의 경우에는 띄어쓰기를 하지 않으면 손쉽게 알아보기 어려운 문장들이 생깁니다. 이는 한국어(모아쓰기 방식)와 영어(풀어쓰기 방식)라는 언어적 특성의 차이에 기인합니다. 이 책에서는 모아쓰기와 풀어쓰기에 대한 설명은 생략하겠으나, 결론은 한국어는 수많은 코퍼스에서 띄어쓰기가 무시되는 경우가 많아 자연어 처리가 어려워졌다는 것입니다.
+
+
+
+### **1.7. 품사 태깅(Part-of-speech tagging)**
+
+단어는 표기는 같지만, 품사에 따라서 단어의 의미가 달라지기도 합니다. 
+
+(예)영어 단어 'fly'는 동사로는 '날다'라는 의미를 갖지만, 명사로는 '파리'라는 의미를 갖고있습니다. 한국어도 마찬가지입니다. '못'이라는 단어는 명사로서는 망치를 사용해서 목재 따위를 고정하는 물건을 의미합니다. 하지만 부사로서의 '못'은 '먹는다', '달린다'와 같은 동작 동사를 할 수 없다는 의미로 쓰입니다. 
+
+즉, 결국 단어의 의미를 제대로 파악하기 위해서는 해당 단어가 어떤 품사로 쓰였는지 보는 것이 주요 지표가 될 수도 있습니다. 
+
+그에 따라 단어 토큰화 과정에서 각 단어가 어떤 품사로 쓰였는지를 구분해놓기도 하는데, 이 작업을 품사 태깅(part-of-speech tagging)이라고 합니다. NLTK와 KoNLPy에서는 어떻게 품사 태깅이 되는지 실습을 통해서 알아보도록 하겠습니다.
+
+
+
+### **1.8. NLTK와 KoNLPy를 이용한 영어, 한국어 토큰화 실습**
+
+NLTK에서는 영어 코퍼스에 품사 태깅 기능을 지원하고 있습니다. 품사를 어떻게 명명하고, 태깅하는지의 기준은 여러가지가 있는데, NLTK에서는 Penn Treebank POS Tags라는 기준을 사용합니다. 실제로 NLTK를 사용해서 영어 코퍼스에 품사 태깅을 해보도록 하겠습니다.
+
+```python
+from nltk.tokenize import word_tokenize
+
+text="I am actively looking for Ph.D. students. and you are a Ph.D. student."
+print(word_tokenize(text))
+['I', 'am', 'actively', 'looking', 'for', 'Ph.D.', 'students', '.', 'and', 'you', 'are', 'a', 'Ph.D.', 'student', '.']
+from nltk.tag import pos_tag
+x=word_tokenize(text)
+pos_tag(x)
+
+
+[('I', 'PRP'), ('am', 'VBP'), ('actively', 'RB'), ('looking', 'VBG'), ('for', 'IN'), ('Ph.D.', 'NNP'), ('students', 'NNS'), ('.', '.'), ('and', 'CC'), ('you', 'PRP'), ('are', 'VBP'), ('a', 'DT'), ('Ph.D.', 'NNP'), ('student', 'NN'), ('.', '.')]
+```
+
+영어 문장에 대해서 토큰화를 수행하고, 이어서 품사 태깅을 수행하였습니다. 
+
+Penn Treebank POG Tags에서 **PRP는 인칭 대명사, VBP는 동사, RB는 부사, VBG는 현재부사, IN은 전치사, NNP는 고유 명사, NNS는 복수형 명사, CC는 접속사, DT는 관사를 의미**합니다.
+
+한국어 자연어 처리를 위해서는 KoNLPy("코엔엘파이"라고 읽습니다)라는 파이썬 패키지를 사용할 수 있습니다. 코엔엘파이를 통해서 사용할 수 있는 형태소 분석기로 Okt(Open Korea Text), 메캅(Mecab), 코모란(Komoran), 한나눔(Hannanum), 꼬꼬마(Kkma)가 있습니다.
+
+한국어 NLP에서 형태소 분석기를 사용한다는 것은 단어 토큰화가 아니라 정확히는 형태소(morpheme) 단위로 형태소 토큰화(morpheme tokenization)를 수행하게 됨을 뜻합니다. 여기선 이 중에서 Okt와 꼬꼬마를 통해서 토큰화를 수행해보도록 하겠습니다. (Okt는 기존에는 Twitter라는 이름을 갖고있었으나 0.5.0 버전부터 이름이 변경되어 인터넷에는 아직 Twitter로 많이 알려져있으므로 학습 시 참고바랍니다.)
+
+```python
+from konlpy.tag import Okt  
+
+okt=Okt()  
+print(okt.morphs("열심히 코딩한 당신, 연휴에는 여행을 가봐요"))
+['열심히', '코딩', '한', '당신', ',', '연휴', '에는', '여행', '을', '가봐요']  
+
+print(okt.pos("열심히 코딩한 당신, 연휴에는 여행을 가봐요"))  
+[('열심히','Adverb'), ('코딩', 'Noun'), ('한', 'Josa'), ('당신', 'Noun'), (',', 'Punctuation'), ('연휴', 'Noun'), ('에는', 'Josa'), ('여행', 'Noun'), ('을', 'Josa'), ('가봐요', 'Verb')]  
+
+print(okt.nouns("열심히 코딩한 당신, 연휴에는 여행을 가봐요"))  
+['코딩', '당신', '연휴', '여행']  
+```
+
+위의 예제는 Okt 형태소 분석기로 토큰화를 시도해본 예제입니다.
+
+1) morphs : 형태소 추출
+2) pos : 품사 태깅(Part-of-speech tagging)
+3) nouns : 명사 추출
+
+위 예제에서 사용된 각 메소드는 이런 기능을 갖고 있습니다. 앞서 언급한 코엔엘파이의 형태소 분석기들은 공통적으로 이 메소드들을 제공하고 있습니다. 위 예제에서 형태소 추출과 품사 태깅 메소드의 결과를 보면, 조사를 기본적으로 분리하고 있음을 확인할 수 있습니다. 그렇기 때문에 한국어 NLP에서 전처리에 형태소 분석기를 사용하는 것은 꽤 유용합니다.
+
+이번에는 꼬꼬마 형태소 분석기를 사용하여 같은 문장에 대해서 토큰화를 진행해볼 것입니다.
+
+```python
+from konlpy.tag import Kkma  
+
+kkma=Kkma()  
+print(kkma.morphs("열심히 코딩한 당신, 연휴에는 여행을 가봐요"))
+['열심히', '코딩', '하', 'ㄴ', '당신', ',', '연휴', '에', '는', '여행', '을', '가보', '아요']  
+
+print(kkma.pos("열심히 코딩한 당신, 연휴에는 여행을 가봐요"))  
+[('열심히','MAG'), ('코딩', 'NNG'), ('하', 'XSV'), ('ㄴ', 'ETD'), ('당신', 'NP'), (',', 'SP'), ('연휴', 'NNG'), ('에', 'JKM'), ('는', 'JX'), ('여행', 'NNG'), ('을', 'JKO'), ('가보', 'VV'), ('아요', 'EFN')]  
+
+print(kkma.nouns("열심히 코딩한 당신, 연휴에는 여행을 가봐요"))  
+['코딩', '당신', '연휴', '여행']  
+```
+
+앞서 사용한 Okt 형태소 분석기와 결과가 다른 것을 볼 수 있습니다. 각 형태소 분석기는 성능과 결과가 다르게 나오기 때문에, 형태소 분석기의 선택은 사용하고자 하는 필요 용도에 어떤 형태소 분석기가 가장 적절한지를 판단하고 사용하면 됩니다. 예를 들어서 속도를 중시한다면 메캅을 사용할 수 있습니다.
+
+------
+
+한국어 형태소 분석기 성능 비교 : https://iostream.tistory.com/144
+http://www.engear.net/wp/%ED%95%9C%EA%B8%80-%ED%98%95%ED%83%9C%EC%86%8C-%EB%B6%84%EC%84%9D%EA%B8%B0-%EB%B9%84%EA%B5%90/
+
+
+
+## ② 정수 인코딩(Integer Encoding)
+
+> 케라스의 텍스트 전처리 https://wikidocs.net/31766
+
+컴퓨터는 텍스트보다는 숫자를 더 잘 처리 할 수 있습니다. 이를 위해 자연어 처리에서는 텍스트를 숫자로 바꾸는 여러가지 기법들이 있습니다. 그리고 그러한 기법들을 본격적으로 적용시키기 위한 **첫 단계로 각 단어를 고유한 정수에 맵핑(mapping)시키는 전처리 작업**이 필요할 때가 있습니다.
+
+예를 들어 갖고 있는 텍스트에 단어가 5,000개가 있다면, 5,000개의 단어들 각각에 1번부터 5,000번까지 단어와 맵핑되는 고유한 정수, 다른 표현으로는 인덱스를 부여합니다. 가령, book은 150번, dog는 171번, love는 192번, books는 212번과 같이 숫자가 부여됩니다. 인덱스를 부여하는 방법은 여러 가지가 있을 수 있는데 랜덤으로 부여하기도 하지만, **보통은 전처리 또는 빈도수가 높은 단어들만 사용하기 위해서 단어에 대한 빈도수를 기준으로 정렬한 뒤에 부여**합니다.
+
+
+
+### **2.1. 정수 인코딩(Integer Encoding)**
+
+왜 이러한 작업이 필요한 지에 대해서는 뒤에서 원-핫 인코딩, 워드 임베딩 챕터 등에서 알아보기로 하고 여기서는 어떤 과정으로 단어에 정수 인덱스를 부여하는지에 대해서만 정리하겠습니다.
+
+단어에 정수를 부여하는 방법 중 하나로 **단어를 빈도수 순으로 정렬한 단어 집합(vocabulary)을 만들고, 빈도수가 높은 순서대로 차례로 낮은 숫자부터 정수를 부여하는 방법**이 있습니다. 이해를 돕기위해 단어의 빈도수가 적당하게 분포되도록 의도적으로 만든 텍스트 데이터를 가지고 실습해보겠습니다.
+
+#### **2.1.1 dictionary 사용하기**
+
+```python
+from nltk.tokenize import sent_tokenize
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+
+text = "A barber is a person. a barber is good person. a barber is huge person. he Knew A Secret! The Secret He Kept is huge secret. Huge secret. His barber kept his word. a barber kept his word. His barber kept his secret. But keeping and keeping such a huge secret to himself was driving the barber crazy. the barber went up a huge mountain."
+```
+
+우선 여러 문장이 함께 있는 텍스트 데이터로부터 **문장 토큰화를 수행**해보겠습니다.
+
+```python
+# 문장 토큰화
+text = sent_tokenize(text)
+print(text)
+['A barber is a person.', 'a barber is good person.', 'a barber is huge person.', 'he Knew A Secret!', 'The Secret He Kept is huge secret.', 'Huge secret.', 'His barber kept his word.', 'a barber kept his word.', 'His barber kept his secret.', 'But keeping and keeping such a huge secret to himself was driving the barber crazy.', 'the barber went up a huge mountain.']
+```
+
+기존의 텍스트 데이터가 **문장 단위로 토큰화** 된 것을 확인할 수 있습니다. 이제 정제 작업을 병행하며, **단어 토큰화를 수행**합니다.
+
+```python
+# 정제와 단어 토큰화
+vocab = {} # 파이썬의 dictionary 자료형
+sentences = []
+stop_words = set(stopwords.words('english'))
+
+for i in text:
+    sentence = word_tokenize(i) # 단어 토큰화를 수행합니다.
+    result = []
+
+    for word in sentence: 
+        word = word.lower() # 모든 단어를 소문자화하여 단어의 개수를 줄입니다.
+        if word not in stop_words: # 단어 토큰화 된 결과에 대해서 불용어를 제거합니다.
+            if len(word) > 2: # 단어 길이가 2이하인 경우에 대하여 추가로 단어를 제거합니다.
+                result.append(word)
+                if word not in vocab:
+                    vocab[word] = 0 
+                vocab[word] += 1
+    sentences.append(result) 
+print(sentences)
+[['barber', 'person'], ['barber', 'good', 'person'], ['barber', 'huge', 'person'], ['knew', 'secret'], ['secret', 'kept', 'huge', 'secret'], ['huge', 'secret'], ['barber', 'kept', 'word'], ['barber', 'kept', 'word'], ['barber', 'kept', 'secret'], ['keeping', 'keeping', 'huge', 'secret', 'driving', 'barber', 'crazy'], ['barber', 'went', 'huge', 'mountain']]
+```
+
+텍스트를 숫자로 바꾸는 단계라는 것은 본격적으로 자연어 처리 작업에 들어간다는 의미이므로, 단어가 텍스트일 때만 할 수 있는 **최대한의 전처리를 끝내놓아야 합니다.** 
+
+위의 코드를 보면, 동일한 단어가 대문자로 표기되었다는 이유로 서로 다른 단어로 카운트되는 일이 없도록 **모든 단어를 소문자로 바꾸었습니다**. 그리고 자연어 처리에서 크게 의미를 갖지 못하는 불**용어와 길이가 짧은 단어를 제거하는 방법을 사용**하였습니다.
+
+현재 vocab에는 중복을 제거한 단어와 각 단어에 대한 빈도수가 기록되어져 있습니다. vocab을 출력해보겠습니다.
+
+```python
+print(vocab)
+{'barber': 8, 'person': 3, 'good': 1, 'huge': 5, 'knew': 1, 'secret': 6, 'kept': 4, 'word': 2, 'keeping': 2, 'driving': 1, 'crazy': 1, 'went': 1, 'mountain': 1}
+```
+
+단어를 키(key)로, 단어에 대한 빈도수가 값(value)으로 저장되어져 있습니다. vocab에 단어를 입력하면 빈도수를 리턴합니다.
+
+```python
+print(vocab["barber"]) # 'barber'라는 단어의 빈도수 출력
+8
+```
+
+이제 빈도수가 높은 순서대로 정렬해보겠습니다.
+
+```python
+vocab_sorted = sorted(vocab.items(), key = lambda x:x[1], reverse = True)
+print(vocab_sorted)
+[('barber', 8), ('secret', 6), ('huge', 5), ('kept', 4), ('person', 3), ('word', 2), ('keeping', 2), ('good', 1), ('knew', 1), ('driving', 1), ('crazy', 1), ('went', 1), ('mountain', 1)]
+```
+
+이제 **높은 빈도수를 가진 단어일수록 낮은 정수 인덱스를 부여**합니다.
+
+```python
+word_to_index = {}
+i=0
+for (word, frequency) in vocab_sorted :
+    if frequency > 1 : # 정제(Cleaning) 챕터에서 언급했듯이 빈도수가 적은 단어는 제외한다.
+        i=i+1
+        word_to_index[word] = i
+print(word_to_index)
+{'barber': 1, 'person': 2, 'huge': 3, 'secret': 4, 'kept': 5, 'word': 6, 'keeping': 7}
+```
+
+1의 인덱스를 가진 단어가 가장 빈도수가 높은 단어가 됩니다. 그리고 이러한 작업을 수행하는 동시에 각 단어의 빈도수를 알 경우에만 할 수 있는 전처리인 **빈도수가 적은 단어를 제외시키는 작업**을 합니다. 등장 빈도가 낮은 단어는 자연어 처리에서 의미를 가지지 않을 가능성이 높기 때문입니다. 여기서는 **빈도수가 1인 단어들은 전부 제외**시켰습니다.
+
+자연어 처리를 하다보면, 텍스트 데이터에 있는 단어를 모두 사용하기 보다는 빈도수가 가장 높은 n개의 단어만 사용하고 싶은 경우가 많습니다. 위 단어들은 빈도수가 높은 순으로 낮은 정수가 부여되어져 있으므로 **빈도수 상위 n개의 단어만 사용하고 싶다고하면** vocab에서 정수값이 1부터 n까지인 단어들만 사용하면 됩니다. 여기서는 상위 5개 단어만 사용한다고 가정하겠습니다.
+
+```python
+vocab_size = 5
+words_frequency = [w for w,c in word_to_index.items() if c >= vocab_size + 1] # 인덱스가 5 초과인 단어 제거
+for w in words_frequency:
+    del word_to_index[w] # 해당 단어에 대한 인덱스 정보를 삭제
+print(word_to_index)
+{'barber': 1, 'secret': 2, 'huge': 3, 'kept': 4, 'person': 5}
+```
+
+이제 word_to_index에는 빈도수가 높은 상위 5개의 단어만 저장되었습니다. 이제 word_to_index를 사용하여 **단어 토큰화가 된 상태로 저장된 sentences에 있는 각 단어를 정수로 바꾸는 작업**을 하겠습니다.
+
+예를 들어 sentences에서 첫번째 문장은 ['barber', 'person']이었는데, 이 문장에 대해서는 [1, 5]로 인코딩합니다. 그런데 두번째 문장인 ['barber', 'good', 'person']에는 더 이상 word_to_index에는 존재하지 않는 단어인 'good'이라는 단어가 있습니다.
+
+이처럼 **단어 집합에 존재하지 않는 단어들을 Out-Of-Vocabulary(단어 집합에 없는 단어)의 약자로 'OOV'라고 합니다. word_to_index에 'OOV'란 단어를 새롭게 추가하고, 단어 집합에 없는 단어들은 'OOV'의 인덱스로 인코딩**하겠습니다.
+
+```python
+word_to_index['OOV'] = len(word_to_index) + 1
+```
+
+이제 word_to_index를 사용하여 **sentences의 모든 단어들을 맵핑되는 정수로 인코딩**하겠습니다.
+
+```python
+encoded = []
+for s in sentences:
+    temp = []
+    for w in s:
+        try:
+            temp.append(word_to_index[w])
+        except KeyError:
+            temp.append(word_to_index['OOV'])
+    encoded.append(temp)
+print(encoded)
+[[1, 5], [1, 6, 5], [1, 3, 5], [6, 2], [2, 4, 3, 2], [3, 2], [1, 4, 6], [1, 4, 6], [1, 4, 2], [6, 6, 3, 2, 6, 1, 6], [1, 6, 3, 6]]
+```
+
+지금까지 파이썬의 dictionary 자료형으로 정수 인코딩을 진행해보았습니다. 그런데 이보다는 좀 더 쉽게 하기 위해서 **<u>Counter, FreqDist, enumerate 또는 케라스 토크나이저를 사용하는 것을 권장</u>**합니다.
+
+
+
+#### **2.1.2 Counter 사용하기**
+
+```python
+from collections import Counter
+
+print(sentences)
+[['barber', 'person'], ['barber', 'good', 'person'], ['barber', 'huge', 'person'], ['knew', 'secret'], ['secret', 'kept', 'huge', 'secret'], ['huge', 'secret'], ['barber', 'kept', 'word'], ['barber', 'kept', 'word'], ['barber', 'kept', 'secret'], ['keeping', 'keeping', 'huge', 'secret', 'driving', 'barber', 'crazy'], ['barber', 'went', 'huge', 'mountain']]
+```
+
+현재 sentences는 단어 토큰화가 된 결과가 저장되어져 있습니다. **단어 집합(vocabulary)을 만들기 위해서 sentences에서 문장의 경계인 [, ]를 제거하고 단어들을 하나의 리스트로** 만들겠습니다.
+
+```python
+words = sum(sentences, [])
+# 위 작업은 words = np.hstack(sentences)로도 수행 가능.
+
+print(words)
+['barber', 'person', 'barber', 'good', 'person', 'barber', 'huge', 'person', 'knew', 'secret', 'secret', 'kept', 'huge', 'secret', 'huge', 'secret', 'barber', 'kept', 'word', 'barber', 'kept', 'word', 'barber', 'kept', 'secret', 'keeping', 'keeping', 'huge', 'secret', 'driving', 'barber', 'crazy', 'barber', 'went', 'huge', 'mountain']
+```
+
+이를 파이썬의 Counter()의 입력으로 사용하면 **중복을 제거하고 단어의 빈도수를 기록**합니다.
+
+```python
+vocab = Counter(words) # 파이썬의 Counter 모듈을 이용하면 단어의 모든 빈도를 쉽게 계산할 수 있습니다.
+print(vocab)
+Counter({'barber': 8, 'secret': 6, 'huge': 5, 'kept': 4, 'person': 3, 'word': 2, 'keeping': 2, 'good': 1, 'knew': 1, 'driving': 1, 'crazy': 1, 'went': 1, 'mountain': 1})
+```
+
+단어를 키(key)로, 단어에 대한 빈도수가 값(value)으로 저장되어져 있습니다. vocab에 단어를 입력하면 빈도수를 리턴합니다.
+
+```python
+print(vocab["barber"]) # 'barber'라는 단어의 빈도수 출력
+8
+```
+
+barber란 단어가 총 8번 등장하였습니다. **most_common()는 상위 빈도수를 가진 주어진 수의 단어만을 리턴**합니다. 이를 사용하여 등장 빈도수가 높은 단어들을 원하는 개수만큼만 얻을 수 있습니다. 등장 빈도수 상위 5개의 단어만 단어 집합으로 저장해봅시다.
+
+```python
+vocab_size = 5
+vocab = vocab.most_common(vocab_size) # 등장 빈도수가 높은 상위 5개의 단어만 저장
+vocab
+[('barber', 8), ('secret', 6), ('huge', 5), ('kept', 4), ('person', 3)]
+```
+
+이제 높은 빈도수를 가진 단어일수록 낮은 정수 인덱스를 부여합니다.
+
+```python
+word_to_index = {}
+i = 0
+for (word, frequency) in vocab :
+    i = i+1
+    word_to_index[word] = i
+print(word_to_index)
+{'barber': 1, 'secret': 2, 'huge': 3, 'kept': 4, 'person': 5}
+```
+
+
+
+#### **2.1.3 NLTK의 FreqDist 사용하기**
+
+NLTK에서는 빈도수 계산 도구인 FreqDist()를 지원합니다. 위에서 사용한 Counter()랑 같은 방법으로 사용할 수 있습니다.
+
+```python
+from nltk import FreqDist
+import numpy as np
+
+# np.hstack으로 문장 구분을 제거하여 입력으로 사용 . ex) ['barber', 'person', 'barber', 'good' ... 중략 ...
+vocab = FreqDist(np.hstack(sentences))
+```
+
+단어를 키(key)로, 단어에 대한 빈도수가 값(value)으로 저장되어져 있습니다. vocab에 단어를 입력하면 빈도수를 리턴합니다.
+
+```python
+print(vocab["barber"]) # 'barber'라는 단어의 빈도수 출력
+8
+```
+
+barber란 단어가 총 8번 등장하였습니다. most_common()는 상위 빈도수를 가진 주어진 수의 단어만을 리턴합니다. 이를 사용하여 등장 빈도수가 높은 단어들을 원하는 개수만큼만 얻을 수 있습니다. 등장 빈도수 상위 5개의 단어만 단어 집합으로 저장해봅시다.
+
+```python
+vocab_size = 5
+vocab = vocab.most_common(vocab_size) # 등장 빈도수가 높은 상위 5개의 단어만 저장
+vocab
+[('barber', 8), ('secret', 6), ('huge', 5), ('kept', 4), ('person', 3)]
+```
+
+앞서 Counter()를 사용했을 때와 결과가 같습니다. 이전 실습들과 마찬가지로 높은 빈도수를 가진 단어일수록 낮은 정수 인덱스를 부여합니다. 그런데 이번에는 enumerate()를 사용하여 좀 더 짧은 코드로 인덱스를 부여하겠습니다.
+
+```python
+word_to_index = {word[0] : index + 1 for index, word in enumerate(vocab)}
+print(word_to_index)
+{'barber': 1, 'secret': 2, 'huge': 3, 'kept': 4, 'person': 5}
+```
+
+위와 같이 인덱스를 부여할 때는 enumerate()를 사용하는 것이 편리합니다. enumerate()에 대해서 간단히 소개해보겠습니다.
+
+
+
+#### **2.1.4 enumerate 이해하기**
+
+enumerate()는 순서가 있는 자료형(list, set, tuple, dictionary, string)을 입력으로 받아 인덱스를 순차적으로 함께 리턴한다는 특징이 있습니다. 간단한 예제를 통해 enumerate()를 이해해봅시다.
+
+```python
+test=['a', 'b', 'c', 'd', 'e']
+for index, value in enumerate(test): # 입력의 순서대로 0부터 인덱스를 부여함.
+  print("value : {}, index: {}".format(value, index))
+value : a, index: 0
+value : b, index: 1
+value : c, index: 2
+value : d, index: 3
+value : e, index: 4
+```
+
+위의 출력 결과는 리스트의 모든 토큰에 대해서 인덱스가 순차적으로 증가되며 부여된 것을 보여줍니다.
+
+
+
+### **2.2. 케라스(Keras)의 텍스트 전처리**
+
+케라스(Keras)는 기본적인 전처리를 위한 도구들을 제공합니다. 때로는 정수 인코딩을 위해서 케라스의 전처리 도구인 토크나이저를 사용하기도 하는데, 사용 방법과 그 특징에 대해서 이해해보겠습니다.
+
+```python
+from tensorflow.keras.preprocessing.text import Tokenizer
+
+sentences=[['barber', 'person'], ['barber', 'good', 'person'], ['barber', 'huge', 'person'], ['knew', 'secret'], ['secret', 'kept', 'huge', 'secret'], ['huge', 'secret'], ['barber', 'kept', 'word'], ['barber', 'kept', 'word'], ['barber', 'kept', 'secret'], ['keeping', 'keeping', 'huge', 'secret', 'driving', 'barber', 'crazy'], ['barber', 'went', 'huge', 'mountain']]
+```
+
+단어 토큰화까지 수행된 앞서 사용한 텍스트 데이터와 동일한 데이터를 사용합니다.
+
+```python
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(sentences) # fit_on_texts()안에 코퍼스를 입력으로 하면 빈도수를 기준으로 단어 집합을 생성한다.
+```
+
+fit_on_texts는 입력한 텍스트로부터 단어 빈도수가 높은 순으로 낮은 정수 인덱스를 부여하는데, 정확히 앞서 설명한 정수 인코딩 작업이 이루어진다고 보면됩니다. 각 단어에 인덱스가 어떻게 부여되었는지를 보려면, word_index를 사용합니다.
+
+```python
+print(tokenizer.word_index)
+{'barber': 1, 'secret': 2, 'huge': 3, 'kept': 4, 'person': 5, 'word': 6, 'keeping': 7, 'good': 8, 'knew': 9, 'driving': 10, 'crazy': 11, 'went': 12, 'mountain': 13}
+```
+
+각 단어의 빈도수가 높은 순서대로 인덱스가 부여된 것을 확인할 수 있습니다. 각 단어가 카운트를 수행하였을 때 몇 개였는지를 보고자 한다면 word_counts를 사용합니다.
+
+```python
+print(tokenizer.word_counts)
+OrderedDict([('barber', 8), ('person', 3), ('good', 1), ('huge', 5), ('knew', 1), ('secret', 6), ('kept', 4), ('word', 2), ('keeping', 2), ('driving', 1), ('crazy', 1), ('went', 1), ('mountain', 1)])
+```
+
+texts_to_sequences()는 입력으로 들어온 코퍼스에 대해서 각 단어를 이미 정해진 인덱스로 변환합니다.
+
+```python
+print(tokenizer.texts_to_sequences(sentences))
+[[1, 5], [1, 8, 5], [1, 3, 5], [9, 2], [2, 4, 3, 2], [3, 2], [1, 4, 6], [1, 4, 6], [1, 4, 2], [7, 7, 3, 2, 10, 1, 11], [1, 12, 3, 13]]
+```
+
+앞서 빈도수가 가장 높은 단어 n개만을 사용하기 위해서 most_common()을 사용했었습니다. 케라스 토크나이저에서는 tokenizer = Tokenizer(num_words=숫자)와 같은 방법으로 빈도수가 높은 상위 몇 개의 단어만 사용하겠다고 지정할 수 있습니다. 여기서는 1번 단어부터 5번 단어까지만 사용하겠습니다. 상위 5개 단어를 사용한다고 토크나이저를 재정의 해보겠습니다.
+
+```python
+vocab_size = 5
+tokenizer = Tokenizer(num_words = vocab_size + 1) # 상위 5개 단어만 사용
+tokenizer.fit_on_texts(sentences)
+```
+
+num_words에서 +1을 더해서 값을 넣어주는 이유는 num_words는 숫자를 0부터 카운트합니다. 만약 5를 넣으면 0 ~ 4번 단어 보존을 의미하게 되므로 뒤의 실습에서 1번 단어부터 4번 단어만 남게됩니다. 그렇기 때문에 1 ~ 5번 단어까지 사용하고 싶다면 num_words에 숫자 5를 넣어주는 것이 아니라 5+1인 값을 넣어주어야 합니다.
+
+실질적으로 숫자 0에 지정된 단어가 존재하지 않는데도 케라스 토크나이저가 숫자 0까지 단어 집합의 크기로 산정하는 이유는 자연어 처리에서 패딩(padding)이라는 작업 때문입니다. 이에 대해서는 뒤에 다루게 되므로 여기서는 **케라스 토크나이저를 사용할 때는 숫자 0도 단어 집합의 크기로 고려해야한다고만 이해합시다.**
+
+다시 word_index를 확인해보겠습니다.
+
+```python
+print(tokenizer.word_index)
+{'barber': 1, 'secret': 2, 'huge': 3, 'kept': 4, 'person': 5, 'word': 6, 'keeping': 7, 'good': 8, 'knew': 9, 'driving': 10, 'crazy': 11, 'went': 12, 'mountain': 13}
+```
+
+상위 5개의 단어만 사용하겠다고 선언하였는데 여전히 13개의 단어가 모두 출력됩니다. word_counts를 확인해보겠습니다.
+
+```python
+print(tokenizer.word_counts)
+OrderedDict([('barber', 8), ('person', 3), ('good', 1), ('huge', 5), ('knew', 1), ('secret', 6), ('kept', 4), ('word', 2), ('keeping', 2), ('driving', 1), ('crazy', 1), ('went', 1), ('mountain', 1)])
+```
+
+word_counts에서도 마찬가지로 13개의 단어가 모두 출력됩니다. 사실 실제 적용은 texts_to_sequences를 사용할 때 적용이 됩니다.
+
+```python
+print(tokenizer.texts_to_sequences(sentences))
+[[1, 5], [1, 5], [1, 3, 5], [2], [2, 4, 3, 2], [3, 2], [1, 4], [1, 4], [1, 4, 2], [3, 2, 1], [1, 3]]
+```
+
+코퍼스에 대해서 각 단어를 이미 정해진 인덱스로 변환하는데, 상위 5개의 단어만을 사용하겠다고 지정하였으므로 1번 단어부터 5번 단어까지만 보존되고 나머지 단어들은 제거된 것을 볼 수 있습니다. 경험상 굳이 필요하다고 생각하지는 않지만, 만약 word_index와 word_counts에서도 지정된 num_words만큼의 단어만 남기고 싶다면 아래의 코드도 방법입니다.
+
+```python
+tokenizer = Tokenizer() # num_words를 여기서는 지정하지 않은 상태
+tokenizer.fit_on_texts(sentences)
+vocab_size = 5
+words_frequency = [w for w,c in tokenizer.word_index.items() if c >= vocab_size + 1] # 인덱스가 5 초과인 단어 제거
+for w in words_frequency:
+    del tokenizer.word_index[w] # 해당 단어에 대한 인덱스 정보를 삭제
+    del tokenizer.word_counts[w] # 해당 단어에 대한 카운트 정보를 삭제
+print(tokenizer.word_index)
+print(tokenizer.word_counts)
+print(tokenizer.texts_to_sequences(sentences))
+{'barber': 1, 'secret': 2, 'huge': 3, 'kept': 4, 'person': 5}
+OrderedDict([('barber', 8), ('person', 3), ('huge', 5), ('secret', 6), ('kept', 4)])
+[[1, 5], [1, 5], [1, 3, 5], [2], [2, 4, 3, 2], [3, 2], [1, 4], [1, 4], [1, 4, 2], [3, 2, 1], [1, 3]]
+```
+
+케라스 토크나이저는 기본적으로 단어 집합에 없는 단어인 **OOV에 대해서는 단어를 정수로 바꾸는 과정에서 아예 단어를 제거한다는 특징**이 있습니다. 단어 집합에 없는 단어들은 OOV로 간주하여 보존하고 싶다면 Tokenizer의 인자 oov_token을 사용합니다.
+
+```python
+vocab_size = 5
+tokenizer = Tokenizer(num_words = vocab_size + 2, oov_token = 'OOV')
+# 빈도수 상위 5개 단어만 사용. 숫자 0과 OOV를 고려해서 단어 집합의 크기는 +2
+tokenizer.fit_on_texts(sentences)
+```
+
+만약 oov_token을 사용하기로 했다면 케라스 토크나이저는 기본적으로 'OOV'의 인덱스를 1로 합니다.
+
+```python
+print('단어 OOV의 인덱스 : {}'.format(tokenizer.word_index['OOV']))
+단어 OOV의 인덱스 : 1
+```
+
+이제 코퍼스에 대해서 정수 인코딩을 진행합니다.
+
+```python
+print(tokenizer.texts_to_sequences(sentences))
+[[2, 6], [2, 1, 6], [2, 4, 6], [1, 3], [3, 5, 4, 3], [4, 3], [2, 5, 1], [2, 5, 1], [2, 5, 3], [1, 1, 4, 3, 1, 2, 1], [2, 1, 4, 1]]
+```
+
+빈도수 상위 5개의 단어는 2 ~ 6까지의 인덱스를 가졌으며, 그 외 단어 집합에 없는 'good'과 같은 단어들은 전부 'OOV'의 인덱스인 1로 인코딩되었습니다.
+
+
+
+## ③ 임베딩
+
+> 정수 인코딩 된 벡터를 임베딩 하는 방법 https://subinium.github.io/Keras-6-1/
+
+> 텍스트 데이터 + 순환 신경망 + 시퀀스 데이터의 처리
+>
+> => 텍스트(단어의 시퀀스 또는 문자의 시퀀스), 시계열 또는 일반적인 시퀀스 데이터를 처리할 수 있는 딥러닝 모델.
+>
+> **순환 신경망(recurrent neural network)과 1D 컨브넷(1D convnet)** 두가지
+>
+> - 이 알고리즘 사용 예
+>   - 문서 분류나 시계열 분류, 예를 들어 글의 주제나 책의 저자 식별
+>   - 시계열 비교, 예를 들어 두 문서나 두 주식 가격이 얼마나 밀접하게 관련이 있는지 추정
+>   - 시퀀스-투-시퀀스 학습. 예를 들어 영어 문장을 프랑스어로 변환
+>   - 감성 분석. 예를 들어 트윗이나 영화 리뷰가 긍정적인지 부정적인지 분류
+>   - 시계열 예측. 예를 들어 어떤 지역의 최근 날씨 데이터가 주어졌을 때 향후 날씨 예측
+>
+> ==>  2가지 문제를 집중하여 다룸 - IMDB 데이터셋의 감정 분석, 기온 예측
+
+
+
+### 3.1 텍스트 데이터 다루기
+
+텍스트는 가장 흔한 시퀀스의 형태 / 보통은 단어 수준으로 작업하는 경우가 많음
+
+이 장에서는 기초적인 자연어 이해 문제를 처리
+
+- 문서 분류 / 감정 분석 / 저자 식별 / 제한된 질문 응답
+
+=> 텍스트를 이해하는 것이 아닌 통계적 구조를 통해 문제를 해결
+
+
+
+(1) **텍스트 벡터화(vectorizing text)** : 텍스트를 수치형 텐서로 변환하는 과정
+
+<텍스트 벡터화 방법> 
+
+- 텍스트를 단어로 나누고 각 단어를 하나의 벡터로 변환
+
+- 텍스트를 문자로 나누고 각 문자를 하나의 벡터로 변환
+
+- 텍스트에서 단어나 문자의 **n-gram** 을 추출하여 각 n-그램을 하나의 벡터로 변환
+
+  n-gram은 연속된 단어나 문자의 그룹으로 텍스트에서 단어나 문자를 하나씩 이동하면서 추출
+
+
+
+(2) **토큰화(tokenization)** : 텍스트를 토큰으로 나누는 것
+
+>  **토큰(token)** : 텍스트를 나누는 이런 단위
+
+텍스트 데이터는 이런 토큰화를 적용하고, 수치형 벡터에 연결하는 작업이 필요
+
+<토큰화 방법>
+
+1. **원-핫 인코딩(one-hot encoding)**
+2. **토큰 임베딩(token embedding)** 또는 **단어 임베딩(word embedding)**
+
+
+
+#### 3.1.1 단어와 문자의 원-핫 인코딩
+
+: 단어 별로 인덱스를 부여하고 이 정수 인덱스 i를 크기가 N(어휘 사전 크기)인 이진 벡터로 변환. i번째 원소만 1이고 나머지는 모두 0
+
+- 케라스에는 원본 텍스트 데이터를 단어 또는 문자 수준의 원-핫 인코딩으로 변환해주는 유틸리티가 있음.
+
+  특수 문자를 제거하거나 빈도가 높은 단어만 사용하는 등 기능이 있음.
+
+```python
+# 케라스를 사용한 단어 수준의 원-핫 인코딩하기
+
+from keras.preprocessing.text import Tokenizer
+
+samples = ['The cat sat on the mat.', 'The dog ate my homework.']
+
+# 가장 빈도가 높은 1,000개의 단어만 선택하도록 Tokenizer 객체를 만듭니다.
+tokenizer = Tokenizer(num_words=1000)
+
+# 단어 인덱스를 구축합니다.
+tokenizer.fit_on_texts(samples)
+
+# 문자열을 정수 인덱스의 리스트로 변환합니다.
+sequences = tokenizer.texts_to_sequences(samples)
+
+# 직접 원-핫 이진 벡터 표현을 얻을 수 있습니다.
+# 원-핫 인코딩 외에 다른 벡터화 방법들도 제공합니다!
+one_hot_results = tokenizer.texts_to_matrix(samples, mode='binary')
+
+# 계산된 단어 인덱스를 구합니다.
+word_index = tokenizer.word_index
+print('Found %s unique tokens.' % len(word_index))
+```
+
+
+
+원-핫 인코딩의 변형으로 **원-핫 해싱(one-hot-hashging)** 기법.
+
+이 방법은 어휘 사전에 있는 고유 토큰 수가 너무 커서 모두 다루기 어려울 때 사용.
+
+- 단어의 명시적 인덱스가 필요 없기 때문에 메모리를 절약하고 온라인 방식으로 데이터를 인코딩할 수 있음
+- 하지만 ***해시 충돌\*** 이 있을 수 있으니 잘 조절해야함
+
+```python
+# 해싱 기법을 사용한 단어 수준의 원-핫 인코딩하기(간단한 예)
+
+samples = ['The cat sat on the mat.', 'The dog ate my homework.']
+
+# 단어를 크기가 1,000인 벡터로 저장합니다.
+# 1,000개(또는 그이상)의 단어가 있다면 해싱 충돌이 늘어나고 인코딩의 정확도가 감소될 것입니다
+dimensionality = 1000
+max_length = 10
+
+results = np.zeros((len(samples), max_length, dimensionality))
+
+for i, sample in enumerate(samples):
+    for j, word in list(enumerate(sample.split()))[:max_length]:
+        # 단어를 해싱하여 0과 1,000 사이의 랜덤한 정수 인덱스로 변환합니다.
+        index = abs(hash(word)) % dimensionality
+        results[i, j, index] = 1.
+```
+
+
+
+#### 3.1.2 단어 임베딩 사용하기
+
+: 단어 임베딩은 저차원의 실수형 벡터
+
+: 단어와 벡터를 연관 하는 강력하고 인기 있는 방법은 **단어 임베딩** 이라는 밀집 **단어 벡터(word vector)** 를 사용하는 것
+
+
+
+- 단어 임베딩은 데이터로부터 학습됨
+
+- 보통 256, 512, 1024차원의 단어 임베딩을 사용하고,
+
+  원-핫 인코딩은 20000차원 또는 그 이상의 벡터인 경우가 많음.
+
+  **=> 즉, 단어 임베딩이 더 많은 정보를 적은 자원에 저장.** 
+
+
+
+<단어 임베딩을 만드는 방법>
+
+1) 관심 대상인 문제와 함께 단어 임베딩을 학습. 랜덤한 단어 벡터로 시작해서 신경망의 가중치를 학습하는 것과 같은 방식으로 단어 벡터를 학습
+
+2) 풀려는 문제가 아니고 다른 머신 러닝 작업에서 미리 계산된 단어 임베딩을 로드. 이를 **사전 훈련된 단어 임베딩(pretrained word embedding)** 이라고 합니다.
+
+
+
+##### Embedding 층을 사용하여 단어 임베딩 학습
+
+단어와 밀집 벡터를 연관 짓는 가장 간단한 방법은 랜덤하게 벡터를 선택하는 것.
+
+이 방식의 문제점은 임베딩 공간이 구조적이지 않다는 것입니다. 의미 관계가 유사하더라도 완전 다른 임베딩을 가집니다. 그렇기에 **단어 사이에 있는 의미 관계를 반영하여 임베딩을 진행해야 합니다.**
+
+![img](https://www.researchgate.net/profile/Venkatesh_Saligrama/publication/304163868/figure/fig1/AS:375256100425729@1466479434837/Comparison-of-gender-bias-of-profession-words-across-two-embeddings-word2vec-trained-on.png)
+
+(구글링해서 가져온 예시)
+
+단어 임베딩은 언어를 기하학적 공간에 매핑하는 것입니다.
+
+일반적으로 두 단어 벡터 사이의 거리(L2 거리)는 이 단어 사이의 의미 거리와 관계되어 있습니다.
+
+거리 외에 임베딩 공간의 특정 방향도 의미를 가질 수 있습니다.
+
+의미있는 기하학적 변환의 예시는 성별, 복수(plural)과 같은 벡터가 있습니다. (‘king’ + ‘female’ => ‘queen’) 단어 임베딩 공간은 전형적으로 이런 해석 가능하고 잠재적으로 유용한 수천 개의 벡터를 특성으로 가집니다.
+
+하지만 사람의 언어를 완벽하게 매핑해서 이상적인 단어 임베딩 공간을 만들기는 어렵습니다. 언어끼리도 종류가 많고 언어는 특정 문화와 환경을 반영하기 때문에 서로 동일하지 않습니다. 그렇기에 각 언어와 상황에 따라 임베딩 공간을 학습하는 것이 타당합니다.
+
+이를 역전파 + 케라스를 이용해서 `Embedding` 층을 학습할 수 있습니다.
+
+```python
+# Embedding층의 객체 생성하기
+
+from keras.layers import Embedding
+
+# Embedding 층은 적어도 두 개의 매개변수를 받습니다.
+# 가능한 토큰의 개수(여기서는 1,000으로 단어 인덱스 최댓값 + 1입니다)와 임베딩 차원(여기서는 64)입니다
+# 인덱스는 0을 사용하지 않으므로 단어 인덱스는 1~999사이의 정수입니다
+embedding_layer = Embedding(1000, 64)
+```
+
+`Embedding` 층을 정수 인덱스를 밀집 벡터로 매핑하는 딕셔너리로 이해하는 것이 좋습니다. 정수를 입력으로 받아 내부 딕셔너리에서 이 정수에 연관된 벡터를 찾아 반환합니다. 딕셔너리 탐색은 효율적으로 수행됩니다. (텐서플로 백엔드에서는 `tf.nn.embedding_lookup()`함수를 사용하여 병렬 처리)
+
+단어 인덱스 -> Embdding 층 -> 연관된 단어 벡터
+
+`Embedding` 층은 크기가 `(samples, sequences_length)`인 2D 정수 텐서를 입력으로 받습니다. 각 샘플은 정수의 시퀀스입니다. 가변 길이의 경우, 제로패딩 또는 자름으로 크기를 맞춥니다.
+
+`Embedding` 층은 크기가 `(samples, sequences_length, embedding_dimensionality)`인 3D 정수 텐서를 반환합니다. 이런 3D 텐서는 RNN 층이나 1D 합성곱 층에서 처리됩니다.
+
+객체를 생성할 때 가중치는 다른 층과 마찬가지로 랜덤으로 초기화됩니다. 훈련하면서 이 단어 벡터는 역전파를 통해 점차 조정되어 이어지는 모델이 사용할 수 있도록 임베딩 공간을 구성합니다. 훈련이 끝나면 임베딩 공간은 특정 문제에 특화된 구조를 가지게 됩니다.
+
+이제 이를 IMDB 영화 리뷰 감성 예측 문제에 적용합니다.
+
+- 빈도 높은 10000단어를 추출하고 리뷰에서 20개 단어 이후는 버림
+- 8차원 임베딩
+- 정수 시퀸스 입력을 임베딩 시퀀스로 바꿈 (2D -> 3D)
+- 2D로 펼쳐 분류를 위한 Dense층 훈련
+
+```python
+# Embedding 층에 사용할 IMDB 데이터 로드하기
+# IMDB 데이터에 Embedding 층과 분류기 사용하기
+from keras.datasets import imdb
+from keras import preprocessing
+
+# 특성으로 사용할 단어의 수
+max_features = 10000
+# 사용할 텍스트의 길이(가장 빈번한 max_features 개의 단어만 사용합니다)
+maxlen = 20
+
+# 정수 리스트로 데이터를 로드합니다.
+(x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_features)
+
+# 리스트를 (samples, maxlen) 크기의 2D 정수 텐서로 변환합니다.
+x_train = preprocessing.sequence.pad_sequences(x_train, maxlen=maxlen)
+x_test = preprocessing.sequence.pad_sequences(x_test, maxlen=maxlen)
+
+from keras.models import Sequential
+from keras.layers import Flatten, Dense, Embedding
+
+model = Sequential()
+# 나중에 임베딩된 입력을 Flatten 층에서 펼치기 위해 Embedding 층에 input_length를 지정합니다.
+model.add(Embedding(10000, 8, input_length=maxlen))
+# Embedding 층의 출력 크기는 (samples, maxlen, 8)가 됩니다.
+
+# 3D 임베딩 텐서를 (samples, maxlen * 8) 크기의 2D 텐서로 펼칩니다.
+model.add(Flatten())
+
+# 분류기를 추가합니다.
+model.add(Dense(1, activation='sigmoid'))
+model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
+model.summary()
+
+history = model.fit(x_train, y_train,
+                    epochs=10,
+                    batch_size=32,
+                    validation_split=0.2)
+```
+
+각 에포크당 2초정도 소모되었습니다. 약 74~75%의 검증 정확도를 가집니다. 하지만 여기서는 단어를 독립적으로 다뤘고, 단어 사이의 관계 그리고 문장 구조는 무시하였습니다.
+
+각 시퀀스 전체를 고려한 특성을 학습하도록 임베딩 층 위에 순환 층이나 1D 합성곱 층을 추가하는 것이 좋습니다. 다음 절에서 이에 관해 다룹니다.
+
+##### 사전 훈련된 단어 임베딩 사용하기
+
+컨브넷과 마찬가지로 사전 훈련된 단어 임베딩을 사용할 수 있습니다. 데이터가 적을 때 매우 유용합니다. 단어 임베딩은 일반적으로 단어 출현 통계를 사용하여 계산합니다. 신경망을 사용하는 것도 있고 그렇지 않은 방법도 존재합니다. 단어를 위해 밀집된 저차원 임베딩 공간을 비지도 학습 방법으로 계산하는 방법도 연구되고 있습니다.
+
+**Word2Vec** 알고리즘은 성공적인 단어 임베딩 방법으로 성별처럼 구체적인 의미가 있는 속성을 잡아냅니다. 다른 단어 임베딩 데이터베이스로 스탠포드에서 개발한 **GloVe** 가 있습니다. 이 기법은 동시 출현 통계를 기록한 행렬을 분해하는 기법을 사용합니다. 이 개발자들은 위키피디아 데이터와 커먼 크롤 데이터에서 가져온 수백만 개의 영어 토큰에 대해서 임베딩을 계산했습니다. 다음 절에서 GloVe 임베딩을 케라스 모델에 적용해봅시다.
+
+
+
+#### 3.1.3 모든 내용을 적용하기: 원본 텍스트에서 단어 임베딩까지
+
+케라스에 포함된 IMDB 데이터는 이미 토큰화가 되어 있습니다. 이를 사용하는 대신 원본 텍스트 데이터를 내려받아 처음부터 시작하겠습니다.
+
+##### 원본 IMDB 텍스트 내려받기
+
+[링크](https://mng.bz/0tIo)에서 IMDB 원본 데이터셋(60MB)을 내려받고 압축을 해제합니다. 저는 다운받고 코랩에 올려서 압축을 해제하였습니다. (생각보다 업로드 시간이 걸립니다.)
+
+훈련용 리뷰 하나를 문자열 만들어 훈련 데이터를 문자열 리스트로 구성합니다. 리뷰 레이블(긍정/부정)도 labels 리스트로 만들겠습니다.
+
+```python
+# 코드 6-8 IMDB 원본 데이터 전처리하기
+
+import os
+
+imdb_dir = './datasets/aclImdb'
+train_dir = os.path.join(imdb_dir, 'train')
+
+labels = []
+texts = []
+
+for label_type in ['neg', 'pos']:
+    dir_name = os.path.join(train_dir, label_type)
+    for fname in os.listdir(dir_name):
+        if fname[-4:] == '.txt':
+            f = open(os.path.join(dir_name, fname), encoding='utf8')
+            texts.append(f.read())
+            f.close()
+            if label_type == 'neg':
+                labels.append(0)
+            else:
+                labels.append(1)
+```
+
+
+
+##### 데이터 토큰화
+
+텍스트를 벡터로 만들고 훈련 세트와 검증 세트로 나눕니다. 사전 훈련된 단어 임베딩은 훈련 데이터가 부족한 문제에서 유용합니다. 그래서 다음과 같이 훈련 데이터를 처음 200개의 샘플로 제한합니다. 이 모델은 200개의 샘플을 학습한 후 영화 리뷰를 분류할 것 입니다.
+
+```python
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+import numpy as np
+
+maxlen = 100  # 100개 단어 이후는 버립니다
+training_samples = 200  # 훈련 샘플은 200 -> 200개입니다
+validation_samples = 10000  # 검증 샘플은 10,000개입니다
+max_words = 10000  # 데이터셋에서 가장 빈도 높은 10,000개의 단어만 사용합니다
+
+tokenizer = Tokenizer(num_words=max_words)
+tokenizer.fit_on_texts(texts)
+sequences = tokenizer.texts_to_sequences(texts)
+
+word_index = tokenizer.word_index
+print('%s개의 고유한 토큰을 찾았습니다.' % len(word_index))
+
+data = pad_sequences(sequences, maxlen=maxlen)
+
+labels = np.asarray(labels)
+print('데이터 텐서의 크기:', data.shape)
+print('레이블 텐서의 크기:', labels.shape)
+
+# 데이터를 훈련 세트와 검증 세트로 분할합니다.
+# 샘플이 순서대로 있기 때문에 (부정 샘플이 모두 나온 후에 긍정 샘플이 옵니다)
+# 먼저 데이터를 섞습니다.
+indices = np.arange(data.shape[0])
+np.random.shuffle(indices)
+data = data[indices]
+labels = labels[indices]
+
+x_train = data[:training_samples]
+y_train = labels[:training_samples]
+x_val = data[training_samples: training_samples + validation_samples]
+y_val = labels[training_samples: training_samples + validation_samples]
+```
+
+
+
+##### GloVe 단어 임베딩 내려받기
+
+https://nlp.stanford.edu/projects/glove 에 2014년 영문 위키피디아를 사용하여 사전에 계산된 임베딩을 내려받습니다. 파일은 [glove.6B.zip(823MB)](https://bit.ly/2NIJwdb)으로 제가 링크를 연결해두었습니다. 40만 개의 단어에 대한 100차원의 임베딩 벡터를 포함하고 있습니다.
+
+저는 여기서 속도 문제로 포기했습니다. 드라이브를 코랩과 연결하고, 드라이브에서 unzip하고 하면되지만 그 정도의 노력은 필요없는 문제라고 생각하고 코드를 읽고 이해하는 것에 초점을 두었습니다.
+
+
+
+##### 임베딩 전처리
+
+압축 해제한 txt파일을 파싱하여 단어와 이에 상응하는 벡터 표현을 매핑하는 인덱스를 만듭니다.
+
+```python
+# 코드 6-10 GloVe 단어 임베딩 파일 파싱하기
+
+glove_dir = './datasets/'
+
+embeddings_index = {}
+f = open(os.path.join(glove_dir, 'glove.6B.100d.txt'), encoding="utf8")
+for line in f:
+    values = line.split()
+    word = values[0]
+    coefs = np.asarray(values[1:], dtype='float32')
+    embeddings_index[word] = coefs
+f.close()
+```
+
+그 다음 임베딩 층에 주입할 수 있도록 임베딩 행렬을 만듭니다. 이 행렬의 크기는 `(max_words, embedding_dim)`이어야 합니다. 이 행렬의 i번째 원소는 단어 인덱스의 i번째 단어에 상응하는 `embedding_dim`차원 벡터입니다. 인덱스 0은 어떤 단어나 토큰도 아닌 경우입니다.
+
+```python
+# 코드 6-11 GloVe 단어 임베딩 행렬 준비하기
+embedding_dim = 100
+
+embedding_matrix = np.zeros((max_words, embedding_dim))
+for word, i in word_index.items():
+    embedding_vector = embeddings_index.get(word)
+    if i < max_words:
+        if embedding_vector is not None:
+            # 임베딩 인덱스에 없는 단어는 모두 0이 됩니다.
+            embedding_matrix[i] = embedding_vector
+```
+
+
+
+##### 모델 정의하기
+
+이전과 동일한 구조의 모델을 사용합니다.
+
+```python
+# 코드 6-12 모델 정의하기
+from keras.models import Sequential
+from keras.layers import Embedding, Flatten, Dense
+
+model = Sequential()
+model.add(Embedding(max_words, embedding_dim, input_length=maxlen))
+model.add(Flatten())
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+```
+
+
+
+##### 모델에 GloVe 임베딩 로드하기
+
+`Embedding` 층은 하나의 가중치 행렬을 가집니다. 이 행렬은 2D 부동 소수 행렬이고 각 i번째 원소는 i번째 인데스에 상응하는 단어 벡터입니다. 모델에 첫번째 층인 `Embdding` 층에 준비된 GloVe 행렬을 로드합니다. 여기서도 전과 같이 동결을 하여 사저 학습된 데이터에 대한 손실을 줄입니다.
+
+```python
+# 코드 6-13 사전 훈련된 단어 임베딩을 Embdding 층에 로드하기
+model.layers[0].set_weights([embedding_matrix])
+model.layers[0].trainable = False
+```
+
+
+
+##### 모델 훈련과 평가
+
+모델을 컴파일하고 훈련한 후 그래프를 그려봅니다.
+
+```python
+# 코드 6-14 훈련과 평가하기
+# 코드 6-15 결과 그래프 그리기
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['acc'])
+history = model.fit(x_train, y_train,
+                    epochs=10,
+                    batch_size=32,
+                    validation_data=(x_val, y_val))
+model.save_weights('pre_trained_glove_model.h5')
+
+import matplotlib.pyplot as plt
+
+acc = history.history['acc']
+val_acc = history.history['val_acc']
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs = range(1, len(acc) + 1)
+
+plt.plot(epochs, acc, 'bo', label='Training acc')
+plt.plot(epochs, val_acc, 'b', label='Validation acc')
+plt.title('Training and validation accuracy')
+plt.legend()
+
+plt.figure()
+
+plt.plot(epochs, loss, 'bo', label='Training loss')
+plt.plot(epochs, val_loss, 'b', label='Validation loss')
+plt.title('Training and validation loss')
+plt.legend()
+
+plt.show()
+```
+
+![img](https://i.imgur.com/DZVgKaj.png)
+
+사전 훈련된 단어 임베딩을 사용했을 때 훈련 손실과 검증 손실
+
+
+
+![img](https://i.imgur.com/QJ9nBhi.png)
+
+사전 훈련된 단어 임베딩을 사용했을 때 훈련 정확도와 검증 정확도
+
+
+
+이 모델은 과대적합이 빠르게 시작됩니다. 훈련 샘플 수가 작기 때문에 당연한 진행입니다. 하지만 검증 정확도는 50% 후반에 머무릅니다. 이정도면 운 좋게 반반 나눈 정도와 같습니다. 데이터에 따라서는 더 안좋게도 나올 가능성이 큽니다.
+
+그렇기에 이번엔 사전 훈련된 단어 임베딩을 사용하지 않거나 임베딩 층을 동결하지 않고 모델을 훈련할 수 있습니다. 일반적으로 데이터가 많다면 사전 훈련된 단어 임베딩보다 그냥 하는 것이 성능이 훨씬 높습니다. 200개라 거의 성능이 비슷할 것 같지만 진행해봅시다.
+
+```python
+from keras.models import Sequential
+from keras.layers import Embedding, Flatten, Dense
+
+model = Sequential()
+model.add(Embedding(max_words, embedding_dim, input_length=maxlen))
+model.add(Flatten())
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['acc'])
+history = model.fit(x_train, y_train,
+                    epochs=10,
+                    batch_size=32,
+                    validation_data=(x_val, y_val))
+```
+
+진행하면 다음과 같은 결과가 나옵니다.
+
+![img](https://i.imgur.com/UlPrdt1.png)
+
+사전 훈련된 단어 임베딩을 사용하지 않았을 때 훈련 손실과 검증 손실
+
+
+
+![img](https://i.imgur.com/3LPWlUZ.png)
+
+사전 훈련된 단어 임베딩을 사용하지 않았을 때 훈련 정확도와 검증 정확도
+
+
+
+50% 초의 정확도에 머무는 것을 알 수 있습니다. 도토리 키재기이긴 하나 사전 훈련된 임베딩을 사용하는 것이 더 좋습니다. 하지만 훈련 샘플이 2000개이상이면 70%에 가까운 검증 정확도를 얻을 수 있다고 합니다.
+
+
+
+마지막으로 테스트 데이터에서 모델을 평가합니다.
+
+```python
+test_dir = os.path.join(imdb_dir, 'test')
+
+labels = []
+texts = []
+
+for label_type in ['neg', 'pos']:
+    dir_name = os.path.join(test_dir, label_type)
+    for fname in sorted(os.listdir(dir_name)):
+        if fname[-4:] == '.txt':
+            f = open(os.path.join(dir_name, fname), encoding="utf8")
+            texts.append(f.read())
+            f.close()
+            if label_type == 'neg':
+                labels.append(0)
+            else:
+                labels.append(1)
+
+sequences = tokenizer.texts_to_sequences(texts)
+x_test = pad_sequences(sequences, maxlen=maxlen)
+y_test = np.asarray(labels)
+
+model.load_weights('pre_trained_glove_model.h5')
+model.evaluate(x_test, y_test)
+```
+
+토큰화하고 평가를 하면 겨우 50% 정도의 정확도 입니다. 적은 데이터에서는 역시 답이 없… 책을 만드신 분도 당황했을 것 같네요. :-p
+
+
+
+### 3.2 순환 신경망 이해하기
+
+완전 연결 네트워크나 컨브넷처럼 지금까지 본 모든 신경망의 특징은 메모리가 없다는 것입니다. 네트워크로 주입되는 입력은 개별적으로 처리되며 입력 간에 유지되는 상태가 없습니다. 이런 네트워크로 시계열, 시퀀스 데이터를 처리하려면 전체 시퀀스를 주입해야합니다. 이런 네트워크를 **피드포워드 네트워크(feedforward network)** 라고 합니다.
+
+하지만 실제 문장을 읽는 것처럼 이전에 나온 데이터를 사용하며 내무 모델을 계속 유지하며 업데이트할 수도 있습니다. 극단적으로 단순화시킨 버전이지만 **순환 신경망(Recurrent Neural Network, RNN)** 은 같은 원리를 적용한 것입니다. 시퀀스의 원소를 순회하면서 지금까지 처리한 정보를 **상태(state)** 에 저장합니다.
+
+순환 신경망은 내부에 루프가 있는 신경망의 한 종류입니다. 하나의 시퀀스가 하나의 데이터 포인터로 간주됩니다. 이 네트워크는 시퀀스의 원소를 차례대로 방문합니다.
+
+[RNN example](http://www.wildml.com/wp-content/uploads/2015/09/rnn.jpg)
+
+루프와 상태에 대한 개념을 명확히 하기 위해 RNN 정방향 계산을 구현해봅시다.
+
+RNN은 크기가 `(timesteps, input_features)`인 2D 텐서로 인코딩된 벡터의 시퀀스를 입력받습니다. 이 시퀀스는 타임스텝을 따라서 반복됩니다. 각 타임스텝 t에서 현재 상태와 입력을 연결하여 출력을 계산합니다. 그 다음 출력을 다음 스텝의 상태로 둡니다. 그렇기에 첫 번째는 상태가 없으니 **초기 상태(initial state)** 인 0 벡터로 시작합니다.
+
+파이썬스럽게 pseudo-code를 작성하면 다음과 같습니다.
+
+```python
+# 코드 6-19 의사코드로 표현한 RNN
+
+state_t = 0
+for input_t in input_seqeunce:
+  output_t = f(input_t, stat_t)
+  state_t = output_t
+```
+
+이를 행렬 W와 U 그리고 편향 벡터를 사용하여 좀 더 구체적으로 코드를 작성해보면 다음과 같습니다.
+
+```python
+# 좀 더 자세한 의사코드로 표현한 RNN
+
+state_t = 0
+for input_t in input_seqeunce:
+  output_t = activation(dot(W, input_t) + dot(U, state_t) + b)
+  state_t = output_t
+```
+
+완벽하게 설명하기 위해 간단한 RNN의 정방향 계산을 넘파이로 구현하면 다음과 같습니다.
+
+```python
+# 코드 6-21 넘파이로 구현한 간단한 RNN
+
+import numpy as np
+
+timesteps = 100
+input_features = 32
+output_features = 64
+
+inputs = np.random.random((timesteps, input_features))
+
+state_t = np.zeros((output_features,))
+
+W = np.random.random((output_features, input_features))
+U = np.random.random((output_features, output_features))
+b = np.random.random((output_features,))
+
+surccesive_outputs = []
+
+for input_t in inputs:
+  output_t = np.tanh(np.dot(W, input_t) + np.dot(U, state_t) + b)
+  surccesive_outputs.append(output_t)
+  state_t = output_t
+
+final_output_sequence = np.stack(surccesive_outputs, axis=0)
+```
+
+하다보니 block 암호와 비슷한 구조같다는 생각이 드네요.
+
+
+
+#### 3.2.1 케라스의 순환 층
+
+넘파이로 간단하게 구현한 과정은 실제로 케라스의 SimpleRNN 층에 해당합니다.
+
+```python
+from keras.layers import SimpleRNN
+```
+
+SimpleRNN이 한 가지 다른 점은 넘파이 예제처럼 하나의 시퀀스가 아니라 다른 케라스 층과 마찬가지로 시퀀스 배치를 처리한다는 것입니다. 즉 `(timesteps, input_features)` 크기가 아니라 `(batch_size, timesteps, input_features)` 크기의 입력을 받습니다.
+
+케라스에 있는 모든 순환 층과 마찬가지로 SimpleRNN은 두 가지 모드로 실행할 수 있습니다. 각 타임스탭의 출력을 모은 전체 시퀀스를 반환하거나, 입력 시퀸스에 대한 마지막 출력만 반환할 수 있습니다. 이는 `return sequence` 매개변수로 설정할 수 있습니다.
+
+네트워크의 표현력을 증가시키기 위해 여러 개의 순환 층을 차례대로 쌓는 것이 유용할 때가 있습니다. 이런 설정에서는 중간층들이 전체 출력 시퀀스를 반환하도록 설정해야합니다.
+
+이제 IMDB 영화 리뷰 문제를 시작합니다, 먼저 데이터를 전처리합니다.
+
+```python
+# 코드 6-22 IMDB 데이터 전처리하기
+
+from keras.datasets import imdb
+from keras.preprocessing import sequence
+
+max_features = 10000  # 특성으로 사용할 단어의 수
+maxlen = 500  # 사용할 텍스트의 길이(가장 빈번한 max_features 개의 단어만 사용합니다)
+batch_size = 32
+
+print('데이터 로딩...')
+(input_train, y_train), (input_test, y_test) = imdb.load_data(num_words=max_features)
+print(len(input_train), '훈련 시퀀스')
+print(len(input_test), '테스트 시퀀스')
+
+print('시퀀스 패딩 (samples x time)')
+input_train = sequence.pad_sequences(input_train, maxlen=maxlen)
+input_test = sequence.pad_sequences(input_test, maxlen=maxlen)
+print('input_train 크기:', input_train.shape)
+print('input_test 크기:', input_test.shape)
+```
+
+Embedding 층과 SimpleRNN 층을 사용하여 간단한 순환 네트워크를 훈련시킵니다.
+
+```python
+# 코드 6-23 Embedding 층과 SimpleRNN 층을 사용한 모델 훈련하기
+
+from keras.models import Sequential
+from keras.layers import Embedding, SimpleRNN
+
+from keras.layers import Dense
+
+model = Sequential()
+model.add(Embedding(max_features, 32))
+model.add(SimpleRNN(32))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['acc'])
+history = model.fit(input_train, y_train,
+                    epochs=10,
+                    batch_size=128,
+                    validation_split=0.2)
+```
+
+훈련은 각 에포크당 40초 걸렸습니다. 왜 전 책 예시보다 2~3배 걸리는걸까 의문입니다. :-( 그리고 이제 항상하듯이 훈련과 검증의 손실 그리고 정확도 그래프를 그려봅시다.
+
+```python
+import matplotlib.pyplot as plt
+
+acc = history.history['acc']
+val_acc = history.history['val_acc']
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs = range(1, len(acc) + 1)
+
+plt.plot(epochs, acc, 'bo', label='Training acc')
+plt.plot(epochs, val_acc, 'b', label='Validation acc')
+plt.title('Training and validation accuracy')
+plt.legend()
+
+plt.figure()
+
+plt.plot(epochs, loss, 'bo', label='Training loss')
+plt.plot(epochs, val_loss, 'b', label='Validation loss')
+plt.title('Training and validation loss')
+plt.legend()
+
+plt.show()
+```
+
+![img](https://i.imgur.com/ToydyBF.png)
+
+SimpleRNN을 사용한 IMDB 문제의 훈련 손실과 검증 손실
+
+
+
+![img](https://i.imgur.com/XwhwZL4.png)
+
+SimpleRNN을 사용한 IMDB 문제의 훈련 정확도와 검증 정확도
+
+
+
+3번째부터 과대적합이 시작되고, 83%에서 정확도가 머무는 것을 확인할 수 있습니다. 3장에서 이미 87~88%를 도달했는데 아직 이 모델의 성능은 거기에 미치지 못했습니다.
+
+이런 원인은 전체 시퀀스가 아니라 처음 500개의 단어만 입력에 사용했기 때문입니다. 이 RNN은 기준 모델보다 얻은 정보가 적습니다. 또 다른 원인은 SimpleRNN이 텍스트 시퀀스에 적합하지 않습니다. 이제 더 잘 작동하는 다른 순환 층을 살펴봅시다.
+
+
+
+#### 3.2.2 LSTM과 GRU 층 이해하기
+
+케라스에는 SimpleRNN 외에 다른 순환 층도 있습니다. LSTM과 GRU 2개입니다. 실전에서는 항상 둘 중 하나를 사용합니다. SimpleRNN은 실전에 쓰기에는 너무 단순하기 때문입니다.
+
+SimpleRNN은 이론적으로 시간 t에서 이전의 모든 타임스텝의 정보를 유지할 수 있습니다. 실제로는 긴 시간에 걸친 의존성은 학습할 수 없는 것이 문제입니다. 층이 많은 일반 네트워크에서 나타나는 것과 비슷한 현상인 **그래디언트 소실 문제(vanishing gradient problem)** 때문입니다.
+
+이런 문제를 해결하기 위해 고안된 것이 LSTM과 GRU 층입니다. 그 중 LSTM을 살펴봅시다. LSTM은 Long Short-Term Memory의 약자입니다. 이 알고리즘은 위의 문제를 해결하기 위해 만들어졌습니다. 우선 이 층은 SimpleRNN의 변종입니다. 정보를 여러 타임스텝에 걸쳐 나르는 방법이 추가됩니다.
+
+![img](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/The_LSTM_cell.png/1200px-The_LSTM_cell.png)SimpleRNN을 사용한 IMDB 문제의 훈련 손실과 검증 손실
+
+위 그림에서는 ctct라는 cell state가 추가되고, xtxt가 input, htht가 output입니다.
+
+cell state는 타입스텝을 가로지르는 정보를 나르는 데이터 흐름입니다. 입력 연결과 순환 연결로부터 이 정보가 합성됩니다. 그러고는 다음 타임스텝으로 전달될 상태를 변경시킵니다. 이 흐름이 다음 출려과 상태를 조정하는 것입니다.
+
+이제 여기서 가질 수 있는 의문은 ctct에서 ct+1ct+1으로 넘어가는 방식입니다. 여기에는 총 3가지 변환이 관련되어 있습니다. 3개 모두 SimpleRNN과 같은 형태를 가집니다. 3개의 변환을 각각 i, f, t로 표시하겠습니다.
+
+```python
+# 코드 6-25 LSTM 구조의 의사코드 (1/2)
+output_t = asctivation(c_t) * activation(dot(input_t,Wo) + dot(state_tm Uo) + bo)
+
+i_t = activation(dot(state_t, Ui) + dot(input_t, Wi) + bi)
+f_t = activation(dot(state_t, Uf) + dot(input_t, Wf) + bf)
+k_t = activation(dot(state_t, Uk) + dot(input_t, Wk) + bk)
+```
+
+이제 이를 이용해서 ct+1ct+1 를 구합니다.
+
+```python
+# 코드 6-26 LSTM 구조의 의사코드 (2/2)
+
+c_t+1 = i_t * k_t + c_t * f_t
+```
+
+이 연산들이 하는 일을 해석하면 다음과 같은 통찰을 얻을 수 있습니다.
+
+- c_t와 f_t의 곱셈은 이동을 위한 데이터 흐름에서 관련이 적은 정보를 의도적으로 삭제
+- i_t와 k_t는 현재에 대한 정보를 제공하고 이동 트랙을 새로운 정보로 업데이트
+
+하지만 결국은 가중치 행렬에 따라 값들이 변경됩니다. 가중치 행렬은 엔드-투-엔드 방식으로 학습됩니다. 이 과정은 훈련 반복마다 새로 시작되며 이런저런 연산들에 목적을 부여하기가 불가능 합니다. LSTM셀의 구체적인 구조에 대해 이해하기 보다는 역할을 기억하라고 합니다. 이 부분은 후에 더 구체적으로 공부해보면서 맞는 말인지 점검해봐야겠습니다.
+
+
+
+#### 3.2.3 케라스를 사용한 LSTM 예제
+
+LSTM층으로 모델을 구성해서 훈련을 진행합니다. 매개변수에 대한 특별한 설정없이 해도 케라스 자체의 초기값이 괜찮다고 합니다.
+
+```python
+from keras.layers import LSTM
+
+model = Sequential()
+model.add(Embedding(max_features, 32))
+model.add(LSTM(32))
+model.add(Dense(1, activation='sigmoid'))
+
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['acc'])
+history = model.fit(input_train, y_train,
+                    epochs=10,
+                    batch_size=128,
+                    validation_split=0.2)
+```
+
+비교적 복잡한 순환 반복 층이라 시간이 오래 걸립니다. 에포크당 155초 정도 소모되었습니다. 다음과 같은 결과가 나옵니다.
+
+![img](https://i.imgur.com/qH8ayY1.png)
+
+LSTM을 사용한 IMDB 문제의 훈련 손실과 검증 손실
+
+
+
+![img](https://i.imgur.com/I2bDHb3.png)
+
+LSTM을 사용한 IMDB 문제의 훈련 손실과 검증 손실
+
+
+
+이번에는 88%정도의 정확도를 달성했습니다. SimpleRNN보다는 확실히 좋은 것을 알 수 있습니다. 3장에서 사용했던 완전 연결 네트워크보다도 적은 데이터를 사용하고 좋은 결과를 얻을 수 있었습니다.
+
+하지만 많은 계산을 사용한 것치고는 좋은 결과는 아닙니다. 그 이유는 임베딩 차원이나 LSTM 출력 차원 같은 하이퍼파라미터를 전혀 튜닝하지 않았고 규제가 없었습니다.
+
+또한 리뷰를 전체적으로 길게 분석하는 것은 감성 분류에 도움이 되지 않습니다. 그렇기에 간단한 문제는 단어 그리고 빈도수로 측정하는 게 더 좋습니다. (완전 연결 네트워크)
+
+하지만 훨씬 복잡한 자연어 처리 문제에서는 유용합니다. 특히 질문-응답과 기계 번역 분야입니다.
+
+
+
+#### 3.2.4 정리
+
+- RNN이 무엇이고 동작하는 방법
+- LSTM이 무엇이고, 긴 시퀀스에서 더 효율적인 이유
+- 케라스에서 RNN 층을 사용하여 시퀀스 데이터를 처리하는 방법
+
+
+
+# (2) RNN
+
+## ① 순환 신경망 기초
+
+> 순환신경망에 대한 기본적인 설명과 예시 코드 https://excelsior-cjh.tistory.com/183?category=940400
+
+### RNN, Recurrent Neural Network
+
+> 이번 포스팅은 [핸즈온 머신러닝](http://www.yes24.com/24/goods/59878826?scode=032&OzSrank=1) 교재, cs231n 강의를 가지고 공부한 것을 정리한 포스팅입니다. RNN에 대해 좀더 간략하게 알고 싶으신 분들은 아래의 링크를 참고하면 됩니다.
+>
+> - **텐서플로 실습 위주** : [[러닝 텐서플로\]Chap05 - 텍스트 1: 텍스트와 시퀀스 처리 및 텐서보드 시각화](http://excelsior-cjh.tistory.com/154?category=940399)
+
+: 아래의 그림과 같이 자연어(NL, Natural Language)나 음성신호, 주식과 같은 연속적인(sequential) **시계열**(time series) 데이터에 적합한 모델인 **RNN**(Recurrent Neural Network)에 대해 알아보도록 하자.
+
+![img](https://t1.daumcdn.net/cfile/tistory/99BEDB465BD1985B10)
+
+
+
+
+
+
+
+### 1. 순환 뉴런(Recurrent Neurons)
+
+RNN(순환 신경망)은 피드포워드 신경망과 비슷하지만, 아래의 그림과 같이 출력이 다시 입력으로 받는 부분이 있다. 
+
+
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/99E349505BD1987801)
+
+
+
+RNN은 입력(x)을 받아 출력(y)를 만들고, 이 출력을 다시 입력으로 받는다.  일반적으로 RNN을 그림으로 나타낼 때는 위의 그림처럼 하나로 나타내지 않고, 아래의 그림처럼 각 **타임 스텝**(time step)  마다 **순환 뉴런**을 펼쳐서 타임스텝 별 입력(xt)과 출력(yt)을 나타낸다. 
+
+
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/997C79465BD1989C14)
+
+
+
+
+
+순환 뉴런으로 구성된 층(layer)은 아래의 그림처럼 나타낼 수 있는데, 타임 스텝  마다 모든 뉴런은 입력 벡터x.t 와 이전 타임 스텝의 출력 벡터y.t-1 을 입력 받는다.
+
+
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/990A71425BD198BB3B)
+
+
+
+
+
+각 순환 뉴런은 두 개의 가중치  w.x와  w.y를 가지는데,  w.x는  x.t를 위한 것이고 w.y는  이전 타임 스텝의 출력 y.t-1을 위한 것이다. 이것을 순환 층(layer) 전체로 생각하면 가중치 벡터  w.x와  w.y를 행렬  W.x와  W.y로 나타낼 수 있으며 다음의 식과 같이 표현할 수 있다.
+
+ ![image-20200909220253502](image/image-20200909220253502.png)
+
+그리고 타임 스텝  에서의 미니배치(mini-batch)의 입력을 행렬  X.t로 나타내어 아래와 같이 순환 층의 출력을 한번에 계산할 수 있다.
+
+
+
+![image-20200909220316835](image/image-20200909220316835.png)
+
+
+
+위의 식에서  Yt는 Xt와 Y.t-1의 함수이므로, 타임 스텝 t=0  에서부터 모든 입력에 대한 함수가 된다. 첫 번째 타임 스텝인  t=0 에서는 이전의 출력이 없기 때문에 일반적으로 0으로 초기화 한다.
+
+
+
+#### 1.1 메모리 셀
+
+타임 스텝  t에서 순환 뉴런의 출력은 이전 타임 스텝의 모든 입력에 대한 함수이기 때문에 이것을 **메모리**라고 볼 수 있다. 이렇게 타임 스텝에 걸쳐 어떠한 상태를 보존하는 신경망의 구성 요소를 **메모리 셀**(memory cell) 또는 셀(cell)이라고 한다. 일반적으로 타임 스텝  t에서 셀의 상태  h.t(h = hidden)는 아래의 식과 같이 타임 스텝에서의 입력과 이전 타임 스텝의 상태에 대한 함수이다.  
+
+![image-20200909220416087](image/image-20200909220416087.png)
+
+위에서 살펴본 RNN은 출력  y.t가 다시 입력으로 들어갔지만, 아래의 그림과 같이 일반적으로 많이 사용되는 RNN은 출력  y.t와 히든 상태(state) h.t가 구분되며, 입력으로는 h.t가 들어간다. RNN에서의 활성화 함수로는 tanh가 주로 사용되는데, 그 이유는 LSTM을 살펴볼 때 알아보도록 하자.
+
+
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/99C4E6485BD198EE0E)
+
+
+
+
+
+
+
+위의 그림을 식으로 나타내면 다음과 같다.
+
+![image-20200909220507338](image/image-20200909220507338.png)
+
+
+
+
+#### 1.2 입력과 출력 시퀀스
+
+RNN은 아래의 그림(출처: [cs231n](http://cs231n.stanford.edu/2017/syllabus.html))과 같이 다양한 입력 시퀀스(sequence)를 받아 출력 시퀀스를 만들 수 있다. 
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/99A94F465BD1990B20)
+
+
+
+위의 그림에서 Vector-to-Sequence는 첫 번째 타임 스텝에서 하나의 입력만(다른 모든 타임 스텝에서는 0)을 입력받아 시퀀스를 출력하는 네트워크이며, 이러한 모델은 Image Captioning에 사용할 수 있다. Sequence-to-Vector는 Vector-to-Sequence와는 반대로 입력으로 시퀀스를 받아 하나의 벡터를 출력하는 네트워크로, Sentiment Classification에 사용할 수 있다.  
+
+위의 그림의 오른쪽에서 세 번째 Sequence-to-Sequence 는 시퀀스를 입력받아 시퀀스를 출력하는 네트워크이며, 주식가격과 같은 시계열 데이터를 예측하는 데 사용할 수 있다.  마지막으로 Delayed Sequence-to-Sequence 는 **인코더**(encoder)에는 seq-to-vec 네트워크를 **디코더**(decoder)에는 vec-to-seq 네트워크를 연결한 것으로, 기계 번역에 사용된다.
+
+
+
+### 2. 텐서플로로 기본 RNN 구성하기
+
+위에서 살펴본 RNN을 텐서플로(TensorFlow)를 이용해 구현해보도록 하자. 먼저, RNN의 구조를 살펴보기 위해 텐서플로에서 제공하는 RNN을 사용하지 않고, 간단한 RNN 모델을 구현해 보도록 하자(2018-10-24 기준으로 텐서플로의 버전은 `1.11.0`이다).
+
+아래의 코드는 tanh 를 활성화 함수로 사용하고, 5개의 뉴런으로 구성된 RNN을 구현 하였으며, 타임 스텝마다 크기 3의 입력을 받고 두개의 타임 스텝(t=0, t=1)에 대해 작동한다.  아래의 코드는 [ExcelsiorCJH](https://github.com/ExcelsiorCJH/Hands-On-ML/blob/master/Chap14-Recurrent_Neural_Networks/Chap14-Recurrent_Neural_Networks.ipynb) 깃헙에서 확인할 수 있다.
+
+
+
+```python
+import numpy as np
+import tensorflow as tf
+
+n_inputs = 3
+n_neurons = 5
+
+X0 = tf.placeholder(tf.float32, [None, n_inputs])
+X1 = tf.placeholder(tf.float32, [None, n_inputs])
+
+Wx = tf.Variable(tf.random_normal(shape=[n_inputs, n_neurons], dtype=tf.float32))
+Wy = tf.Variable(tf.random_normal(shape=[n_neurons, n_neurons], dtype=tf.float32))
+b = tf.Variable(tf.zeros([1, n_neurons], dtype=tf.float32))
+
+Y0 = tf.tanh(tf.matmul(X0, Wx) + b)
+Y1 = tf.tanh(tf.matmul(Y0, Wy) + tf.matmul(X1, Wx) + b)
+
+# input data (mini-batch)
+# t = 0
+X0_batch = np.array([[0, 1, 2],  # sample 0
+                     [3, 4, 5],  # sample 1
+                     [6, 7, 8],  # sample 2
+                     [9, 0, 1]]) # sample 3
+# t = 1
+X1_batch = np.array([[9, 8, 7], 
+                     [3, 4, 5], 
+                     [6, 5, 4], 
+                     [3, 2, 1]])
+
+with tf.Session() as sess:
+    tf.global_variables_initializer().run()
+    Y0_val, Y1_val = sess.run([Y0, Y1], feed_dict={X0: X0_batch, X1: X1_batch})
+    
+print('Y0_val:{}\n{}'.format(Y0_val.shape, Y0_val))  # shape: (4, 5) → (샘플 개수, 뉴런 개수)
+print('Y1_val:{}\n{}'.format(Y1_val.shape, Y1_val))
+
+'''
+Y0_val:(4, 5)
+[[-0.0664006   0.9625767   0.68105793  0.7091854  -0.898216  ]
+ [ 0.9977755  -0.719789   -0.9965761   0.9673924  -0.9998972 ]
+ [ 0.99999774 -0.99898803 -0.9999989   0.9967762  -0.9999999 ]
+ [ 1.         -1.         -1.         -0.99818915  0.9995087 ]]
+Y1_val:(4, 5)
+[[ 1.         -1.         -1.          0.4020025  -0.9999998 ]
+ [-0.12210419  0.62805265  0.9671843  -0.9937122  -0.2583937 ]
+ [ 0.9999983  -0.9999994  -0.9999975  -0.85943305 -0.9999881 ]
+ [ 0.99928284 -0.99999815 -0.9999058   0.9857963  -0.92205757]]
+'''
+```
+
+위의 예제는 2개의 타임 스텝에 대해서만 RNN 연산을 수행했기 때문에 간단해 보였다. 하지만, 타임 스텝이 많아 질수록 연산 그래프가 커지게 된다. 
+
+이번에는 텐서플로에서 제공하는 RNN연산을 사용해 위와 동일한 모델을 만들어 보도록 하자.
+
+
+
+#### 2.1 정적으로 타임 스텝 펼치기
+
+텐서플로에서 제공하는 RNN 중 [`tf.nn.rnn_cell.BasicRNNCell`](https://www.tensorflow.org/api_docs/python/tf/nn/rnn_cell/BasicRNNCell) 은 아래의 그림을 그대로 코드로 구현한 것이라고 할 수 있다.
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/99C695415BD19A8E1D)
+
+
+
+
+
+그런 다음 [`tf.nn.static_rnn()`](https://www.tensorflow.org/api_docs/python/tf/nn/static_rnn) 함수를 호출한 뒤 셀(`BasicRNNCell`)과 입력 텐서, 그리고 입력의 데이터 타입을 알려준다. 기본적으로 모두 으로 채워진 초기 상태의 행렬을 만든다.  `static_rnn()`함수는 셀의 `__call__()`함수를 호출하여 타임 스텝마다(위의 예제에서는 2개) 셀 복사본을 만들고 서로 연결해준다. 즉, 아래의 그림처럼 하나의 RNN 셀을 타임 스텝별로 펼친 것이라 할 수 있다.
+
+
+
+
+
+![img](https://t1.daumcdn.net/cfile/tistory/99CADC3B5BD19AA101)
+
+
+
+`static_rnn()` 함수는 출력(output)과 상태(state)를 리턴하는데, 출력은 각 타임 스텝에서의 출력 텐서를 담고 있는 리스트(list)이고 상태는 네트워크의 최종 상태가 담겨있는 텐서이다.  따라서, 최종 상태(state)가 마지막 출력(output)과 동일하다.
+
+아래의 코드는 `BasicRNNCell`과 `static_rnn()`을 이용해 위의 예제를 똑같이 구현한 것이다.
+
+
+
+```python
+import numpy as np
+import tensorflow as tf
+
+
+n_inputs = 3
+n_neurons = 5
+
+
+X0 = tf.placeholder(tf.float32, [None, n_inputs])
+X1 = tf.placeholder(tf.float32, [None, n_inputs])
+
+
+# BasicRNNCell
+basic_cell = tf.nn.rnn_cell.BasicRNNCell(num_units=n_neurons)
+# static_rnn()
+output_seqs, states = tf.nn.static_rnn(cell=basic_cell, inputs=[X0, X1],
+                                       dtype=tf.float32)
+Y0, Y1 = output_seqs
+
+
+# input data (mini-batch)
+# t = 0
+X0_batch = np.array([[0, 1, 2],  # sample 0
+                     [3, 4, 5],  # sample 1
+                     [6, 7, 8],  # sample 2
+                     [9, 0, 1]]) # sample 3
+# t = 1
+X1_batch = np.array([[9, 8, 7], 
+                     [3, 4, 5], 
+                     [6, 5, 4], 
+                     [3, 2, 1]])
+
+
+with tf.Session() as sess:
+    tf.global_variables_initializer().run()
+    Y0_val, Y1_val = sess.run([Y0, Y1], feed_dict={X0: X0_batch, X1: X1_batch})
+    
+print('Y0_val:{}\n{}'.format(Y0_val.shape, Y0_val))  # shape: (4, 5) → (샘플 개수, 뉴런 개수)
+print('Y1_val:{}\n{}'.format(Y1_val.shape, Y1_val))
+'''
+Y0_val:(4, 5)
+[[ 0.30741334 -0.32884315 -0.6542847  -0.9385059   0.52089024]
+ [ 0.99122757 -0.9542541  -0.7518079  -0.9995208   0.9820235 ]
+ [ 0.9999268  -0.99783254 -0.8247353  -0.9999963   0.99947774]
+ [ 0.996771   -0.68750614  0.8419969   0.9303911   0.8120684 ]]
+Y1_val:(4, 5)
+[[ 0.99998885 -0.99976057 -0.0667929  -0.9999803   0.99982214]
+ [-0.6524943  -0.51520866 -0.37968948 -0.5922594  -0.08968379]
+ [ 0.99862397 -0.99715203 -0.03308626 -0.9991566   0.9932902 ]
+ [ 0.99681675 -0.9598194   0.39660627 -0.8307606   0.79671973]]
+'''
+```
+
+
+
+##### 하나의 placeholder로 타임 스텝별 데이터 넣어주기
+
+위의 예제에서는 타임 스텝(위의 예제에서는 2개)별 플레이스홀더(placeholder) `X0, X1`를 각각 만들어 주고, 2개의 출력 텐서(tensor) `Y0, Y1`를 정의해줬다. 위의 예제에서는 2개의 타임 스텝이어서 괜찮았지만, 만약 타임 스텝이 많아 질수록 타임 스텝별로 플레이스홀더와 출력 텐서를 정의해야하기 때문에 매우 불편하다. 이러한 문제를 해결하기 위해 [미니배치, 타임스텝, 입력크기] 형태인 `[None, n_steps, n_inputs]` 하나의 플레이스홀더 `X`를 만들어 주고, 이것을 `tf.unstack()`을 이용해 타임 스텝별로 나누어 준다. 그리고 출력 `outputs`에는 `tf.stack()`을 이용해 모든 출력 텐서들을 하나의 텐서로 합친다. 아래의 예제는 위의 예제를 하나의 플레이스홀더와 출력으로 만든 예제이다.
+
+
+
+```python
+import numpy as np
+import tensorflow as tf
+
+
+n_steps = 2  # time steps
+n_inputs = 3  # input size
+n_neurons = 5  
+
+
+X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
+X_seqs = tf.unstack(tf.transpose(X, perm=[1, 0, 2]))
+
+
+basic_cell = tf.nn.rnn_cell.BasicRNNCell(num_units=n_neurons)
+output_seqs, states = tf.nn.static_rnn(basic_cell, X_seqs, dtype=tf.float32)
+outputs = tf.transpose(tf.stack(output_seqs), perm=[1, 0, 2])
+
+
+# input data
+X_batch = np.array([
+        # t = 0      t = 1 
+        [[0, 1, 2], [9, 8, 7]], # 샘플 1
+        [[3, 4, 5], [3, 4, 5]], # 샘플 2
+        [[6, 7, 8], [6, 5, 4]], # 샘플 3
+        [[9, 0, 1], [3, 2, 1]], # 샘플 4
+])
+
+
+with tf.Session() as sess:
+    tf.global_variables_initializer().run()
+    outputs_val = outputs.eval(feed_dict={X: X_batch})
+    
+print('outputs_val:{}\n{}'.format(outputs_val.shape, outputs_val))
+'''
+outputs_val:(4, 2, 5)
+[[[-0.45652324 -0.68064123  0.40938237  0.63104504 -0.45732826]
+  [-0.9428799  -0.9998869   0.94055814  0.9999985  -0.9999997 ]]
+
+ [[-0.8001535  -0.9921827   0.7817797   0.9971032  -0.9964609 ]
+  [-0.637116    0.11300927  0.5798437   0.4310559  -0.6371699 ]]
+
+ [[-0.93605185 -0.9998379   0.9308867   0.9999815  -0.99998295]
+  [-0.9165386  -0.9945604   0.896054    0.99987197 -0.9999751 ]]
+
+ [[ 0.9927369  -0.9981933  -0.55543643  0.9989031  -0.9953323 ]
+  [-0.02746338 -0.73191994  0.7827872   0.9525682  -0.9781773 ]]]
+'''
+```
+
+
+
+##### static_rnn()의 문제점
+
+`static_rnn()` 함수의 문제는 타임 스텝마다 하나의 셀을 그래프에 추가하기 때문에, 만약 타임 스텝이 많아질 경우 그래프가 매우 복잡해진다는 것이다. 쉽게 말하면, `for`문과 같이 반복문을 쓰지않고 동일한 셀을 타임 스텝별로 만드는 것이라 할 수 있다. 이럴 경우 타임 스텝이 많아서 그래프가 커지게되면 역전파(backprop)시에 메모리 부족(OOM, Out-Of-Memory)에러가 발생할 수 있다. 
+
+이러한 문제를 해결할 수 있는 방법으로는 `tf.nn.dynamic_rnn()`이 있다. 
+
+
+
+#### 2.2 동적으로 타임 스텝 펼치기
+
+[`tf.nn.dynamic_rnn()`](https://www.tensorflow.org/api_docs/python/tf/nn/dynamic_rnn) 함수는 타임 스텝에 걸쳐 셀을 실행하기 위해 [`tf.while_loop()`](https://www.tensorflow.org/api_docs/python/tf/while_loop)를 이용하므로, `static_rnn()`함수와 달리 매 타임 스텝마다 셀을 그래프에 추가 하지 않는다. 또한, `dynamic_rnn()`함수는 위에서 하나의 플레이스홀더와 출력을 위해 `tf.stack(), tf.unstack(), tf.transpose()`와 같은 함수를 사용하지 않고, 타임 스텝의 모든 입력을 하나의 텐서(`[None, n_steps, n_inputs]`) 로 받아 RNN연산을 거친 후에 하나의 텐서(`[none, n_steps, n_neurons]`)를 출력한다. 아래의 예제는 2.1에서 예제를 `dynamic_rnn()`을 이용해 작성한 코드이다.
+
+
+
+```python
+import numpy as np
+import tensorflow as tf
+
+
+n_steps = 2
+n_inputs = 3
+n_neurons = 5
+
+
+X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
+
+
+basic_cell = tf.nn.rnn_cell.BasicRNNCell(num_units=n_neurons)
+# dynamic_rnn()
+outputs, states = tf.nn.dynamic_rnn(basic_cell, X, dtype=tf.float32)
+
+
+# input data
+X_batch = np.array([
+        # t = 0      t = 1 
+        [[0, 1, 2], [9, 8, 7]], # 샘플 1
+        [[3, 4, 5], [3, 4, 5]], # 샘플 2
+        [[6, 7, 8], [6, 5, 4]], # 샘플 3
+        [[9, 0, 1], [3, 2, 1]], # 샘플 4
+])
+
+
+with tf.Session() as sess:
+    tf.global_variables_initializer().run()
+    outputs_val = outputs.eval(feed_dict={X: X_batch})
+    
+print('outputs_val:{}\n{}'.format(outputs_val.shape, outputs_val))
+'''
+outputs_val:(4, 2, 5)
+[[[-0.85115266  0.87358344  0.5802911   0.8954789  -0.0557505 ]
+  [-0.999996    0.99999577  0.9981815   1.          0.37679607]]
+
+ [[-0.9983293   0.9992038   0.98071456  0.999985    0.25192663]
+  [-0.7081804  -0.0772338  -0.85227895  0.5845349  -0.78780943]]
+
+ [[-0.9999827   0.99999535  0.9992863   1.          0.5159072 ]
+  [-0.9993956   0.9984095   0.83422637  0.99999976 -0.47325212]]
+
+ [[ 0.87888587  0.07356028  0.97216916  0.9998546  -0.7351168 ]
+  [-0.9134514   0.3600957   0.7624866   0.99817705  0.80142   ]]]
+'''
+```
+
+
+
+#### 2.3 가변 길이 입력/출력 시퀀스 다루기
+
+##### 2.3.1 가변 길이 입력 시퀀스
+
+2.1 ~ 2.2에서는 데이터의 타임 스텝이 **고정 길이**를 가진 입력 시퀀스만 다루었다. 하지만, 만약에 입력 시퀀스의 길이가 고정이지 않고 가변 길이일 경우에는 `tf.nn.dynamic_rnn()`함수에 `sequence_length` 인자를 설정해야 한다. `sequence_length`는 각 데이터 샘플의 입력 시퀀스 길이를 1D 텐서로 지정해준다. 
+
+우선, 입력 시퀀스에 대한 예제를 보자. 아래의 코드 처럼 두번째 입력 시퀀스(샘플 2)가 두 개가 아니라 하나의 입력만 있을 경우, 입력 텐서 `X`에 맞춰 주기 위해 나머지 하나를 벡터 `[0, 0, 0]`으로 채워(패딩)줘야 한다. 그리고 `dynamic_rnn()`의 `sequence_length`인자에 넣어주기 위해 데이터 샘플의 길이를 `seq_length_batch`를 만들어 준다.
+
+```
+X_batch = np.array([
+       # t = 0     t = 1
+      [[0, 1, 2], [9, 8, 7]], # 샘플 1
+      [[3, 4, 5], [0, 0, 0]], # 샘플 2 (0 벡터로 패딩)
+      [[6, 7, 8], [6, 5, 4]], # 샘플 3
+      [[9, 0, 1], [3, 2, 1]], # 샘플 4
+])
+seq_length_batch = np.array([2, 1, 2, 2])  # 각 샘플 시퀀스 길이
+```
+
+
+
+아래의 예제는 위의 데이터를 가지고 2.1 ~ 2.2에서 처럼 동일한 RNN 연산을 한 코드이다. 
+
+
+
+```python
+import numpy as np
+import tensorflow as tf
+
+
+n_steps = 2
+n_inputs = 3
+n_neurons = 5
+
+
+X = tf.placeholder(tf.float32, [None, n_steps, n_inputs])
+seq_length = tf.placeholder(tf.int32, [None])  # 시퀀스 길이를 넣어줄 placeholder
+
+
+basic_cell = tf.nn.rnn_cell.BasicRNNCell(num_units=n_neurons)
+outputs, states = tf.nn.dynamic_rnn(basic_cell, X, dtype=tf.float32,
+                                    sequence_length=seq_length)
+
+
+# input data
+X_batch = np.array([
+        # t = 0      t = 1 
+        [[0, 1, 2], [9, 8, 7]], # 샘플 1
+        [[3, 4, 5], [0, 0, 0]], # 샘플 2 (0 벡터로 패딩)
+        [[6, 7, 8], [6, 5, 4]], # 샘플 3
+        [[9, 0, 1], [3, 2, 1]], # 샘플 4
+])
+# seq length
+seq_length_batch = np.array([2, 1, 2, 2])  # 각 샘플 시퀀스 길이
+
+
+with tf.Session() as sess:
+    tf.global_variables_initializer().run()
+    outputs_val, states_val = sess.run([outputs, states], 
+                                       feed_dict={X: X_batch, seq_length: seq_length_batch})
+    
+print('outputs_val:{}\n{}'.format(outputs_val.shape, outputs_val))
+'''
+outputs_val:(4, 2, 5)
+[[[-0.9123188   0.16516446  0.5548655  -0.39159346  0.20846416]
+  [-1.          0.956726    0.99831694  0.99970174  0.96518576]]  # 최종 상태
+
+ [[-0.9998612   0.6702289   0.9723653   0.6631046   0.74457586]   # 최종 상태
+  [ 0.          0.          0.          0.          0.        ]]  # 0 벡터
+
+ [[-0.99999976  0.8967997   0.9986295   0.9647514   0.93662   ]
+  [-0.9999526   0.9681953   0.96002865  0.98706263  0.85459226]]  # 최종 상태
+
+ [[-0.96435434  0.99501586 -0.36150697  0.9983378   0.999497  ]
+  [-0.9613586   0.9568762   0.7132288   0.97729224 -0.0958299 ]]] # 최종 상태
+'''
+```
+
+
+
+위의 출력 결과에서 확인할 수 있듯이 두번째 데이터(샘플2)에 대해서는 시퀀스 길이가 초과하는 타임 스텝에 대해서는  벡터(`[0, 0, 0]`)를 출력하는 것을 알 수 있다.
+
+
+
+
+##### 2.3.2 가변 길이 출력 시퀀스 
+
+입력 시퀀스(데이터)의 길이는 우리가 확인할 수 있기 때문에 `sequence_length`인자에 지정할 수 있었다. 하지만, 출력 시퀀스는 입력 시퀀스의 길이와 같은 경우를 제외하고는 알 수가 없는데, 예를들어 기계번역과 같은 경우에는 출력의 시퀀스가 각각 다르게 나오기 때문에 정확한 출력 시퀀스의 길이를 알기 어렵다. 
+
+이러한 경우에는 일반적으로 입력 시퀀스에 **EOS 토큰**(End-Of-Sequence token)을 추가하여 출력 시퀀스에서 EOS가 나왔을 때, EOS보다 뒤에 나오는 출력을 무시하는 방법을 사용한다. 
+
+
+
+### 3. 마무리
+
+이번 포스팅에서는 시계열 데이터에 적합한 모델인 RNN의 구조와 텐서플로를 이용해 RNN을 구현하는 방법에 대해 알아보았다. 위의 코드는 https://github.com/ExcelsiorCJH/Hands-On-ML/blob/master/Chap14-Recurrent_Neural_Networks/Chap14-Recurrent_Neural_Networks.ipynb에서 확인 할 수 있다.
+
+
+
+## ② LSTM & GRU
+
+> 기본 RNN을 개선한 LSTM과 GRU에 대한 설명 https://datascienceschool.net/view-notebook/770f59f6f7cc40c8b6dc98dddd06c6c5/
+>
+
+### RNN의 한계[¶](https://datascienceschool.net/view-notebook/770f59f6f7cc40c8b6dc98dddd06c6c5/#RNN의-한계)
+
+RNN은 현재의 문제를 해결하는데 이전의 정보를 함께 고려한다. 하지만, 실제로도 그럴까? 사실 상황에 따라 다르다고 할 수 있다. 아래에 두가지 문장을 준비했다. 이 문장들 각각 뒤에 어떤 말이 이어질지 유추해보도록 하자.
+
+1. 오늘은 하늘이 ___\ .
+2. 당신은 20명을 태운 버스를 운행하고 있습니다. 이번 정류장에서 5 명이 내렸고, 3명이 탔습니다. 다음 정류장에서는 7명이 내리고, 4명이 탔습니다. 그리고 그 다음 정류장에서는 1명이 내리고, 3명이 탔습니다. 그리고, 버스 기사의 나이는 __입니다.
+
+1 번 문장의 경우, '오늘' 과 '하늘'만 기억 한다면. 빈 칸에 채울 단어로 '맑다', '흐리다' 등을 쉽게 떠올릴 수 있다. 하지만 2번 문장 같은 경우 빈칸을 예측하기 위해 필요한 정보는 문장의 가장 처음에 있다. '당신', '버스를 운행하고 있습니다.' 이 두 정보만 기억하고 있다면, 쉽게 빈 칸을 채울 수 있었다. 하지만 정보를 사용하는 지점과 해당 정보의 위치 간의 거리가 멀어서 아마 독자 중에서도 몇명은 이 빈칸을 못 채웠을지도 모른다. (참고로 버스 기사의 나이는 "당신"의 나이이다.)
+
+1번 문장과 같이 현재 시점을 예측하는데 필요한 문맥이 가까이 있고 많지 않다면 RNN은 이를 학습할 수 있다. 하지만, 2번 문장 처럼, **정보를 필요로하는 시점과, 필요한 정보가 멀리 떨어져있다면 RNN은 잘 예측할 수 없다**. 이 문제를 **"Long-term dependency"라고 한다. 이 문제를 해결하기 위해 고안된 것이 LSTM**이다.
+
+
+
+## LSTM[¶](https://datascienceschool.net/view-notebook/770f59f6f7cc40c8b6dc98dddd06c6c5/#LSTM)
+
+Long Short Term Memory, 줄여서 LSTM은 **멀리 떨어져있는 정보 또한 활용하도록 학습** 할 수 있다. 다음 그림은 LSTM의 구조를 도식화 한것이다.
+
+[![img](https://datascienceschool.net/upfiles/adcc93edb31e4ad289fb198f2f8d1ae6.png)](https://datascienceschool.net/upfiles/adcc93edb31e4ad289fb198f2f8d1ae6.png)
+
+그림 58.8 : LSTM 모형
+
+구조가 어려워 보일 수 도 있겠다. LSTM의 연산은 다음처럼 여러 단계로 나누어져있다.
+
+1. 망각게이트
+2. 입력게이트
+3. Cell state 갱신
+4. 현재 셀의 출력값 계산
+
+하나하나씩 살펴보도록 하자.
+
+1. **망각게이트(forget gate)**
+
+망각게이트는 t시점에서의 입력값(xt)과 이전 t−1시점에서의 출력값(ht−1)을 입력받아 이전 셀의 정보를 망각할지 말지 결정한다. 망각게이트의 출력값을 ft라고 할 때 수식으로 전개하면 다음과 같다. 다음 식에서는 σ는 시그모이드 함수를 의미하고, Wf와 bf 망각게이트의 가중치와 바이어스를 의미한다.
+
+`ft=σ(Wf[ht−1,xt]+bf)`
+
+그리고 이 값은 이 후에 cell state, Ct−1에 곱해진다. 시그모이드 함수를 거치기 때문에 ft는 0 ~ 1 사이의 값을 가진다. 이 값은 이전 cell state에 곱해지기 때문에 0에 다가갈수록 이전의 정보를 잊고 1에 다가갈수록 이전의 정보를 기억하도록한다. 다르게 해석하면 현재의 정보가 중요하면 이전의 정보를 잊게 할 것이고 현재의 정보가 필요없다면 이전의 정보를 기억하도록 할 것이다.
+
+
+
+[![img](https://datascienceschool.net/upfiles/64b3dbd7e5e94646b74f331948a175bf.png)](https://datascienceschool.net/upfiles/64b3dbd7e5e94646b74f331948a175bf.png)
+
+그림 58.9 : LSTM 모형
+
+2. 입력게이트
+
+입력게이트는 t시점에서의 입력값(xt)과 이전 t−1시점에서의 출력값(ht−1)을 입력받고 현재의 정보를 다음 시점으로 전해질 cell state에 얼마나 반영할 지를 결정한다. itit를 입력게이트의 출력값이라 했을 때 수식으로 정리하면 다음과 같다.
+
+`it=σ(Wi[ht−1,xt]+bi)`
+
+[![img](https://datascienceschool.net/upfiles/4896a96694bd4ebbbd1c12c155e105bb.png)](https://datascienceschool.net/upfiles/4896a96694bd4ebbbd1c12c155e105bb.png)
+
+그림 58.9 : LSTM 모형
+
+3. cell state 갱신
+
+입력값(xt)과 이전 t−1시점에서의 출력값(ht−1)을 입력받고 이번엔 하이퍼탄젠트 함수를 사용해 C~t를 생성하고 입력게이트의 출력과 Hadamard 곱(⊙)을 한다. 그리고 이 값과 망각게이트의 출력을 이용해 cell state를 다음 수식과 같이 갱신한다.
+
+![image-20200909202457658](image/image-20200909202457658.png)
+
+
+
+[![img](https://datascienceschool.net/upfiles/0cd61c6446464a589ec03565bd6f1812.png)](https://datascienceschool.net/upfiles/0cd61c6446464a589ec03565bd6f1812.png)
+
+4. 현재 셀의 출력값 계산
+
+현재 셀의 출력값 ht은 다음 수식처럼 계산한다.
+
+![image-20200909202529130](image/image-20200909202529130.png)
+
+
+
+[![img](https://datascienceschool.net/upfiles/b392641f47914bdbb340d3cc5b533394.png)](https://datascienceschool.net/upfiles/b392641f47914bdbb340d3cc5b533394.png)
+
+그림 58.9 : LSTM 모형
+
+LSTM은 4개의 가중치 셋을 가진다.
+
+- 가중치
+
+  ![image-20200909202558387](image/image-20200909202558387.png)
+
+그리고 하나의 LSTM 셀은 두 가지의 출력값을 가진다.
+
+- 출력값
+
+  ![image-20200909202611485](image/image-20200909202611485.png)
+
+
+
+
+
+## Keras를 사용한 LSTM 구현[¶](https://datascienceschool.net/view-notebook/770f59f6f7cc40c8b6dc98dddd06c6c5/#Keras를-사용한-LSTM-구현)
+
+LSTM을 이용해 시계열 예측을 구현하고 RNN, ARMA 모형과 비교한다. 사용하는 데이터는 "영국의 호흡기 질환으로 인한 사망자 수" 시계열 데이터이다.
+
+![image-20200909164237338](image/image-20200909164237338.png)
+
+![image-20200909164328930](image/image-20200909164328930.png)
+
+원 데이터는 방금 그래프와 같지만 모형간의 비교를 위해 데이터를 조작한다. 원데이터에서 2000 이상의 값들을 모두 2000으로 설정했다.
+
+![image-20200909164348185](image/image-20200909164348185.png)
+
+이 데이터를 이용해 ARMA 모형 만든다. p=1,q=2
+
+![image-20200909164410078](image/image-20200909164410078.png)
+
+이 모형으로 예측한 시계열과 실제 시계열을 비교한다.
+
+![image-20200909164428465](image/image-20200909164428465.png)
+
+이번에는 RNN을 이용하여 시계열을 풀어본다. 이 때 타입스텝은 7로 하였다. 신경망에서는 평균과 분산으로 정규화한 값을 데이터로 사용한다.
+
+![image-20200909164450800](image/image-20200909164450800.png)
+
+![image-20200909164506079](image/image-20200909164506079.png)
+
+![image-20200909164523957](image/image-20200909164523957.png)
+
+![image-20200909164543544](image/image-20200909164543544.png)
+
+![image-20200909164555523](image/image-20200909164555523.png)
+
+같은 것을 LSTM을 이용해 모델링하면 다음과 같다.
+
+![image-20200909164617233](image/image-20200909164617233.png)
+
+![image-20200909164633765](image/image-20200909164633765.png)
+
+![image-20200909164654368](image/image-20200909164654368.png)
+
+![image-20200909164706469](image/image-20200909164706469.png)
+
+지금까지 설명한 것은 기본적인 LSTM의 구조이다. 실제로는 LSTM을 변형한 것들도 많이 사용된다.
+
+
+
+## Bi-directional LSTM[¶](https://datascienceschool.net/view-notebook/770f59f6f7cc40c8b6dc98dddd06c6c5/#Bi-directional-LSTM)
+
+![image-20200909164734970](image/image-20200909164734970.png)
+
+![image-20200909164752020](image/image-20200909164752020.png)
+
+![image-20200909164804157](image/image-20200909164804157.png)
