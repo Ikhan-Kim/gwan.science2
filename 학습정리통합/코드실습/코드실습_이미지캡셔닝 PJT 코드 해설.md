@@ -1,4 +1,4 @@
->(코드학습-명세흐름) 실제 플젝 보면서 흐름 파악 및 사용된 모델 학습
+>(코드실습-명세흐름) 실제 플젝 보면서 흐름 파악 및 사용된 모델 학습
 >
 >이미지 캡셔닝 활용한 플젝 보면서 코드 하나씩 공부하고 정리 중
 >
@@ -40,6 +40,40 @@
 
 - `tqdm`  : 함수나 반복문의 진행상황을 progressbar로 나타내주는 라이브러리
 - `scikit-image` : 이미지 처리를 위한 라이브러리 (load, save 등)
+
+
+
+
+
+> **<u>참고하면 좋을 자료</u>**
+>
+> - 이미지 캡셔닝 전체 흐름 https://www.tensorflow.org/tutorials/text/image_captioning
+>
+> - 텐서보드 사용 방법 https://blog.naver.com/keeping816/221670552687
+>
+> - inception 모델에 관한 설명 https://norman3.github.io/papers/docs/google_inception.html
+>
+> - inception v3 고급 가이드 https://cloud.google.com/tpu/docs/inception-v3-advanced?hl=ko
+>
+> - 넘파이의 기초통계함수 (평균, 분산, 표준편차, 공분산) https://kongdols-room.tistory.com/70
+>
+> - 파이썬 pickle 모듈 https://wayhome25.github.io/cs/2017/04/04/cs-04/
+>
+> - TensorFlow에서 Dataset을 사용하는 방법 https://cyc1am3n.github.io/2018/09/13/how-to-use-dataset-in-tensorflow.html
+>
+> - TensorFlow Dataset API https://datascienceschool.net/view-notebook/57714103a75c43ed9a7d95f96135f0ad/
+>
+> - Augmentation https://nittaku.tistory.com/272 
+>
+>   ​						 https://deepestdocs.readthedocs.io/en/latest/003_image_processing/0030/
+>
+>   - tf.data API로 성능 향상하기 https://www.tensorflow.org/guide/data_performance?hl=ko
+>
+> - 모듈 tf.keras.preprocessing.image https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image
+>
+> - 모듈 tf.image https://www.tensorflow.org/api_docs/python/tf/image?hl=ko-KRChoosing&skip_cache=true
+>
+> - 신경망 이해하기 (tf.keras.layers.Dense) https://mansculture.com/%EC%8B%A0%EA%B2%BD%EB%A7%9D-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-tf-keras-layers-dens/
 
 
 
@@ -502,7 +536,6 @@ def augment(image, captions):
 
     return image, captions
 
-# ❓ 정리 나중에~~~
 # Image Data Augmentation visualize
 def visualize(raw ,original, augmented):
     fig = plt.figure()
@@ -609,6 +642,54 @@ def visualize(raw ,original, augmented):
 
 
 
+✍ 사용된 Matplotlib 해석
+
+```python
+import matplotlib.pyplot as plt
+```
+
+```python
+plt.figure() # figure 생성
+plt.imshow(image) # 이미지 출력
+plt.colobar() # RGB 컬러바
+plt.grid(False) # 눈금선 표시 여부
+plt.show() # 시각화
+```
+
+```python
+plt.figure(figsize=(10,10))
+for i in range(25):
+    plt.subplot(5,5,i+1) # 가로 5등분 세로 5등분 후 i+1 번째 칸에 출력
+    plt.xticks([]) # x축 눈금 값 설정(예시와 같이 빈 배열로 지정하면 눈금이 제거됨)
+    plt.yticks([]) # y축 눈금 값 설정
+    plt.grid(False)
+    plt.imshow(train_images[i], cmap=plt.cm.binary)
+    plt.xlabel(class_names[train_labels[i]])
+plt.show()
+```
+
+```python
+def plot_value_array(i, predictions_array, true_label):
+  predictions_array, true_label = predictions_array[i], true_label[i]
+  plt.grid(False)
+  plt.xticks([])
+  plt.yticks([])
+  thisplot = plt.bar(range(10), predictions_array, color="#777777") # bar: 막대그래프
+  plt.ylim([0, 1]) # y축 범위 제한
+  predicted_label = np.argmax(predictions_array)
+
+  thisplot[predicted_label].set_color('red')
+  thisplot[true_label].set_color('blue')
+
+plot_value_array(0, predictions_single, test_labels)
+_ = plt.xticks(range(10), class_names, rotation=45)
+plt.show()
+```
+
+
+
+
+
 ### Req. 4. 이미지 모델(Encoder) 구현
 
 #### <u>Req. 4-1. Pre-trained 모델로 특성 추출</u>
@@ -686,39 +767,112 @@ tf.keras.layers.Dense(
 
 
 
+----
+
+## 사용된 Python 코드들
+
+### argparse - 명령행 옵션, 인자와 부속 명령을 위한 파서
+
+```python
+import argparse
+
+# 1. argparse.ArgumentParser()를 상속받아 정의
+parser = argparse.ArgumentParser(description='Process some integers.')
+# 2. add_argument
+parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                    help='an integer for the accumulator')
+parser.add_argument('--sum', dest='accumulate', action='store_const',
+                    const=sum, default=max,
+                    help='sum the integers (default: find the max)')
+
+# 3. parser.parse_args()
+args = parser.parse_args()
+print(args.accumulate(args.integers))
+```
+
+위의 파이썬 코드가 `prog.py` 라는 파일에 저장되었다고 가정할 때, 명령행에서 실행되고 유용한 도움말 메시지를 제공할 수 있다:
+
+```bash
+$ python prog.py -h
+usage: prog.py [-h] [--sum] N [N ...]
+
+Process some integers.
+
+positional arguments:
+ N           an integer for the accumulator
+
+optional arguments:
+ -h, --help  show this help message and exit
+ --sum       sum the integers (default: find the max)
+```
+
+```bash
+$ python prog.py 1 2 3 4
+4
+
+$ python prog.py 1 2 3 4 --sum
+10
+```
 
 
 
+### open() - 파일 열기
+
+기본방식
+
+```python
+f = open("foo.txt", 'w')
+f.write("Life is too short, you need python")
+f.close()
+```
+
+with문과 같이 쓰기 - with블록을 벗어나는 순간 열린 객체 f가 자동으로 close되어 편리하다.
+
+```python
+with open("foo.txt", "w") as f:
+    f.write("Life is too short, you need python")
+```
+
+"w" : 파일 쓰기, 같은 이름의 파일이 있으면 내용을 지우고 새로 작성
+
+"a" : 기존 파일에 내용 추가
+
+"r" : 파일 읽기
 
 
 
-> **<u>참고하면 좋을 자료</u>**
->
-> - 이미지 캡셔닝 전체 흐름 https://www.tensorflow.org/tutorials/text/image_captioning
->
-> - 텐서보드 사용 방법 https://blog.naver.com/keeping816/221670552687
->
-> - inception 모델에 관한 설명 https://norman3.github.io/papers/docs/google_inception.html
->
-> - inception v3 고급 가이드 https://cloud.google.com/tpu/docs/inception-v3-advanced?hl=ko
->
-> - 넘파이의 기초통계함수 (평균, 분산, 표준편차, 공분산) https://kongdols-room.tistory.com/70
->
-> - 파이썬 pickle 모듈 https://wayhome25.github.io/cs/2017/04/04/cs-04/
->
-> - TensorFlow에서 Dataset을 사용하는 방법 https://cyc1am3n.github.io/2018/09/13/how-to-use-dataset-in-tensorflow.html
->
-> - TensorFlow Dataset API https://datascienceschool.net/view-notebook/57714103a75c43ed9a7d95f96135f0ad/
->
-> - Augmentation https://nittaku.tistory.com/272 
->
->   ​						 https://deepestdocs.readthedocs.io/en/latest/003_image_processing/0030/
->
->   - tf.data API로 성능 향상하기 https://www.tensorflow.org/guide/data_performance?hl=ko
->
-> - 모듈 tf.keras.preprocessing.image https://www.tensorflow.org/api_docs/python/tf/keras/preprocessing/image
->
-> - 모듈 tf.image https://www.tensorflow.org/api_docs/python/tf/image?hl=ko-KRChoosing&skip_cache=true
->
-> - 신경망 이해하기 (tf.keras.layers.Dense) https://mansculture.com/%EC%8B%A0%EA%B2%BD%EB%A7%9D-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-tf-keras-layers-dens/
+### csv.reader()
+
+지정된 csvfile의 줄을 이터레이트 하는 판독기(reader) 객체를 반환
+
+```python
+f = open(caption_file_path, 'r')
+caption_file = csv.reader(f)
+```
+
+
+
+### sklearn - shuffle()
+
+입력된 1개 이상의 배열을 동일한 순서로 섞어준다. 2개 이상의 배열이 입력될 때는 섞을 행의 개수가 같아야 함에 유의한다.
+
+```python
+from sklearn.utils import shuffle
+
+img_path_list, caption_list = shuffle(img_path_list, caption_list)
+```
+
+
+
+### sklearn - train_test_split()
+
+```python
+from sklearn.model_selection import train_test_split
+
+train_img_paths, val_img_paths, train_captions, val_captions = 
+train_test_split(img_paths, captions, test_size=0.2, random_state=0)
+# train_img_paths에는 img_paths에서 (1-0.2)만큼의 데이터가
+# val_img_paths에는 나머지(0.2=test_size) 만큼의 데이터가 나뉘어 들어간다
+# captions도 동일
+```
 
