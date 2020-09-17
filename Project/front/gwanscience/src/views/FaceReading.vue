@@ -23,7 +23,7 @@
       </div>
       <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-box" v-if="isCameraOpen">
-          <video v-show="!isPhotoTaken" ref="camera" :width="450" :height="300" autoplay></video>
+          <video v-show="!isPhotoTaken" ref="camera" id="Taken" :width="450" :height="300" autoplay></video>
           <canvas v-show="isPhotoTaken" ref="canvas" id="photoTaken" :width="450" :height="300"></canvas>
         </div>
       </div>
@@ -32,11 +32,11 @@
           <b-button class="btn-success" @click="takePhoto">사진촬영</b-button>
         </div>
       </div>
-      <div class="row d-flex justify-content-center m-md-2">
-        <div class="camera-shoot" v-if="isPhotoTaken">
-          <b-img :src="photo" :width="450" :height="300"></b-img>
+      <!-- <div class="row d-flex justify-content-center m-md-2">
+        <div class="camera-shoot"  v-if="isPhotoTaken">
+          <canvas id="userPhoto" :width="450" :height="300"></canvas>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@ export default {
         age: null,
         gender: null,
       },
-      photo: null,
+      // userPhoto: null,
       options: [
         { value: null, text: '성별을 선택해주세요.', disabled: true},
         { value: 1, text: '남자'},
@@ -101,11 +101,40 @@ export default {
     takePhoto() {
       this.isPhotoTaken = !this.isPhotoTaken
 
-      const context = this.$resf.canvas.getContext('2d')
-      context.drawImage(this.$refs.camera, 0,0,450,300)
-      this.photo = context.getImageData( 0,0,450,300)
-    }
+      const context = this.$refs.canvas.getContext('2d');
+      context.drawImage(this.$refs.camera, 0, 0, 450, 300);
 
+      // 아래 코드 수정 예정
+
+      // const context = this.$refs.canvas.getContext('2d')
+
+      // const photo = document.getElementById("photoTaken").toDataURL("image/jpeg")
+      // .replace("image/jpeg", "image/octet-stream")
+
+      // this.photo = canvas.drawImage(photo)
+      // this.photo = this.$refs.canvas.getContext('2d')
+      // this.photo = context.drawImage(this.$refs.camera, 0,0,450,300)
+      //  = context.getImageData( 0,0,450,300)
+
+      // const photo = document.getContext("2d").toDataURL("image/jpeg")
+      // const userPhoto = document.getElementById("userPhoto").getContext("2d")
+      // userPhoto.drawImage(photo, 0,0,450,300)
+
+
+      // const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg")
+      // .replace("image/jpeg", "image/octet-stream");
+      // const userPhoto = document.getElementById("userPhoto").getContext("2d")
+      // userPhoto.drawImage(canvas, 0, 0, 450, 300);
+
+      },
+
+      // downloadImage() {
+      // const download = document.getElementById("downloadPhoto");
+      // const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg")
+      //   .replace("image/jpeg", "image/octet-stream");
+
+      // download.setAttribute("href", canvas);
+      // }
   }
 }
 </script>
