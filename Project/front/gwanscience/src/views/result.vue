@@ -16,7 +16,9 @@
           <p></p>
         </b-tab>
         <b-tab title="종합 평가" active>
-          <p></p>
+          <!-- {{ userInfo.userPhoto.canvas.toDataURL }} -->
+          <p>왕의 상</p>
+          <p>용맹스럽고 위엄이 있으며 먹고 사는데 큰 지장이 없다.</p>
         </b-tab>
       </b-tabs>
     </div>

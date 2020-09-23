@@ -69,6 +69,7 @@ export default {
         nickname: "",
         age: null,
         gender: null,
+        userPhoto: null,
       },
       // userPhoto: null,
       options: [
@@ -120,6 +121,9 @@ export default {
 
       const context = this.$refs.canvas.getContext("2d");
       context.drawImage(this.$refs.camera, 0, 0, 450, 300);
+
+      console.log(context);
+      // this.userInfo.userPhoto = context;
 
       // 아래 코드 수정 예정
 
