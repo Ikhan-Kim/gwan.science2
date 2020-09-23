@@ -1,39 +1,40 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import FaceReading from '../views/FaceReading.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import FaceReading from "../views/FaceReading.vue";
 import inputName from "@/views/inputName";
 import result from "@/views/result";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/",
+    name: "Home",
+    component: Home,
   },
   {
-    path: '/face-reading',
-    name: 'FaceReading',
-    component: FaceReading
+    path: "/face-reading",
+    name: "FaceReading",
+    component: FaceReading,
   },
   {
-    path: '/inputName',
-    name: 'inputName',
-    component: inputName
+    path: "/inputName",
+    name: "inputName",
+    component: inputName,
   },
   {
-    path: '/result',
-    name: 'result',
-    component: result
+    path: "/result",
+    name: "result",
+    component: result,
+    props: true,
   },
-]
+];
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;
