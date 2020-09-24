@@ -1,15 +1,12 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">홈</router-link> |
-      <router-link to="/face-reading">관상</router-link> |
-      <router-link to="/inputName">이름 궁합</router-link> |
-      <router-link to="/result">결과</router-link>
+      <router-link to="/">홈</router-link>|
+      <router-link to="/face-reading">관상</router-link>|
+      <router-link to="/inputName">이름 궁합</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
-
-
 </template>
 
 

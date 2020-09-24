@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div style="margin-top: 150px;">
     <h1>Face Reading</h1>
     <div class="container" v-if="!isCameraOpen">
       <div class="row d-flex justify-content-center m-md-2">
         <b-form-input
-          class="col-md-6"
+          style="width: 300px;"
           type="text"
           v-model="userInfo.nickname"
           placeholder="닉네임을 입력해주세요."
@@ -12,14 +12,14 @@
       </div>
       <div class="row d-flex justify-content-center m-md-2">
         <b-form-input
-          class="col-md-6"
+          style="width: 300px;"
           type="number"
           v-model="userInfo.age"
           placeholder="나이를 입력해주세요."
         ></b-form-input>
       </div>
       <div class="row d-flex justify-content-center m-md-2">
-        <b-form-select class="col-md-6" v-model="userInfo.gender" :options="options"></b-form-select>
+        <b-form-select style="width: 300px;" v-model="userInfo.gender" :options="options"></b-form-select>
       </div>
     </div>
     <div class="container">
@@ -31,7 +31,7 @@
             @click="toggleCamera"
           >
             <span v-if="!isCameraOpen">사진 촬영</span>
-            <span v-else>촬영 중단</span>
+            <span v-else>취소</span>
           </b-button>
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="camera-shoot" v-if="isCameraOpen">
           <b-button class="btn-success" @click="takePhoto">사진촬영</b-button>
           <router-link :to="{name: 'result', params: {userInfo : userInfo}}">
-            <b-button v-if="isPhotoTaken==true">관상보기</b-button>
+            <b-button v-if="isPhotoTaken==true" style="margin-left: 20px;">관상보기</b-button>
           </router-link>
         </div>
       </div>
