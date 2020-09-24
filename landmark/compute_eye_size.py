@@ -1,4 +1,6 @@
+# error시 install cmake
 import dlib
+# install opencv-python
 import cv2
 import glob
 
