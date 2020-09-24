@@ -3,6 +3,7 @@
     <h1>{{userInfo.nickname}}님의 관상 분석 결과</h1>
     <hr />
     <div style="width: 500px; margin: auto;">
+      <img :src="userInfo.userPhoto" />
       <h2 style="font-family: 궁서; font-weight: bold; margin-top: 30px;">왕의 상</h2>
       <p>용맹스럽고 위엄이 있으며 먹고 사는데 큰 지장이 없다.</p>
       <h3 style="margin-top: 30px;">눈썹</h3>
