@@ -68,6 +68,13 @@ export default {
   components: {
     ResultShare,
   },
+  created() {
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    window.Kakao.init("461657f0b2d7529bbc498714486b6b12");
+
+    // SDK 초기화 여부를 판단합니다.
+    console.log(window.Kakao.isInitialized());
+  },
 };
 </script>
 

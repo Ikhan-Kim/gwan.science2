@@ -15,7 +15,32 @@
     >
       페이스북 공유하기
     </button>
-    <button class="shareButtons">카카오톡 공유하기</button>
+    <button
+      class="shareButtons"
+      @click="ShareGooglePlus('http://j3c205.p.ssafy.io/')"
+    >
+      구글플러스 공유하기
+    </button>
+    <button
+      class="shareButtons"
+      @click="ShareKakaoStory('http://j3c205.p.ssafy.io/')"
+    >
+      카카오스토리 공유하기
+    </button>
+    <button
+      class="shareButtons"
+      @click="
+        ShareNaverBlog('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
+      "
+    >
+      네이버 블로그 공유하기
+    </button>
+    <button
+      class="shareButtons"
+      @click="ShareKakaoTalk('http://j3c205.p.ssafy.io/')"
+    >
+      카카오톡 공유하기
+    </button>
   </div>
 </template>
 
@@ -44,6 +69,22 @@ export default {
     },
     ShareFacebook(url) {
       window.open("http://www.facebook.com/sharer/sharer.php?u=" + url);
+    },
+    ShareGooglePlus(url) {
+      window.open("http://plus.google.com/u/0/share?url=" + url);
+    },
+    ShareKakaoStory(url) {
+      window.open("http://story.kakao.com/share?url=" + url);
+    },
+    ShareNaverBlog(url, title) {
+      window.open(
+        "http://blog.naver.com/openapi/share?url=" + url + "&title=" + title
+      );
+    },
+    ShareKakaoTalk(url) {
+      window.Kakao.Link.sendScrap({
+        requestUrl: url,
+      });
     },
   },
 };
