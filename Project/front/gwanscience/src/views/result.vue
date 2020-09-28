@@ -59,6 +59,7 @@
 import ResultShare from "@/components/ResultShare.vue";
 export default {
   name: "result",
+  metaInfo: {},
   props: {
     userInfo: {
       type: Object,
@@ -70,5 +71,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
