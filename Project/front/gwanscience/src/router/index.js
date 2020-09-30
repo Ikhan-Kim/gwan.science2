@@ -2,8 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import FaceReading from "../views/FaceReading.vue";
-import inputName from "@/views/inputName";
-import result from "@/views/result";
+import NameCompatibility from "@/views/NameCompatibility";
+import FaceReadingResult from "@/views/FaceReadingResult";
+import NameCompatibilityResult from "@/views/NameCompatibilityResult";
 
 Vue.use(VueRouter);
 
@@ -14,19 +15,25 @@ const routes = [
     component: Home,
   },
   {
-    path: "/face-reading",
+    path: "/FaceReading",
     name: "FaceReading",
     component: FaceReading,
   },
   {
-    path: "/inputName",
-    name: "inputName",
-    component: inputName,
+    path: "/NameCompatibility",
+    name: "NameCompatibility",
+    component: NameCompatibility,
   },
   {
-    path: "/result",
-    name: "result",
-    component: result,
+    path: "/FaceReading/result",
+    name: "FaceReadingResult",
+    component: FaceReadingResult,
+    props: true,
+  },
+  {
+    path: "/NameCompatibility/result",
+    name: "NameCompatibilityResult",
+    component: NameCompatibilityResult,
     props: true,
   },
 ];

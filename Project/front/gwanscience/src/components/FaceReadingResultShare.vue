@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: "ResultShare",
+  name: "FaceReadingResultShare",
   metaInfo() {
     return {
       meta: [
