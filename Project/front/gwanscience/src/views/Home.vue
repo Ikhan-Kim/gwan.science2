@@ -2,13 +2,13 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/img.jpg" />
     <div style="margin: 70px"></div>
-    <router-link to="/face-reading">
+    <router-link to="/FaceReading">
       <b-button style="width: 200px" squared variant="outline-secondary"
         >관상 분석하기</b-button
       >
     </router-link>
     <div style="margin: 20px"></div>
-    <router-link to="/inputName">
+    <router-link to="/NameCompatibility">
       <b-button style="width: 200px" squared variant="outline-secondary"
         >이름 궁합</b-button
       >

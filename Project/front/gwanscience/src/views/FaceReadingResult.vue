@@ -51,14 +51,14 @@
         있음, 인내력이 강하고 지도자가 될 가능성이 있음
       </p>
     </div>
-    <ResultShare style="margin: 50px" />
+    <FaceReadingResultShare style="margin: 50px" />
   </div>
 </template>
 
 <script>
-import ResultShare from "@/components/ResultShare.vue";
+import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 export default {
-  name: "result",
+  name: "FaceReadingResult",
   metaInfo: {},
   props: {
     userInfo: {
@@ -66,12 +66,13 @@ export default {
     },
   },
   components: {
-    ResultShare,
+    FaceReadingResultShare,
   },
   created() {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-    window.Kakao.init("461657f0b2d7529bbc498714486b6b12");
-
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init("461657f0b2d7529bbc498714486b6b12");
+    }
     // SDK 초기화 여부를 판단합니다.
     console.log(window.Kakao.isInitialized());
   },

@@ -1,10 +1,10 @@
 <template>
-  <div style="margin-top: 150px;">
+  <div style="margin-top: 150px">
     <h1>Face Reading</h1>
     <div class="container" v-if="!isCameraOpen">
       <div class="row d-flex justify-content-center m-md-2">
         <b-form-input
-          style="width: 300px;"
+          style="width: 300px"
           type="text"
           v-model="userInfo.nickname"
           placeholder="닉네임을 입력해주세요."
@@ -12,14 +12,18 @@
       </div>
       <div class="row d-flex justify-content-center m-md-2">
         <b-form-input
-          style="width: 300px;"
+          style="width: 300px"
           type="number"
           v-model="userInfo.age"
           placeholder="나이를 입력해주세요."
         ></b-form-input>
       </div>
       <div class="row d-flex justify-content-center m-md-2">
-        <b-form-select style="width: 300px;" v-model="userInfo.gender" :options="options"></b-form-select>
+        <b-form-select
+          style="width: 300px"
+          v-model="userInfo.gender"
+          :options="options"
+        ></b-form-select>
       </div>
     </div>
     <div class="container">
@@ -27,7 +31,10 @@
         <div class="camera-button">
           <b-button
             class="btn-success"
-            :class="{ 'btn-success': !isCameraOpen, 'btn-danger': isCameraOpen }"
+            :class="{
+              'btn-success': !isCameraOpen,
+              'btn-danger': isCameraOpen,
+            }"
             @click="toggleCamera"
           >
             <span v-if="!isCameraOpen">사진 촬영</span>
@@ -37,15 +44,32 @@
       </div>
       <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-box" v-if="isCameraOpen">
-          <video v-show="!isPhotoTaken" ref="camera" id="Taken" :width="450" :height="300" autoplay></video>
-          <canvas v-show="isPhotoTaken" ref="canvas" id="photoTaken" :width="450" :height="300"></canvas>
+          <video
+            v-show="!isPhotoTaken"
+            ref="camera"
+            id="Taken"
+            :width="450"
+            :height="300"
+            autoplay
+          ></video>
+          <canvas
+            v-show="isPhotoTaken"
+            ref="canvas"
+            id="photoTaken"
+            :width="450"
+            :height="300"
+          ></canvas>
         </div>
       </div>
       <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-shoot" v-if="isCameraOpen">
           <b-button class="btn-success" @click="takePhoto">사진촬영</b-button>
-          <router-link :to="{name: 'result', params: {userInfo : userInfo}}">
-            <b-button v-if="isPhotoTaken==true" style="margin-left: 20px;">관상보기</b-button>
+          <router-link
+            :to="{ name: 'FaceReadingResult', params: { userInfo: userInfo } }"
+          >
+            <b-button v-if="isPhotoTaken == true" style="margin-left: 20px"
+              >관상보기</b-button
+            >
           </router-link>
         </div>
       </div>
@@ -71,7 +95,6 @@ export default {
         gender: null,
         userPhoto: null,
       },
-      // userPhoto: null,
       options: [
         { value: null, text: "성별을 선택해주세요.", disabled: true },
         { value: 1, text: "남자" },
