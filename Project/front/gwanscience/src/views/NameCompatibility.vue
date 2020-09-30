@@ -5,7 +5,7 @@
     <div class="row d-flex justify-content-center m-md-2">
       <b-form-input
         v-model="name1"
-        class="col-md-6"
+        style="width: 300px"
         type="text"
         placeholder="본인의 이름을 입력해주세요."
       ></b-form-input>
@@ -13,7 +13,7 @@
     <div class="row d-flex justify-content-center m-md-2">
       <b-form-input
         v-model="name2"
-        class="col-md-6"
+        style="width: 300px"
         type="text"
         placeholder="상대방의 이름을 입력해주세요."
       ></b-form-input>
@@ -32,10 +32,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
-const test_URL = "http://127.0.0.1:8000/services/name_compability/";
-
 export default {
   name: "NameCompatibility",
 
@@ -48,14 +44,12 @@ export default {
 
   methods: {
     inputName() {
-      const nameData = {
-        name1: this.name1,
-        name2: this.name2,
-      };
-      axios.post(test_URL, nameData).then((res) => {
-        if (res.status === 200) {
-          console.log(res);
-        }
+      this.$router.push({
+        name: "NameCompatibilityResult",
+        params: {
+          name1: this.name1,
+          name2: this.name2,
+        },
       });
     },
   },

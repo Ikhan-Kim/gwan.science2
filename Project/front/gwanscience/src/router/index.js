@@ -31,7 +31,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/NameCompatibility/result",
+    path: "/NameCompatibility/:name1/:name2",
     name: "NameCompatibilityResult",
     component: NameCompatibilityResult,
     props: true,
