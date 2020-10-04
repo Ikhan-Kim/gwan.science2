@@ -1,11 +1,30 @@
 <template>
+  <b-container>
+    <img src="@/assets/all.jpg">
   <div>
     <hr />
+    <!-- <div style="float: left; width: 33%;">
+      <div class="name-img">
+        <img src="@/assets/circle1.png" alt="not found picture">
+      </div>
+      <div class="name-text">
+        <p>{{ this.result.name[0][0] }}</p>
+      </div>
+    </div>
+    <div style="float: left; width: 33%;">
+      두번째 영역
+    </div>
+    <div style="float: left; width: 33%;">
+      세번째 영역
+    </div> -->
+    <div>
     <h3>{{ this.result.name[0] }}님의 {{ this.result.name[1] }}님을 생각하는 호감도 {{ this.result.score[0] }}%</h3>
     <h3>{{ this.result.name[1] }}님의 {{ this.result.name[0] }}님을 생각하는 호감도 {{ this.result.score[1] }}%</h3>
+    </div>
     <div style="width: 500px; margin: auto"></div>
     <NameCompatibilityResultShare style="margin: 50px" />
   </div>
+  </b-container>
 </template>
 
 <script>
@@ -20,7 +39,7 @@ export default {
   data () {
     return {
       result: {
-        name: [null, null],
+        name: [ null, null],
         score: [null, null],
       }
     }
@@ -57,4 +76,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .name-img {
+    width: 100%;
+    vertical-align: middle;
+  }
+  .name-text {
+    padding: 5px 10px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+</style>
