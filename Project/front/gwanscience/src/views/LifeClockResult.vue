@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import LifeClockResult from "@/views/LifeClockResult";
+// import LifeClockResult from "@/views/LifeClockResult";
 export default {
-  name: "LifeClockResult",
+  // name: "LifeClockResult",
 };
 </script>
 
