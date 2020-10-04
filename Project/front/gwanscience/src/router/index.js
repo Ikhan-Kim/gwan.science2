@@ -5,6 +5,7 @@ import FaceReading from "../views/FaceReading.vue";
 import NameCompatibility from "@/views/NameCompatibility";
 import FaceReadingResult from "@/views/FaceReadingResult";
 import NameCompatibilityResult from "@/views/NameCompatibilityResult";
+import LifeClock from "@/views/LifeClock";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ const routes = [
     name: "NameCompatibilityResult",
     component: NameCompatibilityResult,
     props: true,
+  },
+  {
+    path: "/LifeClock",
+    name: "LifeClock",
+    component: LifeClock,
   },
 ];
 
