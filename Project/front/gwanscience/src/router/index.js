@@ -44,7 +44,7 @@ const routes = [
     component: LifeClock,
   },
   {
-    path: "/LifeClockResult",
+    path: "/LifeClockResult/:age",
     name: "LifeClockResult",
     component: LifeClockResult,
     props: true,

@@ -9,18 +9,15 @@
         placeholder="나이를 입력해주세요."
       ></b-form-input>
       <router-link
-        :to="{ name: 'LifeClockResult', params: { userInfo: userInfo } }"
+        :to="{ name: 'LifeClockResult', params: { age: userInfo.age } }"
       >
-        <b-button v-if="isPhotoTaken == true" style="margin-left: 20px"
-          >나의 인생 시간은? →</b-button
-        >
+        <b-button style="margin-left: 20px">나의 인생 시간은? →</b-button>
       </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import LifeClock from "@/views/LifeClock";
 export default {
   name: "LifeClock",
   data() {
