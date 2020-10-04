@@ -42,5 +42,5 @@ def name_compability_compability(request):
 @api_view(['GET'])
 def func_life_clock(request, age):
     time, result, img_url = life_clock(age)
-    result_data = {"time":time, "result":result, "img_url":img_url}
+    result_data = {"time":time, "ment":result, "img_url":img_url}
     return Response(result_data)

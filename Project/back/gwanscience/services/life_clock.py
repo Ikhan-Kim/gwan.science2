@@ -1,5 +1,5 @@
 def life_clock(age):
-    img_url = '@/assets/clock_img/'+ str(age) +'.png'
+    img_url = 'clock_img/'+ str(age) +'.png'
     # 1살에 18분
     time = ((24 / 80) * age)
     minute = int(round((time - int(time)) * 60, 1))
