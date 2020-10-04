@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import FaceReading from "../views/FaceReading.vue";
 import inputName from "@/views/inputName";
 import result from "@/views/result";
+import resultName from "@/views/resultName"
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
     name: "result",
     component: result,
     props: true,
+  },
+  {
+    path: "/namecompability/:name1/:name2",
+    name: "namecompability",
+    component: resultName,
   },
 ];
 
