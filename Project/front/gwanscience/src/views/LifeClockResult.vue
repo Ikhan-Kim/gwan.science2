@@ -1,5 +1,10 @@
 <template>
-  <div></div>
+  <div>
+    <h1>Life Clock</h1>
+    <h3>당신의 인생 시간은 {{}} 입니다.</h3>
+    <img src="" />
+    <p>{{}}</p>
+  </div>
 </template>
 
 <script>
