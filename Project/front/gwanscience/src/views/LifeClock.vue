@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import LifeClock from "@/views/LifeClock";
 export default {
   name: "LifeClock",
   data() {
