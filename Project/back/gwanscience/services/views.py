@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from .models import NameCompat
 from .serializers import NameCompatSerializer
 from .algo_name import algo
+from .life_clock import life_clock
 # 추후삭제
 from django.http import HttpResponse, JsonResponse
 
@@ -37,3 +38,9 @@ def test(request, name_1, name_2):
 
 def name_compability_compability(request):
     pass
+
+@api_view(['GET'])
+def func_life_clock(request, age):
+    time, result, img_url = life_clock(age)
+    result_data = {"time":time, "result":result, "img_url":img_url}
+    return Response(result_data)
