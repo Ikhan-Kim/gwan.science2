@@ -1,8 +1,8 @@
 <template>
   <div>
     <hr />
-    <h3>{{ name1 }}님의 {{ name2 }}님을 생각하는 호감도 {{ score1 }}%</h3>
-    <h3>{{ name2 }}님의 {{ name1 }}님을 생각하는 호감도 {{ score2 }}%</h3>
+    <h3>{{ this.result.name[0] }}님의 {{ this.result.name[1] }}님을 생각하는 호감도 {{ this.result.score[0] }}%</h3>
+    <h3>{{ this.result.name[1] }}님의 {{ this.result.name[0] }}님을 생각하는 호감도 {{ this.result.score[1] }}%</h3>
     <div style="width: 500px; margin: auto"></div>
     <NameCompatibilityResultShare style="margin: 50px" />
   </div>
@@ -12,16 +12,18 @@
 import NameCompatibilityResultShare from "@/components/NameCompatibilityResultShare.vue";
 import axios from "axios";
 
-const test_URL = "http://127.0.0.1:8000/services/name_compability/";
+const URL = "http://127.0.0.1:8000/services/test/"
 
 export default {
-  name: "FaceReadingResult",
+  name: "NameCompatibilityResult",
   metaInfo: {},
-  data() {
+  data () {
     return {
-      score1: 0,
-      score2: 0,
-    };
+      result: {
+        name: [null, null],
+        score: [null, null],
+      }
+    }
   },
   props: {
     name1: {
@@ -42,18 +44,16 @@ export default {
     // SDK 초기화 여부를 판단합니다.
     console.log(window.Kakao.isInitialized());
 
-    const nameData = {
-      name1: this.name1,
-      name2: this.name2,
-    };
-    axios.post(test_URL, nameData).then((res) => {
-      if (res.status === 200) {
-        console.log(res);
-        this.score1 = res.data.jumsu1;
-        this.score2 = res.data.jumsu2;
-      }
-    });
+    this.loadresult();
   },
+  methods: {
+    loadresult() {
+      axios.get(URL + this.$route.params.name1 + '/' + this.$route.params.name2)
+      .then(res => {
+        this.result = res.data
+      })
+    }
+  }
 };
 </script>
 

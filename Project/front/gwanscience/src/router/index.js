@@ -36,11 +36,6 @@ const routes = [
     component: NameCompatibilityResult,
     props: true,
   },
-  {
-    path: "/namecompability/:name1/:name2",
-    name: "namecompability",
-    component: resultName,
-  },
 ];
 
 const router = new VueRouter({
