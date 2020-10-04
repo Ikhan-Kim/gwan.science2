@@ -18,19 +18,8 @@ def face_reading(request):
 def face_reading_reading(request):
     pass
 
-@api_view(['POST'])
-def name_compability(request):
-    serializer = NameCompatSerializer(data=request.data)
-    name1 = request.data.get('name1')
-    name2 = request.data.get('name2')
-    
-    result_data = {"name1":name1,"name2":name2,"jumsu1":algo(name1,name2),"jumsu2":algo(name2,name2)} 
-    return Response(result_data)
-        # return HttpResponse(serializer.data)
-        # return HttpResponse(serializer.data)
-
 @api_view(['GET'])
-def test(request, name_1, name_2):
+def name_compability(request, name_1, name_2):
     result_data = {"name":[name_1,name_2], "score": [algo(name_1,name_2),algo(name_2,name_1)]}
     return Response(result_data)
     # return JsonResponse(a)

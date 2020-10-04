@@ -12,7 +12,7 @@
 import NameCompatibilityResultShare from "@/components/NameCompatibilityResultShare.vue";
 import axios from "axios";
 
-const URL = "http://127.0.0.1:8000/services/test/"
+const URL = "http://127.0.0.1:8000/services/name_compability/"
 
 export default {
   name: "NameCompatibilityResult",
