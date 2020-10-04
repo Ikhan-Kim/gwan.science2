@@ -3,7 +3,8 @@
     <div id="nav">
       <router-link to="/">홈</router-link>|
       <router-link to="/FaceReading">관상</router-link>|
-      <router-link to="/NameCompatibility">이름 궁합</router-link>
+      <router-link to="/NameCompatibility">이름 궁합</router-link>|
+      <router-link to="/NameCompatibility">인생 시계</router-link>
     </div>
     <router-view />
   </div>
