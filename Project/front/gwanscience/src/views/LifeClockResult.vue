@@ -1,16 +1,51 @@
 <template>
   <div>
-    <h1>Life Clock</h1>
-    <h3>당신의 인생 시간은 {{}} 입니다.</h3>
-    <img src="" />
-    <p>{{}}</p>
+    <LifeClockResultComponent :result="result" />
   </div>
 </template>
 
 <script>
-// import LifeClockResult from "@/views/LifeClockResult";
+import axios from "axios";
+import LifeClockResultComponent from "@/components/LifeClockResultComponent";
+
+const URL = "http://127.0.0.1:8000/services/life_clock/";
+
 export default {
-  // name: "LifeClockResult",
+  name: "LifeClockResult",
+  components: {
+    LifeClockResultComponent,
+  },
+  data() {
+    return {
+      result: {
+        time: null,
+        ment: null,
+        img_url: null,
+      },
+    };
+  },
+  //   props: {
+  //     time: {
+  //       type: String,
+  //     },
+  //     ment: {
+  //       type: String,
+  //     },
+  //     img_url: {
+  //       type: String,
+  //     },
+  //   },
+  created() {
+    this.loadResult();
+  },
+  methods: {
+    loadResult() {
+      axios.get(URL + this.$route.params.age).then((res) => {
+        this.result = res.data;
+        console.log(this.result.img_url);
+      });
+    },
+  },
 };
 </script>
 
