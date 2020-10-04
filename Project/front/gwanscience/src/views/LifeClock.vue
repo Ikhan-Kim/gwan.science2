@@ -8,11 +8,13 @@
         v-model="userInfo.age"
         placeholder="나이를 입력해주세요."
       ></b-form-input>
-      <router-link
+      <!-- <router-link
         :to="{ name: 'LifeClockResult', params: { age: userInfo.age } }"
+      > -->
+      <b-button @click="goResult" style="margin-left: 20px"
+        >나의 인생 시간은? →</b-button
       >
-        <b-button style="margin-left: 20px">나의 인생 시간은? →</b-button>
-      </router-link>
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -26,6 +28,22 @@ export default {
         age: 0,
       },
     };
+  },
+  methods: {
+    goResult() {
+      if (this.userInfo.age < 1) {
+        alert("1 이상의 정수를 입력 해주세요");
+      } else if (this.userInfo.age > 80) {
+        alert("80 이하의 정수를 입력 해주세요");
+      } else {
+        this.$router.push({
+          name: "LifeClockResult",
+          params: {
+            age: this.userInfo.age,
+          },
+        });
+      }
+    },
   },
 };
 </script>

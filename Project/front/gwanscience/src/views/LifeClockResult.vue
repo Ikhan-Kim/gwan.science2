@@ -24,17 +24,6 @@ export default {
       },
     };
   },
-  //   props: {
-  //     time: {
-  //       type: String,
-  //     },
-  //     ment: {
-  //       type: String,
-  //     },
-  //     img_url: {
-  //       type: String,
-  //     },
-  //   },
   created() {
     this.loadResult();
   },

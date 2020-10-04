@@ -1,5 +1,8 @@
 def life_clock(age):
-    img_url = 'clock_img/'+ str(age) +'.png'
+    if age > 40:
+        img_url = 'clock_img/'+ str(age) +'.png'
+    else:
+        img_url = 'clock_img/'+ str(age+40) +'.png'
     # 1살에 18분
     time = ((24 / 80) * age)
     minute = int(round((time - int(time)) * 60, 1))
@@ -7,10 +10,10 @@ def life_clock(age):
     if age <= 80:
         if time < 13 :
             # print('오전', int(time), '시', minute, '분입니다.')
-            time_string = '오전' + str(int(time)) + '시' + str(minute) + '분'
+            time_string = '오전 ' + str(int(time)) + '시' + str(minute) + '분'
         else:
             # print('오후', int(time)-12, '시', minute, '분입니다.')
-            time_string = '오후' + str((int(time)-12)) + '시' + str(minute) + '분'
+            time_string = '오후 ' + str((int(time)-12)) + '시' + str(minute) + '분'
     
     if age <= 80:
         if 1 <= age <= 5 :
