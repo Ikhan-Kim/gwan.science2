@@ -11,45 +11,72 @@
     </div>
   <div> -->
     <hr />
-    <b-row>
-      <b-col cols="12" sm="2">
+    <b-row class="f-ujr">
+      <b-col cols="12" xs="2" sm="2">
         <div>
-          <img src="@/assets/circle6.png" width="100%">
-          <div style="text-align: center; position: absolute; top: 60%; left: 50%; transform: translate( -50%, -50% ); font-size: 2em;">
+          <img src="@/assets/name_img/circle1.png" width="100%">
+          <div class="example">
             <p>{{ this.result.name[0][0] }}</p>
           </div>
         </div>
       </b-col>
-      <b-col cols="12" sm="2">
+      <b-col cols="12" xs="2" sm="2">
         <div>
-          <img src="@/assets/circle6.png" width="100%">
+          <img src="@/assets/name_img/circle2.png" width="100%">
+          <div class="example">
+            <p>{{ this.result.name[1][0] }}</p>
+          </div>
         </div>
       </b-col>
-      <b-col cols="12" sm="2">
+      <b-col cols="12" xs="2" sm="2">
         <div>
-          <img src="@/assets/circle6.png" width="100%">
+          <img src="@/assets/name_img/circle3.png" width="100%">
+          <div class="example">
+            <p>{{ this.result.name[0][1] }}</p>
+          </div>
         </div>
       </b-col>
-      <b-col cols="12" sm="2">
+      <b-col cols="12" xs="2" sm="2">
         <div>
-          <img src="@/assets/circle6.png" width="100%">
+          <img src="@/assets/name_img/circle4.png" width="100%">
+          <div class="example">
+            <p>{{ this.result.name[1][1] }}</p>
+          </div>
         </div>
       </b-col>
-      <b-col cols="12" sm="2">
+      <b-col cols="12" xs="2" sm="2">
         <div>
-          <img src="@/assets/circle6.png" width="100%">
+          <img src="@/assets/name_img/circle5.png" width="100%">
+          <div class="example">
+            <p>{{ this.result.name[0][2] }}</p>
+          </div>
         </div>
       </b-col>
-      <b-col cols="12" sm="2">
+      <b-col cols="12" xs="2" sm="2">
         <div>
-          <img src="@/assets/circle6.png" width="100%">
+          <img src="@/assets/name_img/circle6.png" width="100%">
+          <div class="example">
+            <p>{{ this.result.name[1][2] }}</p>
+          </div>
         </div>
       </b-col>
     </b-row>
-    <div>
-    <h3>{{ this.result.name[0] }}님의 {{ this.result.name[1] }}님을 생각하는 호감도 {{ this.result.score[0] }}%</h3>
-    <h3>{{ this.result.name[1] }}님의 {{ this.result.name[0] }}님을 생각하는 호감도 {{ this.result.score[1] }}%</h3>
-    </div>
+    <b-row>
+      <div>
+        <img src="@/assets/name_img/cal.jpg" width="100%">
+        <div class="cexample f-ujr" style="top: 30%; left: 15%;"> {{ this.result.cal[0][1][0] }}</div>
+        <div class="cexample f-ujr" style="top: 30%; left: 33%;"> {{ this.result.cal[0][1][1] }}</div>
+        <div class="cexample f-ujr" style="top: 30%; left: 50%;"> {{ this.result.cal[0][1][2] }}</div>
+        <div class="cexample f-ujr" style="top: 30%; left: 70%;"> {{ this.result.cal[0][1][3] }}</div>
+        <div class="cexample f-ujr" style="top: 30%; left: 90%;"> {{ this.result.cal[0][1][4] }}</div>
+      </div>
+    </b-row>
+    <!-- <div style="width: 90px; float: left"> div tag
+      <img src="@/assets/circle6.png" width="100%">
+      <div style="text-align: center; position: absolute; top: 10%; left: 13%;  font-size: 2em;">
+        <p>{{ this.result.name[0][0] }}</p>
+      </div>
+    </div> -->
     <div style="width: 500px; margin: auto"></div>
     <NameCompatibilityResultShare style="margin: 50px" />
   </b-container>
@@ -67,7 +94,7 @@ export default {
   data () {
     return {
       result: {
-        name: [ null, null],
+        name: [null, null],
         score: [null, null],
       }
     }
@@ -98,6 +125,7 @@ export default {
       axios.get(URL + this.$route.params.name1 + '/' + this.$route.params.name2)
       .then(res => {
         this.result = res.data
+        console.log(res.data)
       })
     }
   }
@@ -117,4 +145,45 @@ export default {
     left: 50%;
     transform: translate( -50%, -50% );
   }
+
+  @media screen and (min-width: 768px) {
+    div.example {
+      font-size: 25px;
+      text-align: center;
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translate( -50%, -50% );
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    div.example {
+      font-size: 20px;
+      text-align: center;
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translate( -50%, -50% );
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    div.cexample {
+      font-size: 25px;
+      text-align: center;
+      position: absolute;
+      transform: translate( -50%, -50% );
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    div.cexample {
+      font-size: 20px;
+      text-align: center;
+      position: absolute;
+      transform: translate( -50%, -50% );
+    }
+  }
+  
 </style>

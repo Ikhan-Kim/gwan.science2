@@ -23,14 +23,18 @@ def adda2n(lst_num):
 
 def algo(a, b):
     lst_name_num = []
+    lst_num = []
+
     for n in range(3):
         lst_name_num.append(alpha2num(list(j2hcj(h2j(a[n])))))
         lst_name_num.append(alpha2num(list(j2hcj(h2j(b[n])))))
-
+    lst_num.append(lst_name_num)
+    
     while len(lst_name_num) > 2:
         lst_name_num = adda2n(lst_name_num)
+        lst_num.append(lst_name_num)
 
     if lst_name_num == [0, 0]:
-        return 100
+        return 100, lst_num
     else:
-        return lst_name_num[0]*10 + lst_name_num[1]
+        return lst_name_num[0]*10 + lst_name_num[1], lst_num
