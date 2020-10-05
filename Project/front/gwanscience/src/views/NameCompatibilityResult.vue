@@ -1,29 +1,57 @@
 <template>
   <b-container>
-    <img src="@/assets/all.jpg">
-  <div>
+    <!-- <div style="position: relative;">  일일이 위치지정
+      <img src="@/assets/all.jpg" height="80">
+      <div style="left: -80px; width: 450px; bottom: 10px; font-size: 2em; position: absolute;">
+        {{ this.result.name[0][0] }}
+      </div>
+      <div style="left: -4px; width: 450px; bottom: 10px; font-size: 2em; position: absolute;">
+        {{ this.result.name[1][0] }}
+      </div>
+    </div>
+  <div> -->
     <hr />
-    <!-- <div style="float: left; width: 33%;">
-      <div class="name-img">
-        <img src="@/assets/circle1.png" alt="not found picture">
-      </div>
-      <div class="name-text">
-        <p>{{ this.result.name[0][0] }}</p>
-      </div>
-    </div>
-    <div style="float: left; width: 33%;">
-      두번째 영역
-    </div>
-    <div style="float: left; width: 33%;">
-      세번째 영역
-    </div> -->
+    <b-row>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+          <div style="text-align: center; position: absolute; top: 60%; left: 50%; transform: translate( -50%, -50% ); font-size: 2em;">
+            <p>{{ this.result.name[0][0] }}</p>
+          </div>
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+    </b-row>
     <div>
     <h3>{{ this.result.name[0] }}님의 {{ this.result.name[1] }}님을 생각하는 호감도 {{ this.result.score[0] }}%</h3>
     <h3>{{ this.result.name[1] }}님의 {{ this.result.name[0] }}님을 생각하는 호감도 {{ this.result.score[1] }}%</h3>
     </div>
     <div style="width: 500px; margin: auto"></div>
     <NameCompatibilityResultShare style="margin: 50px" />
-  </div>
   </b-container>
 </template>
 
