@@ -33,6 +33,13 @@ export default {
   font-style: normal;
 }
 
+@font-face { 
+  font-family: 'Chosunilbo_myungjo'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+  }
+
 /* 을지로 폰트 */
 .f-ujr {
   font-family: BMEULJIRO;
@@ -42,6 +49,12 @@ export default {
 /* 연성 폰트 */
 .f-ys {
   font-family: BMYEONSUNG;
+  color: black;
+}
+
+/* 조선일보명조체 */
+.f-cs {
+  font-family: Chosunilbo_myungjo;
   color: black;
 }
 
@@ -63,13 +76,13 @@ export default {
 
   /* 글자색 */
 .t-red{
-  color: (192, 0, 0);
+  color: RGB(192, 0, 0);
 }
 .t-blue{
-  color: (84, 130, 53);
+  color: RGB(84, 130, 53);
 }
 .t-green{
-  color: (46, 117, 182);
+  color: RGB(46, 117, 182);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
