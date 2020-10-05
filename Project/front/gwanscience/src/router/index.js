@@ -27,7 +27,8 @@ const routes = [
     component: NameCompatibility,
   },
   {
-    path: "/FaceReading/result",
+    path:
+      "/FaceReading/:eyebrowShape/:eyebrowInterval/:eyeSize/:eyeInterval/:eyeTail/:noseLength/:noseWidth/:mouthLength/:mouthThickness/:mouthTail",
     name: "FaceReadingResult",
     component: FaceReadingResult,
     props: true,

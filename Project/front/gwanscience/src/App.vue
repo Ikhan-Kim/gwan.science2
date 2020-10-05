@@ -17,20 +17,24 @@ export default {
 </script>
 
 <style>
-@font-face { 
-  font-family: 'BMEULJIRO'; 
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff'); 
-  font-weight: normal; 
-  font-style: normal; }
+@font-face {
+  font-family: "BMEULJIRO";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
-@font-face { 
-  font-family: 'BMYEONSUNG'; 
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMYEONSUNG.woff') format('woff'); 
-  font-weight: normal; 
-  font-style: normal; }
+@font-face {
+  font-family: "BMYEONSUNG";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMYEONSUNG.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* 을지로 폰트 */
-.f-ujr { 
+.f-ujr {
   font-family: BMEULJIRO;
 }
 
@@ -60,11 +64,11 @@ export default {
 }
 
 .bg-img {
-  background-image: url(assets/images/bg.png);
+  /* background-image: url(assets/images/bg.png); */
   background-color: (248, 244, 233);
-  position: fixed; 
-  top: 0; 
-  left: 0; 
+  position: fixed;
+  top: 0;
+  left: 0;
 
   /* Preserve aspet ratio */
   min-width: 100%;

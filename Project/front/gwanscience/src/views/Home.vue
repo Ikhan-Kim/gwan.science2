@@ -1,40 +1,35 @@
 <template>
   <div>
-    <img alt="logo" class="logo" src="../assets/images/logo.png" />
+    <!-- <img alt="logo" class="logo" src="../assets/images/logo.png" /> -->
     <div class="f-ys">관상으로 보는 내 조선시대 신분은?</div>
 
- <div style="padding-top: 20%;">
-   <div>
-    <router-link to="/FaceReading">
-      <button class="main-btn f-ujr" squared variant="outline-secondary"
-        >제 ＜1＞ 법칙. 관상분석
-</button
-      >
-    </router-link>
-    </div>
-    <div></div>
-    <router-link to="/NameCompatibility">
-      <button class="main-btn f-ujr" squared variant="outline-secondary"
-        >제 ＜2＞ 법칙. 이름궁합
-</button
-      >
-    </router-link>
+    <div style="padding-top: 20%">
+      <div>
+        <router-link to="/FaceReading">
+          <button class="main-btn f-ujr" squared variant="outline-secondary">
+            제 ＜1＞ 법칙. 관상분석
+          </button>
+        </router-link>
+      </div>
+      <div></div>
+      <router-link to="/NameCompatibility">
+        <button class="main-btn f-ujr" squared variant="outline-secondary">
+          제 ＜2＞ 법칙. 이름궁합
+        </button>
+      </router-link>
     </div>
     <div>
-    <router-link to="/FaceReading">
-      <button class="main-btn f-ujr" squared variant="outline-secondary"
-        >제 ＜3＞ 법칙. 인생시계
-</button
-      >
-    </router-link>
+      <router-link to="/FaceReading">
+        <button class="main-btn f-ujr" squared variant="outline-secondary">
+          제 ＜3＞ 법칙. 인생시계
+        </button>
+      </router-link>
     </div>
-
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
 </script>
 
 <style>
@@ -45,24 +40,25 @@
 }
 
 .main-btn {
-    padding-left: 10%;
-    padding-right: 10%;
-    max-width: 60%;
-    margin-bottom : 5%;
-    display: inline-block;
-    font-weight: 400;
-    color: #212529;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    background-color: white;
-    border: 1px dashed transparent;
-    border-width: 3px;
-    border-color: black;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.25rem;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  padding-left: 10%;
+  padding-right: 10%;
+  max-width: 60%;
+  margin-bottom: 5%;
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: white;
+  border: 1px dashed transparent;
+  border-width: 3px;
+  border-color: black;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 </style>
