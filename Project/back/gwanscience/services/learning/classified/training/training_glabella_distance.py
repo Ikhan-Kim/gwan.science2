@@ -22,14 +22,14 @@ train_generator = training_datagen.flow_from_directory(
 	train_dir,
 	target_size=(224, 224),
 	class_mode='categorical',
-    batch_size= 16
+    batch_size= 24
 )
 
 validation_generator = validation_datagen.flow_from_directory(
 	val_dir,
 	target_size=(224, 224),
 	class_mode='categorical',
-    batch_size= 16
+    batch_size= 24
 )
 
 # define model
@@ -65,16 +65,16 @@ model.summary()
 model.compile(loss = 'categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 # model.compile(loss = 'categorical_crossentropy', optimizer='Adam', metrics=['accuracy'])
 
-checkpoint_path = os.path.join(LEARN_DIR, 'training_glabella_distance_logs/cp-{epoch:04d}.ckpt')
+checkpoint_path = os.path.join(LEARN_DIR, 'training_glabella_distance_logs/cp-4-{epoch:04d}.ckpt')
 checkpoint_dir = os.path.dirname(checkpoint_path)
 
-ckpt_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1, period=30)
+ckpt_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1, period=100)
 
-history = model.fit(train_generator, epochs=150, steps_per_epoch=8, validation_data = validation_generator, verbose = 1, validation_steps=3, callbacks=[ckpt_callback])
+history = model.fit(train_generator, epochs=300, steps_per_epoch=12, validation_data = validation_generator, verbose = 1, validation_steps=3, callbacks=[ckpt_callback])
 
 # model.save("model_eyes_size.h5")
 
-save_path = os.path.join(LEARN_DIR,'training_glabella_distance_logs/model_glabella_distance.h5')
+save_path = os.path.join(LEARN_DIR,'training_glabella_distance_logs/model_glabella_distance4.h5')
 model.save(save_path)
 
 # 정확도 그래프
