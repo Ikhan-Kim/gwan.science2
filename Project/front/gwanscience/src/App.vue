@@ -62,10 +62,8 @@ export default {
 .bg-img {
   background-image: url(assets/main_img/bg.png);
   background-color: (248, 244, 233);
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-
+  top: 0;
+  left: 0;
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
