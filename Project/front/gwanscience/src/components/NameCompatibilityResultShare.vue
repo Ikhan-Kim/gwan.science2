@@ -91,8 +91,8 @@ export default {
 </script>
 
 <style>
-.shareButtons {
+/* .shareButtons {
   display: block;
   margin: 25px auto 25px auto;
-}
+} */
 </style>

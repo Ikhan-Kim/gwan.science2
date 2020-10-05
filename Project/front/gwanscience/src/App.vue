@@ -91,12 +91,19 @@ export default {
 .bg-img {
   background-image: url(assets/main_img/bg.png);
   background-color: (248, 244, 233);
-  position: fixed;
+  /* position: fixed; */
+  /* background-attachment: fixed; */
   top: 0; 
   left: 0; 
+  overflow-y:auto;
+  overflow-x:scroll;
 
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
+}
+
+.m-b300 {
+  margin-bottom: 300px;
 }
 </style>
