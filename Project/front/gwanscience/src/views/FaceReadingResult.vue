@@ -14,9 +14,6 @@
     <div>결과 이미지 - 안맞는 친구</div>
     <br>
     <br>
-
-    
-    <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
     <FaceReadingResultShare />
   </div>
 </template>

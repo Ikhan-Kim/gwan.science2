@@ -66,11 +66,11 @@ export default {
   /* background-color: blueviolet; */
 }
 .bg-blue{
-  background-color: RGB(84, 130, 53);
+  background-color: RGB(46, 117, 182);
   color: white;
 }
 .bg-green{
-  background-color: RGB(46, 117, 182);
+  background-color: RGB(84, 130, 53);
   color: white;
 }
 
@@ -79,10 +79,10 @@ export default {
   color: RGB(192, 0, 0);
 }
 .t-blue{
-  color: RGB(84, 130, 53);
+  color: RGB(46, 117, 182);
 }
 .t-green{
-  color: RGB(46, 117, 182);
+  color: RGB(84, 130, 53);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
