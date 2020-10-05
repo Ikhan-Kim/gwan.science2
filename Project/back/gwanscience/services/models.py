@@ -23,4 +23,6 @@ class FaceReadingInfo(models.Model):
     eye_result = models.TextField()
     nose_result = models.TextField()
     mouth_result = models.TextField()
+    total = models.TextField()
     total_result = models.TextField()
+    user_img = models.ImageField()
