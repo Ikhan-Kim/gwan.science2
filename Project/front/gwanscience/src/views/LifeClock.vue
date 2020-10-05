@@ -1,22 +1,34 @@
 <template>
   <div>
-    <h1>Life Clock</h1>
-    <div class="row d-flex justify-content-center m-md-2">
-      <b-form-input
-        style="width: 300px"
-        type="number"
+    <div class="f-ujr duru"><h3 class="pt-20"> 제 ＜3＞ 법칙. 인생시계</h3></div>
+    <div class="f-ys"><h5>당신의 인생은 지금 몇 시 일까요?</h5><br></div>
+
+    <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
+      <b-row>
+        <b-col cols="4" class="pb-3"><h4>나이</h4></b-col>
+        <b-col cols="8">
+          <b-form-input
+          type="number"
         v-model="userInfo.age"
         placeholder="나이를 입력해주세요."
-      ></b-form-input>
+        ></b-form-input>
+        </b-col>
+     </b-row>
+    </b-container>
+
+    <br>
+    <br>
+    <br>
+
       <!-- <router-link
         :to="{ name: 'LifeClockResult', params: { age: userInfo.age } }"
       > -->
-      <b-button @click="goResult" style="margin-left: 20px"
-        >나의 인생 시간은? →</b-button
+      <button @click="goResult" class="bg-red btn-customm f-ujr m-b300"
+        >나의 인생 시간 확인하기 ➡</button
       >
       <!-- </router-link> -->
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -25,7 +37,7 @@ export default {
   data() {
     return {
       userInfo: {
-        age: 0,
+        age: null,
       },
     };
   },

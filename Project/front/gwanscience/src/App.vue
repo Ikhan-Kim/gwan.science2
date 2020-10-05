@@ -48,13 +48,17 @@ export default {
 /* 컬러 팔레트 */
   /* 배경색 */
 .bg-red{
-  background-color: (192, 0, 0);
+  background-color: RGB(192, 0, 0);
+  color: white;
+  /* background-color: blueviolet; */
 }
 .bg-blue{
-  background-color: (84, 130, 53);
+  background-color: RGB(84, 130, 53);
+  color: white;
 }
 .bg-green{
-  background-color: (46, 117, 182);
+  background-color: RGB(46, 117, 182);
+  color: white;
 }
 
   /* 글자색 */

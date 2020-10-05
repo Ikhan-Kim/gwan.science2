@@ -9,7 +9,7 @@
     <br>
 
     <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
-      <b-row >
+      <b-row>
         <b-col cols="4" class="pb-3"><h4> 닉네임</h4></b-col>
         <b-col cols="8">
           <b-form-input
@@ -293,6 +293,7 @@ export default {
     font-weight: 400;
     text-align: center;
     vertical-align: middle;
+    background-color: (192, 0, 0);
     user-select: none;
     border: 1px solid transparent;
     padding: 0.375rem 0.75rem;
