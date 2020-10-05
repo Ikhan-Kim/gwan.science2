@@ -124,6 +124,8 @@
 </template>
 
 <script>
+import axios from "axios";
+const URL = "http://127.0.0.1:8000/services/face_reading/";
 export default {
   name: "FaceReading",
   data() {
@@ -141,6 +143,24 @@ export default {
         { value: 1, text: "남자" },
         { value: 2, text: "여자" },
       ],
+      result: {
+        eyebrowShape: null,
+        eyebrowInterval: null,
+        eyeSize: null,
+        eyeInterval: null,
+        eyeTail: null,
+        noseLength: null,
+        noseWidth: null,
+        mouthLength: null,
+        mouthThickness: null,
+        mouthTail: null,
+        eyebrowResult: null,
+        eyeResult: null,
+        noseResult: null,
+        mouthResult: null,
+        totalResult: null,
+      },
+      tmpphoto: null,
     };
   },
 
@@ -155,7 +175,6 @@ export default {
         this.createCameraElement();
       }
     },
-
     createCameraElement() {
       const constraints = (window.constraints = {
         audio: false,
@@ -179,7 +198,6 @@ export default {
         track.stop();
       });
     },
-
     takePhoto() {
       this.isPhotoTaken = !this.isPhotoTaken;
 
@@ -188,6 +206,9 @@ export default {
 
       // console.log(context.canvas.toDataURL());
       this.userInfo.userPhoto = context.canvas.toDataURL();
+      this.tmpphoto = document.getElementById("photoTaken").toDataURL("image/jpeg");
+      // this.tmpphoto = document.getElementById("photoTaken").toDataURL()
+      // console.log(this.tmpphoto)
 
       // 아래 코드 수정 예정
 
@@ -218,6 +239,37 @@ export default {
 
     // download.setAttribute("href", canvas);
     // }
+    imgToBack() {
+      axios.get(URL + this.userInfo.nickname).then((res) => {
+        this.result = res.data;
+        console.log(this.result);
+        this.$router.push({
+          name: "FaceReadingResult",
+          params: {
+            eyebrowShape: this.result.eyebrowShape,
+            eyebrowInterval: this.result.eyebrowInterval,
+            eyeSize: this.result.eyeSize,
+            eyeInterval: this.result.eyeInterval,
+            eyeTail: this.result.eyeTail,
+            noseLength: this.result.noseLength,
+            noseWidth: this.result.noseWidth,
+            mouthLength: this.result.mouthLength,
+            mouthThickness: this.result.mouthThickness,
+            mouthTail: this.result.mouthTail,
+            eyebrowResult: this.result.eyebrowResult,
+          },
+        });
+      });
+    },
+    sendImage() {
+      axios.post(`${this.URL}service/face_reading/`, this.tmpphoto)
+      .then(res=> {
+        console.log('보내짐')
+      })
+      .catch(err=> {
+        console.log(err)
+      })
+    }
   },
 };
 </script>
