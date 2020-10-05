@@ -15,6 +15,16 @@
     <br>
     <br>
     <FaceReadingResultShare />
+    <hr>
+    <div class="m-b300">
+      <router-link :to="{ name: 'Home' }">
+      <button class="btn-customm f-ujr mr-4 h5 text--white" style="width: 30%;  background-color: var(--secondary); color: white;" @click="takePhoto">처음으로</button>
+      </router-link>
+
+      <!-- <router-link :to="{ name: 'FaceReadingResult', params: { userInfo: userInfo } }"> -->
+      <button class="btn-customm f-ujr bg-red h5" style="width: 50%">관상 상세보기</button>
+      <!-- </router-link> -->
+    </div>
   </div>
 </template>
 

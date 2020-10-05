@@ -2,7 +2,7 @@
 
   <b-container>
     <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
-    <b-row class="flex-row m-b300">
+    <b-row class="flex-row">
     <img
       src="@/assets/images/twitter.png"
       class="shareButtons"

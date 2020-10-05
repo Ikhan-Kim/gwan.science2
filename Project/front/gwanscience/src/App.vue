@@ -1,9 +1,9 @@
 <template>
   <div id="app" class="bg-img">
-    <div id="nav">
-      <router-link to="/">홈</router-link>|
-      <router-link to="/FaceReading">관상</router-link>|
-      <router-link to="/NameCompatibility">이름 궁합</router-link>|
+    <div id="nav" class="f-cs">
+      <router-link to="/">홈</router-link> |
+      <router-link to="/FaceReading">관상</router-link> |
+      <router-link to="/NameCompatibility">이름 궁합</router-link> |
       <router-link to="/LifeClock">인생 시계</router-link>
     </div>
     <router-view />
@@ -98,11 +98,11 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color:black
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: RGB(46, 117, 182);
 }
 
 .bg-img {
@@ -121,6 +121,6 @@ export default {
 }
 
 .m-b300 {
-  margin-bottom: 300px;
+  margin-bottom: 210px;
 }
 </style>
