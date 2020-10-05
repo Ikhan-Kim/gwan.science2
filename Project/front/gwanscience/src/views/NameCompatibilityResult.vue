@@ -1,18 +1,65 @@
 <template>
-  <div>
+  <b-container>
+    <!-- <div style="position: relative;">  일일이 위치지정
+      <img src="@/assets/all.jpg" height="80">
+      <div style="left: -80px; width: 450px; bottom: 10px; font-size: 2em; position: absolute;">
+        {{ this.result.name[0][0] }}
+      </div>
+      <div style="left: -4px; width: 450px; bottom: 10px; font-size: 2em; position: absolute;">
+        {{ this.result.name[1][0] }}
+      </div>
+    </div>
+  <div> -->
     <hr />
+    <b-row>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+          <div style="text-align: center; position: absolute; top: 60%; left: 50%; transform: translate( -50%, -50% ); font-size: 2em;">
+            <p>{{ this.result.name[0][0] }}</p>
+          </div>
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+      <b-col cols="12" sm="2">
+        <div>
+          <img src="@/assets/circle6.png" width="100%">
+        </div>
+      </b-col>
+    </b-row>
+    <div>
     <h3>{{ this.result.name[0] }}님의 {{ this.result.name[1] }}님을 생각하는 호감도 {{ this.result.score[0] }}%</h3>
     <h3>{{ this.result.name[1] }}님의 {{ this.result.name[0] }}님을 생각하는 호감도 {{ this.result.score[1] }}%</h3>
+    </div>
     <div style="width: 500px; margin: auto"></div>
     <NameCompatibilityResultShare style="margin: 50px" />
-  </div>
+  </b-container>
 </template>
 
 <script>
 import NameCompatibilityResultShare from "@/components/NameCompatibilityResultShare.vue";
 import axios from "axios";
 
-const URL = "http://127.0.0.1:8000/services/test/"
+const URL = "http://127.0.0.1:8000/services/name_compability/"
 
 export default {
   name: "NameCompatibilityResult",
@@ -20,7 +67,7 @@ export default {
   data () {
     return {
       result: {
-        name: [null, null],
+        name: [ null, null],
         score: [null, null],
       }
     }
@@ -57,4 +104,17 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .name-img {
+    width: 100%;
+    vertical-align: middle;
+  }
+  .name-text {
+    padding: 5px 10px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate( -50%, -50% );
+  }
+</style>
