@@ -21,7 +21,7 @@ def face_reading_reading(request):
 
 @api_view(['GET'])
 def name_compability(request, name_1, name_2):
-    result_data = {"name":[name_1,name_2], "score": [algo(name_1,name_2)[0] ,algo(name_2,name_1)[0]], "cal": [algo(name_1, name_2)[1], algo(name_2, name_1)[1]]}
+    result_data = {"name":[name_1,name_2], "score": [algo(name_1,name_2)[0] ,algo(name_2,name_1)[0]], "cal": [algo(name_1, name_2)[1], algo(name_2, name_1)[1]], "comment": algo(name_1,name_2)[2]}
     return Response(result_data)
     # return JsonResponse(a)
 
