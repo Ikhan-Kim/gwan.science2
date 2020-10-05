@@ -9,11 +9,10 @@ import keras_preprocessing
 from keras_preprocessing import image
 from keras_preprocessing.image import ImageDataGenerator
 
-train_dir = settings.BASE_DIR+'services/learning/classifid/eyes_size/train' 
-val_dir = settings.BASE_DIR+'services/learning/classifid/eyes_size/validation'
+LEARN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# train_dir = os.path.join('C:/Users/multicampus/Desktop/new1/new2/eyes_size/train')
-# test_dir = os.path.join('C:/Users/multicampus/Desktop/new1/new2/eyes_size/test')
+train_dir = os.path.join(LEARN_DIR, 'eyes_size/train')
+val_dir = os.path.join(LEARN_DIR, 'eyes_size/validation')
 
 # label
 training_datagen = ImageDataGenerator(rescale = 1./255)
@@ -63,18 +62,20 @@ model = tf.keras.models.Sequential([
 
 model.summary()
 
-model.compile(loss = 'categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+# model.compile(loss = 'categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+model.compile(loss = 'categorical_crossentropy', optimizer='Adam', metrics=['accuracy'])
 
-checkpoint_path = settings.BASE_DIR+'services/learning/training_eyes_size_logs/cp-{epoch:04d}.ckpt'
+checkpoint_path = os.path.join(LEARN_DIR, 'training_eyes_size_logs/cp-{epoch:04d}.ckpt')
 checkpoint_dir = os.path.dirname(checkpoint_path)
 
-# checkpoint_path = "C:/Users/multicampus/Desktop/new1/new2/training_1/cp-{epoch:04d}.ckpt"
+ckpt_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1, period=30)
 
-cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1, period=30)
+history = model.fit(train_generator, epochs=150, steps_per_epoch=8, validation_data = validation_generator, verbose = 1, validation_steps=3, callbacks=[ckpt_callback])
 
-history = model.fit(train_generator, epochs=120, steps_per_epoch=8, validation_data = validation_generator, verbose = 1, validation_steps=3, callbacks=[cp_callback])
+# model.save("model_eyes_size.h5")
 
-model.save("model_eyes_size.h5")
+save_path = os.path.join(LEARN_DIR,'training_eyes_size_logs/model_eyes_size.h5')
+model.save(save_path)
 
 # 정확도 그래프
 import matplotlib.pyplot as plt
@@ -87,7 +88,7 @@ epochs = range(len(acc))
 
 plt.plot(epochs, acc, 'r', label='Training accuracy')
 plt.plot(epochs, val_acc, 'b', label='Validation accuracy')
-plt.title('Training and validation accuracy')
+plt.title('Eyes_size Training and validation accuracy')
 plt.legend(loc=0)
 plt.figure()
 
