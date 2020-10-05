@@ -64,7 +64,7 @@ export default {
 }
 
 .bg-img {
-  /* background-image: url(assets/images/bg.png); */
+  background-image: url(assets/images/bg.png);
   background-color: (248, 244, 233);
   position: fixed;
   top: 0;

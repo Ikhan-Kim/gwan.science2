@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <img alt="logo" class="logo" src="../assets/images/logo.png" /> -->
+    <img alt="logo" class="logo" src="../assets/images/logo.png" />
     <div class="f-ys">관상으로 보는 내 조선시대 신분은?</div>
 
     <div style="padding-top: 20%">
