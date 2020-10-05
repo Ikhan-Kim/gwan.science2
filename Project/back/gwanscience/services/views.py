@@ -3,7 +3,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from .models import NameCompat
+from .models import FaceReadingInfo
 from .serializers import NameCompatSerializer
+from .serializers import FaceReadingInfoSerializer
 from .algo_name import algo
 from .life_clock import life_clock
 # 추후삭제
@@ -53,3 +55,11 @@ def func_life_clock(request, age):
     time, result, img_url = life_clock(age)
     result_data = {"time":time, "ment":result, "img_url":img_url}
     return Response(result_data)
+
+@api_view(['POST'])
+def test(request):
+    serializer = FaceReadingInfoSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
