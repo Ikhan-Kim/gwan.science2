@@ -72,6 +72,9 @@
           >
         </div>
       </div>
+      <div>
+        <button v-if="isPhotoTaken" @click="sendImage">사진보내기 test</button>
+      </div>
       <!-- <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-shoot"  v-if="isPhotoTaken">
           <canvas id="userPhoto" :width="450" :height="300"></canvas>
@@ -118,6 +121,7 @@ export default {
         mouthResult: null,
         totalResult: null,
       },
+      tmpphoto: null,
     };
   },
 
@@ -163,6 +167,9 @@ export default {
 
       // console.log(context.canvas.toDataURL());
       this.userInfo.userPhoto = context.canvas.toDataURL();
+      this.tmpphoto = document.getElementById("photoTaken").toDataURL("image/jpeg");
+      // this.tmpphoto = document.getElementById("photoTaken").toDataURL()
+      // console.log(this.tmpphoto)
 
       // 아래 코드 수정 예정
 
@@ -215,6 +222,15 @@ export default {
         });
       });
     },
+    sendImage() {
+      axios.post(`${this.URL}service/face_reading/`, this.tmpphoto)
+      .then(res=> {
+        console.log('보내짐')
+      })
+      .catch(err=> {
+        console.log(err)
+      })
+    }
   },
 };
 </script>
