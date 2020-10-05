@@ -32,11 +32,36 @@ export default {
 /* 을지로 폰트 */
 .f-ujr { 
   font-family: BMEULJIRO;
+  color: black;
 }
 
 /* 연성 폰트 */
 .f-ys {
   font-family: BMYEONSUNG;
+  color: black;
+}
+
+/* 컬러 팔레트 */
+  /* 배경색 */
+.bg-red{
+  background-color: (192, 0, 0);
+}
+.bg-blue{
+  background-color: (84, 130, 53);
+}
+.bg-green{
+  background-color: (46, 117, 182);
+}
+
+  /* 글자색 */
+.t-red{
+  color: (192, 0, 0);
+}
+.t-blue{
+  color: (84, 130, 53);
+}
+.t-green{
+  color: (46, 117, 182);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -62,7 +87,7 @@ export default {
 .bg-img {
   background-image: url(assets/images/bg.png);
   background-color: (248, 244, 233);
-  position: fixed; 
+  position: fixed;
   top: 0; 
   left: 0; 
 
