@@ -5,7 +5,7 @@ app_name = 'services'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('face_reading/', views.face_reading, name='face_reading'),
+    path('face_reading/<username>/', views.face_reading, name='face_reading'),
     path('face_reading/reading/', views.face_reading_reading, name='face_reading_reading'),
     path('name_compability/<str:name_1>/<str:name_2>/', views.name_compability, name='name_compability'),
     path('life_clock/<int:age>/', views.func_life_clock, name='life_clock'),
