@@ -65,5 +65,30 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+div.left {
+  width: 40%;
+  float: left;
+  box-sizing: border-box;
+}
+
+div.right {
+  width: 60%;
+  float: right;
+  box-sizing: border-box;
+}
+
+input {
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
+  border-width: 1px;
+}
+
+p.name {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: BMEULJIRO;
+  font-size: 20px;
+}
 </style>
