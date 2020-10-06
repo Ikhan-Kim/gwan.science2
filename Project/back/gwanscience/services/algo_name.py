@@ -21,9 +21,35 @@ def adda2n(lst_num):
         lst_result.append(result%10)
     return lst_result
 
+def make_comment(num):
+    comment = ''
+    if 0 <= num < 10:
+        # 그냥 다음생을 기대하세요
+        comment = '친해지는것보다 다음생이 더 빠를 사이'
+    elif 10 <= num < 20:
+        comment = '안싸우는게 신기한 사이'
+    elif 20 <= num < 30:
+        comment = '노오오력 없이 친해지기 힘든 사이'
+    elif 30 <= num < 40:
+        comment = '전생에 옷깃 한 번 스쳐본 사이'
+    elif 40 <= num < 50:
+        comment = '얼굴만 알고 지내게 될 사이'
+    elif 50 <= num < 60:
+        comment = '가끔 안부만 물어 볼 사이'
+    elif 60 <= num < 70:
+        comment = '언제든 전화 가능한 사이'
+    elif 70 <= num < 80:
+        comment = '곁에 없으면 허전한 사이'
+    elif 80 <= num < 90:
+        comment = '눈빛만 봐도 알 수 있을 사이'
+    elif 90 <= num < 100:
+        comment = '하늘에서 이어준 천생연분~!'
+    return comment
+
 def algo(a, b):
     lst_name_num = []
     lst_num = []
+    comment = ''
 
     for n in range(3):
         lst_name_num.append(alpha2num(list(j2hcj(h2j(a[n])))))
@@ -34,7 +60,7 @@ def algo(a, b):
         lst_name_num = adda2n(lst_name_num)
         lst_num.append(lst_name_num)
 
-    if lst_name_num == [0, 0]:
-        return 100, lst_num
-    else:
-        return lst_name_num[0]*10 + lst_name_num[1], lst_num
+    score = lst_name_num[0]*10 + lst_name_num[1]
+
+    return score, lst_num, make_comment(score)
+    # return lst_name_num[0]*10 + lst_name_num[1], lst_num

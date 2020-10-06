@@ -1,18 +1,7 @@
 <template>
   <b-container>
-    <!-- <div style="position: relative;">  일일이 위치지정
-      <img src="@/assets/all.jpg" height="80">
-      <div style="left: -80px; width: 450px; bottom: 10px; font-size: 2em; position: absolute;">
-        {{ this.result.name[0][0] }}
-      </div>
-      <div style="left: -4px; width: 450px; bottom: 10px; font-size: 2em; position: absolute;">
-        {{ this.result.name[1][0] }}
-      </div>
-    </div>
-  <div> -->
-    <hr />
-    <b-row class="f-ujr">
-      <b-col cols="12" xs="2" sm="2">
+    <b-row class="f-ujr" v-if="this.timedelay">
+      <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle1.png" width="100%">
           <div class="example">
@@ -20,7 +9,7 @@
           </div>
         </div>
       </b-col>
-      <b-col cols="12" xs="2" sm="2">
+      <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle2.png" width="100%">
           <div class="example">
@@ -28,7 +17,7 @@
           </div>
         </div>
       </b-col>
-      <b-col cols="12" xs="2" sm="2">
+      <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle3.png" width="100%">
           <div class="example">
@@ -36,7 +25,7 @@
           </div>
         </div>
       </b-col>
-      <b-col cols="12" xs="2" sm="2">
+      <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle4.png" width="100%">
           <div class="example">
@@ -44,7 +33,7 @@
           </div>
         </div>
       </b-col>
-      <b-col cols="12" xs="2" sm="2">
+      <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle5.png" width="100%">
           <div class="example">
@@ -52,39 +41,59 @@
           </div>
         </div>
       </b-col>
-      <b-col cols="12" xs="2" sm="2">
+      <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle6.png" width="100%">
-          <div class="example">
+          <div class="example" style="width:100%">
             <p>{{ this.result.name[1][2] }}</p>
           </div>
         </div>
       </b-col>
+      <b-col cols="12">
+        <div>
+          <img src="@/assets/name_img/cal.png" width="100%">
+          <div class="cexample" style="top: 11%; left: 12%">{{ this.result.cal[0][0][0] }}</div>
+          <div class="cexample" style="top: 11%; left: 27%">{{ this.result.cal[0][0][1] }}</div>
+          <div class="cexample" style="top: 11%; left: 42%">{{ this.result.cal[0][0][2] }}</div>
+          <div class="cexample" style="top: 11%; left: 58%">{{ this.result.cal[0][0][3] }}</div>
+          <div class="cexample" style="top: 11%; left: 74%">{{ this.result.cal[0][0][4] }}</div>
+          <div class="cexample" style="top: 11%; left: 89%">{{ this.result.cal[0][0][5] }}</div>
+          <div class="cexample" style="top: 33%; left: 19%">{{ this.result.cal[0][1][0] }}</div>
+          <div class="cexample" style="top: 33%; left: 34%">{{ this.result.cal[0][1][1] }}</div>
+          <div class="cexample" style="top: 33%; left: 49%">{{ this.result.cal[0][1][2] }}</div>
+          <div class="cexample" style="top: 33%; left: 66%">{{ this.result.cal[0][1][3] }}</div>
+          <div class="cexample" style="top: 33%; left: 81%">{{ this.result.cal[0][1][4] }}</div>
+          <div class="cexample" style="top: 52%; left: 27%">{{ this.result.cal[0][2][0] }}</div>
+          <div class="cexample" style="top: 52%; left: 42%">{{ this.result.cal[0][2][1] }}</div>
+          <div class="cexample" style="top: 52%; left: 57%">{{ this.result.cal[0][2][2] }}</div>
+          <div class="cexample" style="top: 52%; left: 73%">{{ this.result.cal[0][2][3] }}</div>
+          <div class="cexample" style="top: 70%; left: 34%">{{ this.result.cal[0][3][0] }}</div>
+          <div class="cexample" style="top: 70%; left: 50%">{{ this.result.cal[0][3][1] }}</div>
+          <div class="cexample" style="top: 70%; left: 66%">{{ this.result.cal[0][3][2] }}</div>
+          <div class="cexample" style="top: 88%; left: 41%">{{ this.result.cal[0][4][0] }}</div>
+          <div class="cexample" style="top: 88%; left: 58%">{{ this.result.cal[0][4][1] }}</div>
+        </div>
+      </b-col>
     </b-row>
-    <b-row>
-      <div>
-        <img src="@/assets/name_img/cal.jpg" width="100%">
-        <div class="cexample f-ujr" style="top: 30%; left: 15%;"> {{ this.result.cal[0][1][0] }}</div>
-        <div class="cexample f-ujr" style="top: 30%; left: 33%;"> {{ this.result.cal[0][1][1] }}</div>
-        <div class="cexample f-ujr" style="top: 30%; left: 50%;"> {{ this.result.cal[0][1][2] }}</div>
-        <div class="cexample f-ujr" style="top: 30%; left: 70%;"> {{ this.result.cal[0][1][3] }}</div>
-        <div class="cexample f-ujr" style="top: 30%; left: 90%;"> {{ this.result.cal[0][1][4] }}</div>
-      </div>
-    </b-row>
+    <spinner :loading="this.timedelay"></spinner>
+    <p class="f-ujr"> {{ this.result.name[0] }}님은 {{ this.result.name[1] }}님과의 궁합은 {{ this.result.score[0] }}% 입니다.</p>
+    <p class="f-ujr"> {{ this.result.comment }}</p>
     <!-- <div style="width: 90px; float: left"> div tag
       <img src="@/assets/circle6.png" width="100%">
       <div style="text-align: center; position: absolute; top: 10%; left: 13%;  font-size: 2em;">
         <p>{{ this.result.name[0][0] }}</p>
       </div>
     </div> -->
-    <div style="width: 500px; margin: auto"></div>
+    <!-- <div style="width: 500px; margin: auto"></div> -->
     <NameCompatibilityResultShare style="margin: 50px" />
   </b-container>
 </template>
 
 <script>
 import NameCompatibilityResultShare from "@/components/NameCompatibilityResultShare.vue";
+import spinner from "@/components/spinner.vue";
 import axios from "axios";
+
 
 const URL = "http://127.0.0.1:8000/services/name_compability/"
 
@@ -96,7 +105,10 @@ export default {
       result: {
         name: [null, null],
         score: [null, null],
-      }
+        cal: [null, null],
+        comment: null,
+      },
+      timedelay: false,
     }
   },
   props: {
@@ -109,6 +121,7 @@ export default {
   },
   components: {
     NameCompatibilityResultShare,
+    spinner,
   },
   created() {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -119,6 +132,9 @@ export default {
     console.log(window.Kakao.isInitialized());
 
     this.loadresult();
+    setTimeout(() => {
+      this.timeout()
+    }, 1500)
   },
   methods: {
     loadresult() {
@@ -127,7 +143,10 @@ export default {
         this.result = res.data
         console.log(res.data)
       })
-    }
+    },
+    timeout() {
+      this.timedelay = true
+    },
   }
 };
 </script>
@@ -168,6 +187,17 @@ export default {
     }
   }
 
+  @media screen and (max-width: 376px) {
+    div.example {
+      font-size: 14px;
+      text-align: center;
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translate( -50%, -50% );
+    }
+  }
+
   @media screen and (min-width: 768px) {
     div.cexample {
       font-size: 25px;
@@ -182,6 +212,17 @@ export default {
       font-size: 20px;
       text-align: center;
       position: absolute;
+      transform: translate( -50%, -50% );
+    }
+  }
+
+  @media screen and (max-width: 376px) {
+    div.cexample {
+      font-size: 14px;
+      text-align: center;
+      position: absolute;
+      top: 63%;
+      left: 50%;
       transform: translate( -50%, -50% );
     }
   }
