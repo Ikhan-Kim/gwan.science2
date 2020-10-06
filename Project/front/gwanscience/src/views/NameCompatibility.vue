@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="f-ujr duru"><h3 class="pt-20"> 제 ＜2＞ 법칙. 이름궁합</h3></div>
-    <div class="f-ys"><h5>상대방과 이름 궁합을 확인하세요.</h5><br></div>
+    <div class="f-ys"><h5>상대방과 이름궁합을 확인하세요.</h5><br></div>
     <div style="margin: 50px"></div>
     <b-container class="bv-example-row f-ujr">
       <b-row>
