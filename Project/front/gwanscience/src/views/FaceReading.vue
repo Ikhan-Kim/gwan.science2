@@ -91,19 +91,19 @@
       <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-box" v-if="isCameraOpen">
           <video
-            v-show="!isPhotoTaken"
-            ref="camera"
-            id="Taken"
-            :width="300"
-            :height="300"
-            autoplay
+              v-show="!isPhotoTaken"
+              ref="camera"
+              id="Taken"
+              :width="300"
+              :height="300"
+              autoplay
           ></video>
           <canvas
-            v-show="isPhotoTaken"
-            ref="canvas"
-            id="photoTaken"
-            :width="300"
-            :height="300"
+              v-show="isPhotoTaken"
+              ref="canvas"
+              id="photoTaken"
+              :width="300"
+              :height="300"
           ></canvas>
         </div>
       </div>
@@ -147,6 +147,7 @@
 
 <script>
 import axios from "axios";
+
 const URL = "http://127.0.0.1:8000/services/face_reading/";
 export default {
   name: "FaceReading",
@@ -162,8 +163,8 @@ export default {
       },
       options: [
         // { value: null, text: "성별을 선택해주세요.", disabled: true },
-        { value: 1, text: "남자" },
-        { value: 2, text: "여자" },
+        {value: 1, text: "남자"},
+        {value: 2, text: "여자"},
       ],
       result: {
         eyebrowShape: null,
@@ -220,14 +221,14 @@ export default {
       });
 
       navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then((stream) => {
-          this.$refs.camera.srcObject = stream;
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("설정을 확인해주세요.");
-        });
+          .getUserMedia(constraints)
+          .then((stream) => {
+            this.$refs.camera.srcObject = stream;
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("설정을 확인해주세요.");
+          });
     },
     stopCameraStream() {
       let tracks = this.$refs.camera.srcObject.getTracks();
