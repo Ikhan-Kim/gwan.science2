@@ -114,13 +114,18 @@ img.back {
 
 .bg-img {
   background-image: url(assets/main_img/bg.png);
+  min-height: 100%;
+  background-repeat: repeat-y;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
   background-color: (248, 244, 233);
   top: 0;
   left: 0;
   /* position: fixed; */
   /* Preserve aspet ratio */
   min-width: 100%;
-  min-height: 100%;
+  /* min-height: 100%; */
 }
 
 .mini-logo {
@@ -130,7 +135,4 @@ img.back {
   max-height: 30%;
 }
 
-.m-b300 {
-  margin-bottom: 210px;
-}
 </style>

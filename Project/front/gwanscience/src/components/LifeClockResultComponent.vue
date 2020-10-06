@@ -3,7 +3,7 @@
     <h3 class="f-ujr">당신의 인생 시간은 <br>
     {{ this.result.time }} 입니다.</h3>
     <img class="clock-size" :src="getImgUrl(this.result.img_url)" />
-    <p class="f-cs m-b300">{{ this.result.ment }}</p>
+    <p class="f-cs">{{ this.result.ment }}</p>
   </div>
 </template>
 
