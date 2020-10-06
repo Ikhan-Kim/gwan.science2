@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3 class="f-ujr">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
+    <h3 class="f-ujr" style="margin-bottom: 30px">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
     <b-container id="my_job">
-      <img src="../assets/job_img/1.png" alt="내 신분" class="img-size">
+      <img src="../assets/job_img/1.png" alt="내 신분" class="img-size" style="height: 430px;">
 <!--      <img :src="require('../assets/job_img/'+result.job+'.png')" alt="내 신분" class="img-size">-->
     </b-container>
     <br>
