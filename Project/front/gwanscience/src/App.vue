@@ -1,12 +1,15 @@
 <template>
   <div id="app" class="bg-img">
-    <div>
-  <b-navbar variant="faded" type="light">
+    <div v-if="$router.history.current['path']!='/'">
+  <b-navbar variant="faded" type="light" class="pl-0 mb-3">
       <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back" align="left">
-    <b-navbar-brand href="#">BootstrapVue</b-navbar-brand>
+    <b-navbar-brand>
+      <router-link :to="{ name: 'Home' }">
+      <img src="../src/assets/main_img/logo.png" class="mini-logo">
+      </router-link>
+    </b-navbar-brand>
   </b-navbar>
-</div>
-
+    </div>
     <router-view />
   </div>
 </template>
@@ -122,9 +125,17 @@ img.back {
   background-color: (248, 244, 233);
   top: 0;
   left: 0;
+  /* position: fixed; */
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
+}
+
+.mini-logo {
+  align-content: center;
+  justify-content: center;
+  max-width: 50%;
+  max-height: 30%;
 }
 
 .m-b300 {
