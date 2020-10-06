@@ -4,7 +4,7 @@
     <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
     <b-row class="flex-row">
     <img
-      src="@/assets/images/twitter.png"
+      src="@/assets/main_img/twitter.png"
       class="shareButtons"
       @click="
         ShareTwitter('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
@@ -12,18 +12,18 @@
     >
 
     <img
-      src="@/assets/images/facebook.png"
+      src="@/assets/main_img/facebook.png"
       class="shareButtons"
       @click="ShareFacebook('http://j3c205.p.ssafy.io/')"
     >
     <img
-      src="@/assets/images/kakaostory.png"
+      src="@/assets/main_img/kakaostory.png"
       class="shareButtons"
       @click="ShareKakaoStory('http://j3c205.p.ssafy.io/')"
     >
 
     <img
-      src="@/assets/images/blog.png"
+      src="@/assets/main_img/blog.png"
       class="shareButtons"
       @click="
         ShareNaverBlog('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
@@ -31,7 +31,7 @@
     >
 
     <img
-      src="@/assets/images/kakao.png"
+      src="@/assets/main_img/kakao.png"
       class="shareButtons"
       @click="ShareKakaoTalk('http://j3c205.p.ssafy.io/')"
     >
