@@ -1,47 +1,41 @@
 <template>
-  <div>
-    <h2>결과 공유하기</h2>
-    <button
-      class="shareButtons"
-      @click="
-        ShareTwitter(
-          `http://j3c205.p.ssafy.io/${name1}/${name2}`,
-          '관싸이언스: 우리의 궁합은?'
-        )
-      "
-    >
-      트위터 공유하기
-    </button>
-    <button
-      class="shareButtons"
-      @click="ShareFacebook(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
-    >
-      페이스북 공유하기
-    </button>
-    <button
-      class="shareButtons"
-      @click="ShareKakaoStory(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
-    >
-      카카오스토리 공유하기
-    </button>
-    <button
-      class="shareButtons"
-      @click="
-        ShareNaverBlog(
-          `http://j3c205.p.ssafy.io/${name1}/${name2}`,
-          '관싸이언스: 우리의 궁합은?'
-        )
-      "
-    >
-      네이버 블로그 공유하기
-    </button>
-    <button
-      class="shareButtons"
-      @click="ShareKakaoTalk(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
-    >
-      카카오톡 공유하기
-    </button>
-  </div>
+  <b-container>
+    <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
+    <b-row>
+      <img
+        src="@/assets/main_img/twitter.png"
+        class="shareButtons"
+        @click="
+          ShareTwitter(
+            `https://j3c205.p.ssafy.io/${name1}/${name2}`,
+            '관싸이언스: 우리의 궁합은?')
+        "
+      >
+      <img
+        src="@/assets/main_img/facebook.png"
+        class="shareButtons"
+        @click="ShareFacebook(`https://j3c205.p.ssafy.io/${name1}/${name2}`)"
+      >
+      <img
+        src="@/assets/main_img/kakaostory.png"
+        class="shareButtons"
+        @click="ShareKakaoStory(`https://j3c205.p.ssafy.io/${name1}/${name2}`)"
+      >
+      <img
+        src="@/assets/main_img/blog.png"
+        class="shareButtons"
+        @click="
+          ShareNaverBlog(
+            `https://j3c205.p.ssafy.io/${name1}/${name2}`,
+            '관싸이언스: 우리의 궁합은?')"
+      >
+      <img
+        src="@/assets/main_img/kakao.png"
+        class="shareButtons"
+        @click="ShareKakaoTalk(`https://j3c205.p.ssafy.io/${name1}/${name2}`)"
+      >
+    </b-row>
+  </b-container>
 </template>
 
 <script>

@@ -8,6 +8,7 @@ from .serializers import NameCompatSerializer
 from .serializers import FaceReadingInfoSerializer
 from .algo_name import algo
 from .life_clock import life_clock
+from .split_face import split_main
 
 # 사진
 import base64
@@ -110,7 +111,10 @@ def test(request):
     
     return Response('success')
 
-
+@api_view(['GET'])
+def split(request):
+    split_main()
+    return Response('split')
 
 
 

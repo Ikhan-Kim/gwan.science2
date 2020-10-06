@@ -74,6 +74,7 @@
     <!-- 사진촬영 버튼 -->
     <div class="container">
       <div class="row d-flex justify-content-center">
+<<<<<<< HEAD
         <button
           v-if="!isCameraOpen"
           class="btn-customm bg-red f-ujr"
@@ -86,6 +87,20 @@
         >
           <span class="bg-red h4">사진 촬영</span>
         </button>
+=======
+        
+          <button v-if="!isCameraOpen" 
+            class="btn-customm bg-red f-ujr" style="width: 60%"
+            :class="{
+              'bg-red': !isCameraOpen,
+              'bg-green': isCameraOpen,
+            }"
+            @click="checkInfo"
+          >
+            <span class="bg-red h4">사진 촬영</span>
+          </button>
+          <button @click="splitFace">얼굴쪼개기</button>
+>>>>>>> feature/back_ik
         <div class="camera-button"></div>
       </div>
       <div class="row d-flex justify-content-center m-md-2">
@@ -313,6 +328,13 @@ export default {
           console.log(err);
         });
     },
+    splitFace() {
+      axios.get(`http://127.0.0.1:8000/services/split`)
+      .then(res => {
+        console.log(res)
+        console.log('얼굴을 쪼갬')
+      })
+    }
   },
 };
 </script>
