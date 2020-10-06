@@ -21,9 +21,9 @@
       <button class="btn-customm f-ujr mr-4 h5 text--white" style="width: 30%;  background-color: var(--secondary); color: white;" @click="takePhoto">처음으로</button>
       </router-link>
 
-      <!-- <router-link :to="{ name: 'FaceReadingResult', params: { userInfo: userInfo } }"> -->
+      <router-link :to="{ name: 'FaceReadingDetail' }">
       <button class="btn-customm f-ujr bg-red h5" style="width: 50%">관상 상세보기</button>
-      <!-- </router-link> -->
+      </router-link>
     </div>
   </div>
 </template>
