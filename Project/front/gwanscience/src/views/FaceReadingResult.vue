@@ -2,7 +2,7 @@
   <div>
     <h3 class="f-ujr">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
     <b-container id="my_job">
-      <img src="../assets/job_result/beggar.png" alt="내 신분" class="img-size">
+      <img src="../assets/job_img/1.png" alt="내 신분" class="img-size">
     </b-container>
     <br>
     <br>
@@ -15,9 +15,9 @@
   </b-collapse> -->
 
     <b-container id="my_job">
-      <b-button v-b-toggle.collapse-3 class="m-1"><img src="../assets/job_result/duck_small.png" alt="내 신분" class="img-size"></b-button>
+      <b-button v-b-toggle.collapse-3 class="m-1"><img src="../assets/job_img/small/2.png" alt="내 신분" class="img-size"></b-button>
       <b-collapse visible id="collapse-3">
-    <b-card class="f-cs">탐관오리 특징 간략히?</b-card>
+    <b-card class="f-cs">특징 간략히?</b-card>
   </b-collapse>
     </b-container>
     <br>
@@ -25,7 +25,7 @@
 
     <h3 class="f-ujr">나와 안 맞는 친구는 ? </h3>
     <b-container id="my_job">
-      <img src="../assets/job_result/gisang_small.png" alt="내 신분" class="img-size">
+      <img src="../assets/job_img/small/3.png" alt="내 신분" class="img-size">
     </b-container>
     <br>
     <br>
