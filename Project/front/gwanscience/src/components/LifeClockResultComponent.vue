@@ -1,12 +1,16 @@
 <template>
   <div>
-    <h3 class="f-ujr">당신의 인생 시간은 <br>
-    {{ this.result.time }} 입니다.</h3>
-    <img class="clock-size" :src="getImgUrl(this.result.img_url)" />
-    <p class="f-cs">{{ this.result.ment }}</p>
+    <h5 class="f-ujr" style="width: 80%; margin-left: 10%">당신의 나이는 {{ this.$route.params.age }}살입니다.<br>
+      이 나이를 하루 24시간으로 환산하면 <br>
+    </h5>
+    <h5 class="f-ujr" style="color: red">  {{ this.result.time }} 입니다.</h5>
+    <br>
+    <img class="clock-size" :src="getImgUrl(this.result.img_url)"/>
+    <br>
+    <h5 class="f-ujr" style="width: 80%; margin-bottom: 70px; margin-left: 10%; margin-top: 30px; font-weight: normal">
+      {{ this.result.ment }}</h5>
   </div>
 </template>
-
 <script>
 export default {
   name: "LifeClockResultComponent",
