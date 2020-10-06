@@ -37,7 +37,7 @@
     <br>
     <FaceReadingResultShare/>
     <hr>
-    <div class="m-b300">
+    <div class="mt-5 mb-5">
       <router-link :to="{ name: 'Home' }">
         <button class="btn-customm f-ujr mr-4 h5 text--white"
                 style="width: 30%;  background-color: var(--secondary); color: white;">처음으로

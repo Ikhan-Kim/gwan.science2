@@ -26,7 +26,7 @@
       <!-- <router-link
         :to="{ name: 'LifeClockResult', params: { age: userInfo.age } }"
       > -->
-      <button @click="goResult" class="bg-red btn-customm f-ujr m-b300"
+      <button @click="goResult" class="bg-red btn-customm f-ujr"
         >나의 인생 시간 확인하기 ➡</button
       >
       <!-- </router-link> -->

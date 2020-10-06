@@ -72,12 +72,12 @@
       <div class="row d-flex justify-content-center">
         
           <button v-if="!isCameraOpen" 
-            class="btn-customm bg-red f-ujr m-b300" style="width: 60%"
+            class="btn-customm bg-red f-ujr" style="width: 60%"
             :class="{
               'bg-red': !isCameraOpen,
               'bg-green': isCameraOpen,
             }"
-            @click="toggleCamera"
+            @click="checkInfo"
           >
             <span class="bg-red h4">사진 촬영</span>
           </button>
@@ -103,7 +103,7 @@
         </div>
       </div>
 
-        <div class="camera-shoot m-b300 mt-5" v-if="isCameraOpen">
+        <div class="camera-shoot mt-2 mb-5" v-if="isCameraOpen">
           <button v-if="isPhotoTaken == false" class="btn-customm bg-red f-ujr h4" style="width: 60%" @click="takePhoto">사진촬영</button>
           
           <button v-if="isPhotoTaken == true" class="btn-customm bg-green f-ujr mr-4 h5" style="width: 30%" @click="takePhoto">다시찍기</button>
@@ -112,11 +112,11 @@
           </router-link>
         </div>
 
-      <div class="row d-flex justify-content-center m-md-2">
+      <!-- <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-shoot"  v-if="isPhotoTaken">
           <canvas id="userPhoto" :width="300" :height="300"></canvas>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -163,6 +163,25 @@ export default {
   },
 
   methods: {
+    checkInfo() {
+      if (this.userInfo.nickname == "") {
+        alert("닉네임을 입력해 주세요.");
+      }
+      else if (this.userInfo.age == null) {
+        alert("나이를 입력해 주세요.")
+      }
+      else if (this.userInfo.gender == null) {
+        alert("성별을 선택해 주세요.")
+      }
+      else {
+        this.toggleCamera()
+      }
+    },
+    checkAge() {
+      if (this.userInfo.age < 1) {
+        alert("1 이상의 정수를 입력 해주세요");
+      }
+    },
     toggleCamera() {
       if (this.isCameraOpen) {
         this.isCameraOpen = false;

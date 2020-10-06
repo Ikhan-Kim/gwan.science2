@@ -22,11 +22,11 @@
     </b-tab>
   </b-tabs>
   
-<div class="m-b300">
+
   <router-link :to="{ name: 'Home' }">
     <button class="btn-customm f-ujr mr-4 h5 text--white bg-red" style="width: 30%;">처음으로</button>
   </router-link>
-</div>
+
 
   </div>
 </template>

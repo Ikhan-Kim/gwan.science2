@@ -32,7 +32,7 @@
 
     <div style="margin: 80px"></div>
     <!--    <router-link to="/NameCompatibilityResult">-->
-    <button @click="inputName" class="bg-red btn-customm f-ujr m-b300"
+    <button @click="inputName" class="bg-red btn-customm f-ujr"
     >궁합 확인하기
     </button
     >
