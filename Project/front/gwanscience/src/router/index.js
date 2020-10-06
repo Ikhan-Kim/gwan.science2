@@ -40,7 +40,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/NameCompatibility/:name1/:name2",
+    path: "/NameCompatibilityResult/:name1/:name2",
     name: "NameCompatibilityResult",
     component: NameCompatibilityResult,
     props: true,
