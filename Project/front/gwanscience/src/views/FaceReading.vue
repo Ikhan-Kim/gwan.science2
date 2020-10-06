@@ -77,7 +77,7 @@
               'bg-red': !isCameraOpen,
               'bg-green': isCameraOpen,
             }"
-            @click="toggleCamera"
+            @click="checkInfo"
           >
             <span class="bg-red h4">사진 촬영</span>
           </button>
@@ -163,6 +163,25 @@ export default {
   },
 
   methods: {
+    checkInfo() {
+      if (this.userInfo.nickname == "") {
+        alert("닉네임을 입력해 주세요.");
+      }
+      else if (this.userInfo.age == null) {
+        alert("나이를 입력해 주세요.")
+      }
+      else if (this.userInfo.gender == null) {
+        alert("성별을 선택해 주세요.")
+      }
+      else {
+        this.toggleCamera()
+      }
+    },
+    checkAge() {
+      if (this.userInfo.age < 1) {
+        alert("1 이상의 정수를 입력 해주세요");
+      }
+    },
     toggleCamera() {
       if (this.isCameraOpen) {
         this.isCameraOpen = false;
