@@ -1,33 +1,30 @@
 <template>
   <div>
-    <h1>이름 궁합</h1>
+    <img src="../assets/name_img/head.png" width="400px">
     <div style="margin: 50px"></div>
-    <div class="row d-flex justify-content-center m-md-2">
-      <b-form-input
-        v-model="name1"
-        style="width: 300px"
-        type="text"
-        placeholder="본인의 이름을 입력해주세요."
-      ></b-form-input>
+    <div style="padding-bottom: 200px">
+      <div class="left">
+        <p class="name" style="margin-top: 7px">내 이름</p>
+        <p class="name">상대방 이름</p>
+      </div>
+      <div class="right">
+        <input
+            v-model="name1"
+            type="text"
+            style="margin: 0px 20px 5px 0px"
+        />
+        <br>
+        <input
+            v-model="name2"
+            style="margin: 0px 20px 5px 0px"
+            type="text"
+        />
+      </div>
     </div>
-    <div class="row d-flex justify-content-center m-md-2">
-      <b-form-input
-        v-model="name2"
-        style="width: 300px"
-        type="text"
-        placeholder="상대방의 이름을 입력해주세요."
-      ></b-form-input>
-    </div>
-    <div style="margin: 80px"></div>
-    <!-- <router-link to="/name-compatibility"> -->
-    <b-button
-      style="width: 200px"
-      squared
-      variant="outline-secondary"
-      @click="inputName"
-      >계산하기</b-button
-    >
-    <!-- </router-link> -->
+    <router-link to="/name-compatibility">
+      <img src="../assets/name_img/ok.png" style="width: 300px">
+    </router-link>
+    <div style="padding-bottom: 300px"></div>
   </div>
 </template>
 
@@ -56,5 +53,30 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+div.left {
+  width: 40%;
+  float: left;
+  box-sizing: border-box;
+}
+
+div.right {
+  width: 60%;
+  float: right;
+  box-sizing: border-box;
+}
+
+input {
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
+  border-width: 1px;
+}
+
+p.name {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: BMEULJIRO;
+  font-size: 20px;
+}
 </style>

@@ -1,11 +1,7 @@
 <template>
   <div id="app" class="bg-img">
-    <div id="nav" class="f-cs">
-      <router-link to="/">홈</router-link> |
-      <router-link to="/FaceReading">관상</router-link> |
-      <router-link to="/NameCompatibility">이름궁합</router-link> |
-      <router-link to="/LifeClock">인생시계</router-link>
-    </div>
+      <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back" align="left">
+
     <router-view />
   </div>
 </template>
@@ -92,9 +88,11 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
+img.back {
+  height: 35px;
+  margin: 10px;
 }
+
 
 #nav a {
   font-weight: bold;
@@ -108,13 +106,8 @@ export default {
 .bg-img {
   background-image: url(assets/main_img/bg.png);
   background-color: (248, 244, 233);
-  /* position: fixed; */
-  /* background-attachment: fixed; */
-  top: 0; 
-  left: 0; 
-  overflow-y:auto;
-  overflow-x:scroll;
-
+  top: 0;
+  left: 0;
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
