@@ -2,8 +2,8 @@
   <div>
     <h3 class="f-ujr">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
     <b-container id="my_job">
-      <img :src="('../assets/job_img/'+this.result.job + '.png')"/>
       <img src="../assets/job_img/1.png" alt="내 신분" class="img-size">
+<!--      <img :src="require('../assets/job_img/'+result.job+'.png')" alt="내 신분" class="img-size">-->
     </b-container>
     <br>
     <br>
@@ -17,8 +17,7 @@
 
     <b-container id="my_job">
       <b-button v-b-toggle.collapse-3 class="m-1">
-        <img src="../assets/job_img/small/2.png" alt="내 신분" class="img-size">
-        <img :src="('../assets/job_img/'+getGood(this.result.job) + '.png')"/>
+        <img :src="require('../assets/job_img/small/'+getGood(1)+'.png')" alt="내 신분" class="img-size">
       </b-button>
       <b-collapse visible id="collapse-3">
         <b-card class="f-cs">특징 간략히?</b-card>
@@ -29,15 +28,13 @@
 
     <h3 class="f-ujr">나와 안 맞는 친구는 ? </h3>
     <b-container id="my_job">
-      <img src="../assets/job_img/small/3.png" alt="내 신분" class="img-size">
-      <img :src="('../assets/job_img/'+getBad(this.result.job) + '.png')"/>
-
+      <img :src="require('../assets/job_img/small/'+getBad(1)+'.png')" alt="내 신분" class="img-size">
     </b-container>
     <br>
     <br>
     <FaceReadingResultShare/>
     <hr>
-    <div class="mt-5 mb-5">
+    <div class="m-b300">
       <router-link :to="{ name: 'Home' }">
         <button class="btn-customm f-ujr mr-4 h5 text--white"
                 style="width: 30%;  background-color: var(--secondary); color: white;">처음으로
@@ -53,7 +50,6 @@
 
 <script>
 import axios from "axios";
-
 const URL = "http://127.0.0.1:8000/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 
