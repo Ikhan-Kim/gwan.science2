@@ -1,24 +1,39 @@
 <template>
   <div>
     <h3 class="f-ujr">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
-    <div>결과 이미지 - 내 신분</div>
+    <b-container id="my_job">
+      <img src="../assets/job_result/beggar.png" alt="내 신분" class="img-size">
+    </b-container>
     <br>
     <br>
 
     <h3 class="f-ujr">나와 잘 맞는 친구는 ? </h3>
-    <div>결과 이미지 - 맞는 친구</div>
+
+    <!-- <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
+  <b-collapse visible id="collapse-3">
+    <b-card>I should start open!</b-card>
+  </b-collapse> -->
+
+    <b-container id="my_job">
+      <b-button v-b-toggle.collapse-3 class="m-1"><img src="../assets/job_result/duck_small.png" alt="내 신분" class="img-size"></b-button>
+      <b-collapse visible id="collapse-3">
+    <b-card class="f-cs">탐관오리 특징 간략히?</b-card>
+  </b-collapse>
+    </b-container>
     <br>
     <br>
 
     <h3 class="f-ujr">나와 안 맞는 친구는 ? </h3>
-    <div>결과 이미지 - 안맞는 친구</div>
+    <b-container id="my_job">
+      <img src="../assets/job_result/gisang_small.png" alt="내 신분" class="img-size">
+    </b-container>
     <br>
     <br>
     <FaceReadingResultShare />
     <hr>
     <div class="m-b300">
       <router-link :to="{ name: 'Home' }">
-      <button class="btn-customm f-ujr mr-4 h5 text--white" style="width: 30%;  background-color: var(--secondary); color: white;" @click="takePhoto">처음으로</button>
+      <button class="btn-customm f-ujr mr-4 h5 text--white" style="width: 30%;  background-color: var(--secondary); color: white;">처음으로</button>
       </router-link>
 
       <router-link :to="{ name: 'FaceReadingDetail' }">
@@ -81,4 +96,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.img-size{
+  max-height: 100%;
+  max-width: 100%;
+  background-color: white;
+}
+</style>

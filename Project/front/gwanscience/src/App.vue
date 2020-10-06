@@ -40,6 +40,15 @@ export default {
   font-style: normal; 
   }
 
+  @font-face { font-family: 'ChosunLo'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunLo.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+  /* 조선로고체 */
+
+  .f-csl {
+    font-family: 'ChosunLo';
+    color: black;
+  }
+
 /* 을지로 폰트 */
 .f-ujr {
   font-family: BMEULJIRO;
