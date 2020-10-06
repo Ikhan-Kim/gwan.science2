@@ -274,7 +274,7 @@ export default {
 
 <style>
 .duru {
-  background-image: url(../assets/images/duru.png);
+  background-image: url(../assets/main_img/duru.png);
   background-size: cover;
   background-repeat: no-repeat;
   width: 360px;
