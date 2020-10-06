@@ -12,7 +12,7 @@
     <br />
     <br />
 
-    <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
+    <b-container class="bv-example-row f-ujr mb-4" v-if="!isCameraOpen">
       <b-row>
         <b-col cols="4" class="pb-3"><h4> 닉네임</h4></b-col>
         <b-col cols="6">
@@ -42,8 +42,6 @@
       </b-row>
     </b-container>
 
-    <!-- 사진 촬영 버튼 -->
-
     <!-- 📌📌📌 작동 이상 없으면 삭제하기 !! -->
     <!-- <div class="container" v-if="!isCameraOpen">
       <div class="row d-flex justify-content-center m-md-2">
@@ -72,6 +70,7 @@
     </div> -->
 
     <!-- 사진촬영 버튼 -->
+    
     <div class="container">
       <div class="row d-flex justify-content-center">
         
@@ -83,9 +82,9 @@
             }"
             @click="checkInfo"
           >
-            <span class="bg-red h4">사진 촬영</span>
+            <span class="bg-red h4 mt-3">사진 촬영</span>
           </button>
-          <button @click="splitFace">얼굴쪼개기</button>
+          <!-- <button @click="splitFace">얼굴쪼개기</button> -->
         <div class="camera-button"></div>
       </div>
       <!-- <div class="row d-flex justify-content-center m-md-2"> -->
@@ -95,7 +94,7 @@
               ref="camera"
               id="Taken"
               :width="300"
-              :height="300"
+              :height="225"
               autoplay
           ></video>
           <canvas
@@ -103,12 +102,12 @@
               ref="canvas"
               id="photoTaken"
               :width="300"
-              :height="300"
+              :height="225"
           ></canvas>
         </div>
       <!-- </div> -->
 
-      <div class="camera-shoot mt-2 mb-5" v-if="isCameraOpen">
+      <div class="camera-shoot mt-4 mb-5" v-if="isCameraOpen">
         <button
           v-if="isPhotoTaken == false"
           class="btn-customm bg-red f-ujr h4"
@@ -241,7 +240,7 @@ export default {
       this.isPhotoTaken = !this.isPhotoTaken;
 
       const context = this.$refs.canvas.getContext("2d");
-      context.drawImage(this.$refs.camera, 0, 0, 300, 300);
+      context.drawImage(this.$refs.camera, 0, 0, 300, 225);
 
       // console.log(context.canvas.toDataURL());
       this.userInfo.userPhoto = context.canvas.toDataURL();
@@ -313,13 +312,13 @@ export default {
           console.log(err);
         });
     },
-    splitFace() {
-      axios.get(`http://127.0.0.1:8000/services/split`)
-      .then(res => {
-        console.log(res)
-        console.log('얼굴을 쪼갬')
-      })
-    }
+    // splitFace() {
+    //   axios.get(`http://127.0.0.1:8000/services/split`)
+    //   .then(res => {
+    //     console.log(res)
+    //     console.log('얼굴을 쪼갬')
+    //   })
+    // }
   },
 };
 </script>

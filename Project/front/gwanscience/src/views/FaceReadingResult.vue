@@ -16,12 +16,7 @@
   </b-collapse> -->
 
     <b-container id="my_job">
-      <b-button v-b-toggle.collapse-3 class="m-1">
         <img :src="require('../assets/job_img/small/'+getGood(1)+'.png')" alt="내 신분" class="img-size">
-      </b-button>
-      <b-collapse visible id="collapse-3">
-        <b-card class="f-cs">특징 간략히?</b-card>
-      </b-collapse>
     </b-container>
     <br>
     <br>

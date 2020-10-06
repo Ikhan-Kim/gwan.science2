@@ -2,7 +2,7 @@
   <div id="app" class="bg-img" style="al: center">
     <div v-if="$router.history.current['path']!='/'">
   <b-navbar variant="faded" type="light" class="pl-0 mb-3">
-      <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back" align="left">
+      <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back">
     <b-navbar class="logo-center">
       
       <router-link :to="{ name: 'Home' }">
@@ -100,9 +100,11 @@ export default {
 
 img.back {
   height: 35px;
-  margin: 10px;
-}
+  margin-left: 10px;
+  align-content: left;
+  justify-content: center;
 
+}
 
 #nav a {
   font-weight: bold;
