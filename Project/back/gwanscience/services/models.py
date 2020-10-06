@@ -1,7 +1,7 @@
 from django.db import models
 
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFit
 # Create your models here.
 
 class NameCompat(models.Model):
@@ -32,7 +32,7 @@ class FaceReadingInfo(models.Model):
 class FaceImage(models.Model):
     user_img = models.ImageField(blank=True, upload_to="facePhotos")
     user_img2 = ProcessedImageField(upload_to='facePhotos',
-                                            processors=[ResizeToFill(450,300)],
+                                            processors=[ResizeToFit(upscale=False)],
                                             format='JPEG',
                                             options= {'quality': 90 },
                                             )

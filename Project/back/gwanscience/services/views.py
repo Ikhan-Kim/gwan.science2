@@ -13,6 +13,12 @@ from .life_clock import life_clock
 import base64
 from django.core.files.base import ContentFile
 from .models import FaceImage
+from PIL import Image
+import random
+import os
+from django.conf import settings
+
+import six
 
 # 추후삭제
 from django.http import HttpResponse, JsonResponse
@@ -62,26 +68,53 @@ def func_life_clock(request, age):
     result_data = {"time":time, "ment":result, "img_url":img_url}
     return Response(result_data)
 
+# @api_view(['POST'])
+# def test(request):
+#     faceImage = FaceImage()
+#     image_tmp = list(request.data.keys())
+#     print(image_tmp)
+#     print(image_tmp[0])
+#     format, imgstr = image_tmp[0], image_tmp[1]
+#     imgstr = imgstr.split('base64,')[1]
+#     imgstr += '='*(4-len(imgstr)%4) 
+#     # imgstr = imgstr.strip()
+
+#     ext = format.split('/')[-1]
+#     faceImage.user_img = ContentFile(base64.b64decode(imgstr), name='face.' + ext)
+#     faceImage.save()
+#     return Response('success')
+
 @api_view(['POST'])
 def test(request):
-    faceImage = FaceImage()
+    # faceImage = FaceImage()
+    print(request.data)
     image_tmp = list(request.data.keys())
-    print(image_tmp)
-    print(image_tmp[0])
     format, imgstr = image_tmp[0], image_tmp[1]
-    # print(imgstr)
-    imgstr += '='*(4-len(imgstr)%4) 
+    print(format)
     print(imgstr)
     imgstr = imgstr.split('base64,')[1]
-    print(imgstr)
-
-    # imgstr = base64.b64encode(imgstr)
+    imgstr += '='*(4-len(imgstr)%4) 
     # print(imgstr)
+    number = random.randrange(1,100)
+    if isinstance(imgstr, six.string_types):
+        print('yes')
+    else:
+        print('no')
 
-    ext = format.split('/')[-1]
-    faceImage.user_img2 = ContentFile(base64.b64decode(imgstr), name='face.' + ext)
-    faceImage.save()
+    path = str(os.path.join(settings.MEDIA_ROOT, 'testImg/'))
+    filename = 'image'+str(number)+'.png'
+
+    image = open(path+filename,'wb')
+    image.write(base64.b64decode(imgstr))
+    image.close()
+    
     return Response('success')
+
+
+
+
+
+
 
     # print(base64.b64encode(request.data))
 

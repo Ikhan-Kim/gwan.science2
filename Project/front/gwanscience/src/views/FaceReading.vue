@@ -48,16 +48,16 @@
             v-show="!isPhotoTaken"
             ref="camera"
             id="Taken"
-            :width="450"
-            :height="300"
+            :width="100"
+            :height="100"
             autoplay
           ></video>
           <canvas
             v-show="isPhotoTaken"
             ref="canvas"
             id="photoTaken"
-            :width="450"
-            :height="300"
+            :width="100"
+            :height="100"
           ></canvas>
         </div>
       </div>
@@ -163,10 +163,11 @@ export default {
       this.isPhotoTaken = !this.isPhotoTaken;
 
       const context = this.$refs.canvas.getContext("2d");
-      context.drawImage(this.$refs.camera, 0, 0, 450, 300);
+      context.drawImage(this.$refs.camera, 0, 0, 100, 100);
 
       // console.log(context.canvas.toDataURL());
       this.userInfo.userPhoto = context.canvas.toDataURL();
+      // this.tmpphoto = context.canvas.toDataURL();
       this.tmpphoto = document.getElementById("photoTaken").toDataURL("image/jpeg")
       console.log(this.tmpphoto)
 
