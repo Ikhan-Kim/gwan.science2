@@ -259,15 +259,16 @@ export default {
         });
       });
     },
-    // sendImage() {
-    //   axios.post(`${this.URL}service/face_reading/`, this.tmpphoto)
-    //   .then(res=> {
-    //     console.log('보내짐')
-    //   })
-    //   .catch(err=> {
-    //     console.log(err)
-    //   })
-    // }
+    sendImage() {
+      axios.post(`http://127.0.0.1:8000/services/test`, this.tmpphoto)
+      .then(res=> {
+        console.log(res)
+        console.log('보내짐')
+      })
+      .catch(err=> {
+        console.log(err)
+      })
+    },
   },
 };
 </script>
