@@ -1,7 +1,7 @@
 <template>
-  <b-container class="m-0 p-4">
+  <b-container class="m-0 p-2">
     <hr>
-    <h4 class="f-ujr">결과 공유하기</h4>
+    <h5 class="f-ujr">결과 공유하기</h5>
     <b-row class="flex-row">
     <img
       src="@/assets/main_img/twitter.png"

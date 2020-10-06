@@ -7,7 +7,7 @@
     <br>
     <img class="clock-size" :src="getImgUrl(this.result.img_url)"/>
     <br>
-    <h5 class="f-ujr" style="width: 80%; margin-bottom: 70px; margin-left: 10%; margin-top: 30px; font-weight: normal">
+    <h5 class="f-ujr" style="width: 80%; margin-bottom: 70px; margin-left: 10%; margin-top: 30px; font-weight: lighter">
       {{ this.result.ment }}</h5>
   </div>
 </template>
