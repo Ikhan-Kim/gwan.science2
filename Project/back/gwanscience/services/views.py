@@ -64,15 +64,23 @@ def func_life_clock(request, age):
 
 @api_view(['POST'])
 def test(request):
+    faceImage = FaceImage()
     image_tmp = list(request.data.keys())
     print(image_tmp)
     print(image_tmp[0])
     format, imgstr = image_tmp[0], image_tmp[1]
+    # print(imgstr)
+    imgstr += '='*(4-len(imgstr)%4) 
+    print(imgstr)
     imgstr = imgstr.split('base64,')[1]
+    print(imgstr)
+
+    # imgstr = base64.b64encode(imgstr)
+    # print(imgstr)
 
     ext = format.split('/')[-1]
-    faceImage = ContentFile(base64.b64decode(imgstr), name='face.' + ext)
-    FaceImage.user_img.save(faceImage)
+    faceImage.user_img2 = ContentFile(base64.b64decode(imgstr), name='face.' + ext)
+    faceImage.save()
     return Response('success')
 
     # print(base64.b64encode(request.data))
