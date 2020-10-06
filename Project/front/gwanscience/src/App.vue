@@ -1,10 +1,10 @@
 <template>
   <div id="app" class="bg-img">
-    <div id="nav">
-      <router-link to="/">홈</router-link>|
-      <router-link to="/FaceReading">관상</router-link>|
-      <router-link to="/NameCompatibility">이름 궁합</router-link>|
-      <router-link to="/LifeClock">인생 시계</router-link>
+    <div id="nav" class="f-cs">
+      <router-link to="/">홈</router-link> |
+      <router-link to="/FaceReading">관상</router-link> |
+      <router-link to="/NameCompatibility">이름궁합</router-link> |
+      <router-link to="/LifeClock">인생시계</router-link>
     </div>
     <router-view />
   </div>
@@ -33,6 +33,13 @@ export default {
   font-style: normal;
 }
 
+@font-face { 
+  font-family: 'Chosunilbo_myungjo'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+  }
+
 /* 을지로 폰트 */
 .f-ujr {
   font-family: BMEULJIRO;
@@ -45,27 +52,37 @@ export default {
   color: black;
 }
 
+/* 조선일보명조체 */
+.f-cs {
+  font-family: Chosunilbo_myungjo;
+  color: black;
+}
+
 /* 컬러 팔레트 */
   /* 배경색 */
 .bg-red{
-  background-color: (192, 0, 0);
+  background-color: RGB(192, 0, 0);
+  color: white;
+  /* background-color: blueviolet; */
 }
 .bg-blue{
-  background-color: (84, 130, 53);
+  background-color: RGB(46, 117, 182);
+  color: white;
 }
 .bg-green{
-  background-color: (46, 117, 182);
+  background-color: RGB(84, 130, 53);
+  color: white;
 }
 
   /* 글자색 */
 .t-red{
-  color: (192, 0, 0);
+  color: RGB(192, 0, 0);
 }
 .t-blue{
-  color: (84, 130, 53);
+  color: RGB(46, 117, 182);
 }
 .t-green{
-  color: (46, 117, 182);
+  color: RGB(84, 130, 53);
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -81,22 +98,29 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color:black
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: RGB(46, 117, 182);
 }
 
 .bg-img {
   background-image: url(assets/main_img/bg.png);
   background-color: (248, 244, 233);
-  position: fixed;
+  /* position: fixed; */
+  /* background-attachment: fixed; */
   top: 0; 
   left: 0; 
+  overflow-y:auto;
+  overflow-x:scroll;
 
   /* Preserve aspet ratio */
   min-width: 100%;
   min-height: 100%;
+}
+
+.m-b300 {
+  margin-bottom: 210px;
 }
 </style>

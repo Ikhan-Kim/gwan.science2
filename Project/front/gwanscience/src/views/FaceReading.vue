@@ -9,7 +9,7 @@
     <br>
 
     <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
-      <b-row >
+      <b-row>
         <b-col cols="4" class="pb-3"><h4> 닉네임</h4></b-col>
         <b-col cols="8">
           <b-form-input
@@ -69,18 +69,18 @@
 
     <!-- 사진촬영 버튼 -->
     <div class="container">
-      <div class="row d-flex justify-content-center m-md-2">
+      <div class="row d-flex justify-content-center">
         
-          <b-button v-if="!isCameraOpen" 
-            class=" btn-danger f-ujr"
+          <button v-if="!isCameraOpen" 
+            class="btn-customm bg-red f-ujr m-b300" style="width: 60%"
             :class="{
-              'btn-danger': !isCameraOpen,
-              'btn-success': isCameraOpen,
+              'bg-red': !isCameraOpen,
+              'bg-green': isCameraOpen,
             }"
             @click="toggleCamera"
           >
-            <span class="btn-danger">사진 촬영</span>
-          </b-button>
+            <span class="bg-red h4">사진 촬영</span>
+          </button>
         <div class="camera-button"></div>
       </div>
       <div class="row d-flex justify-content-center m-md-2">
@@ -102,18 +102,16 @@
           ></canvas>
         </div>
       </div>
-      <div class="row d-flex justify-content-center">
-        <div class="camera-shoot" v-if="isCameraOpen">
-          <b-button class="btn-success f-ujr" @click="takePhoto">사진촬영</b-button>
-          <router-link
-            :to="{ name: 'FaceReadingResult', params: { userInfo: userInfo } }"
-          >
-            <button v-if="isPhotoTaken == true" class="btn-customm f-ujr"
-              >관상보기</button
-            >
+
+        <div class="camera-shoot m-b300 mt-5" v-if="isCameraOpen">
+          <button v-if="isPhotoTaken == false" class="btn-customm bg-red f-ujr h4" style="width: 60%" @click="takePhoto">사진촬영</button>
+          
+          <button v-if="isPhotoTaken == true" class="btn-customm bg-green f-ujr mr-4 h5" style="width: 30%" @click="takePhoto">다시찍기</button>
+          <router-link :to="{ name: 'FaceReadingResult', params: { userInfo: userInfo } }">
+          <button v-if="isPhotoTaken == true" class="btn-customm f-ujr bg-red h5" style="width: 30%">관상보기</button>
           </router-link>
         </div>
-      </div>
+
       <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-shoot"  v-if="isPhotoTaken">
           <canvas id="userPhoto" :width="300" :height="300"></canvas>
@@ -261,15 +259,15 @@ export default {
         });
       });
     },
-    sendImage() {
-      axios.post(`${this.URL}service/face_reading/`, this.tmpphoto)
-      .then(res=> {
-        console.log('보내짐')
-      })
-      .catch(err=> {
-        console.log(err)
-      })
-    }
+    // sendImage() {
+    //   axios.post(`${this.URL}service/face_reading/`, this.tmpphoto)
+    //   .then(res=> {
+    //     console.log('보내짐')
+    //   })
+    //   .catch(err=> {
+    //     console.log(err)
+    //   })
+    // }
   },
 };
 </script>
@@ -293,6 +291,7 @@ export default {
     font-weight: 400;
     text-align: center;
     vertical-align: middle;
+    background-color: (192, 0, 0);
     user-select: none;
     border: 1px solid transparent;
     padding: 0.375rem 0.75rem;

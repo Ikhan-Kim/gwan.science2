@@ -18,8 +18,8 @@
         </button>
       </router-link>
     </div>
-    <div>
-      <router-link to="/FaceReading">
+    <div class=" m-b300">
+      <router-link to="/LifeClock">
         <button class="main-btn f-ujr" squared variant="outline-secondary">
           제 ＜3＞ 법칙. 인생시계
         </button>
