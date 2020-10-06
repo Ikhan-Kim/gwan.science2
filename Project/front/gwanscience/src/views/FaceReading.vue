@@ -167,7 +167,8 @@ export default {
 
       // console.log(context.canvas.toDataURL());
       this.userInfo.userPhoto = context.canvas.toDataURL();
-      this.tmpphoto = document.getElementById("photoTaken").toDataURL("image/jpeg");
+      this.tmpphoto = document.getElementById("photoTaken").toDataURL("image/jpeg")
+      console.log(this.tmpphoto)
 
       // 아래 코드 수정 예정
 

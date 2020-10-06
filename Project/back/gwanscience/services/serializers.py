@@ -11,4 +11,4 @@ class NameCompatSerializer(serializers.ModelSerializer):
 class FaceReadingInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = FaceReadingInfo
-        fields = 'user_img'
+        fields = ['user_img']

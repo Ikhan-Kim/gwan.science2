@@ -8,6 +8,12 @@ from .serializers import NameCompatSerializer
 from .serializers import FaceReadingInfoSerializer
 from .algo_name import algo
 from .life_clock import life_clock
+
+# 사진
+import base64
+from django.core.files.base import ContentFile
+from .models import FaceImage
+
 # 추후삭제
 from django.http import HttpResponse, JsonResponse
 
@@ -58,8 +64,22 @@ def func_life_clock(request, age):
 
 @api_view(['POST'])
 def test(request):
-    serializer = FaceReadingInfoSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    image_tmp = list(request.data.keys())
+    print(image_tmp)
+    print(image_tmp[0])
+    format, imgstr = image_tmp[0], image_tmp[1]
+    imgstr = imgstr.split('base64,')[1]
+
+    ext = format.split('/')[-1]
+    faceImage = ContentFile(base64.b64decode(imgstr), name='face.' + ext)
+    FaceImage.user_img.save(faceImage)
+    return Response('success')
+
+    # print(base64.b64encode(request.data))
+
+
+    # serializer = FaceReadingInfoSerializer(data=request.data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(serializer.data)
+    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

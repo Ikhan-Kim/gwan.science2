@@ -25,4 +25,7 @@ class FaceReadingInfo(models.Model):
     mouth_result = models.TextField()
     total = models.TextField()
     total_result = models.TextField()
-    user_img = models.ImageField(upload_to="facePhotos")
+    user_img = models.ImageField(blank=True, upload_to="facePhotos")
+
+class FaceImage(models.Model):
+    user_img = models.ImageField(blank=True, upload_to="facePhotos")
