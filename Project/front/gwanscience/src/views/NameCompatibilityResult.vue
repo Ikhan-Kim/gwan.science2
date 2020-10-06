@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row class="f-ujr">
+    <b-row class="f-ujr" v-if="this.timedelay">
       <b-col cols="2">
         <div>
           <img src="@/assets/name_img/circle1.png" width="100%">
@@ -75,7 +75,7 @@
         </div>
       </b-col>
     </b-row>
-
+    <spinner :loading="this.timedelay"></spinner>
     <p class="f-ujr"> {{ this.result.name[0] }}님은 {{ this.result.name[1] }}님과의 궁합은 {{ this.result.score[0] }}% 입니다.</p>
     <p class="f-ujr"> {{ this.result.comment }}</p>
     <!-- <div style="width: 90px; float: left"> div tag
@@ -91,7 +91,9 @@
 
 <script>
 import NameCompatibilityResultShare from "@/components/NameCompatibilityResultShare.vue";
+import spinner from "@/components/spinner.vue";
 import axios from "axios";
+
 
 const URL = "http://127.0.0.1:8000/services/name_compability/"
 
@@ -105,7 +107,8 @@ export default {
         score: [null, null],
         cal: [null, null],
         comment: null,
-      }
+      },
+      timedelay: false,
     }
   },
   props: {
@@ -118,6 +121,7 @@ export default {
   },
   components: {
     NameCompatibilityResultShare,
+    spinner,
   },
   created() {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -128,6 +132,9 @@ export default {
     console.log(window.Kakao.isInitialized());
 
     this.loadresult();
+    setTimeout(() => {
+      this.timeout()
+    }, 1500)
   },
   methods: {
     loadresult() {
@@ -136,7 +143,10 @@ export default {
         this.result = res.data
         console.log(res.data)
       })
-    }
+    },
+    timeout() {
+      this.timedelay = true
+    },
   }
 };
 </script>

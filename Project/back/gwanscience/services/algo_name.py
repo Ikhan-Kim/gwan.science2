@@ -25,9 +25,9 @@ def make_comment(num):
     comment = ''
     if 0 <= num < 10:
         # 그냥 다음생을 기대하세요
-        comment = '안싸우는게 신기한 사이'
-    elif 10 <= num < 20:
         comment = '친해지는것보다 다음생이 더 빠를 사이'
+    elif 10 <= num < 20:
+        comment = '안싸우는게 신기한 사이'
     elif 20 <= num < 30:
         comment = '노오오력 없이 친해지기 힘든 사이'
     elif 30 <= num < 40:
