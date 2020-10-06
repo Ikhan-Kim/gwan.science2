@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>Life Clock</h1>
-    <h3>당신의 인생 시간은 {{ this.result.time }} 입니다.</h3>
-    <img :src="getImgUrl(this.result.img_url)" />
-    <p>{{ this.result.ment }}</p>
+    <h3 class="f-ujr">당신의 인생 시간은 <br>
+    {{ this.result.time }} 입니다.</h3>
+    <img class="clock-size" :src="getImgUrl(this.result.img_url)" />
+    <p class="f-cs m-b300">{{ this.result.ment }}</p>
   </div>
 </template>
 
@@ -42,4 +42,8 @@ export default {
 </script>
 
 <style>
+.clock-size {
+  max-width: 80%;
+  max-height: 70%;
+}
 </style>
