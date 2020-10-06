@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-img">
+  <div id="app" class="bg-img" style="al: center">
     <div v-if="$router.history.current['path']!='/'">
   <b-navbar variant="faded" type="light" class="pl-0 mb-3">
       <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back" align="left">

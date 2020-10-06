@@ -1,41 +1,43 @@
 <template>
-
   <b-container>
     <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
     <b-row class="flex-row">
-    <img
-      src="@/assets/main_img/twitter.png"
-      class="shareButtons"
-      @click="
-        ShareTwitter('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
-      "
-    >
+      <img
+        src="@/assets/main_img/twitter.png"
+        class="shareButtons"
+        @click="
+          ShareTwitter('https://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
+        "
+      />
 
-    <img
-      src="@/assets/main_img/facebook.png"
-      class="shareButtons"
-      @click="ShareFacebook('http://j3c205.p.ssafy.io/')"
-    >
-    <img
-      src="@/assets/main_img/kakaostory.png"
-      class="shareButtons"
-      @click="ShareKakaoStory('http://j3c205.p.ssafy.io/')"
-    >
+      <img
+        src="@/assets/main_img/facebook.png"
+        class="shareButtons"
+        @click="ShareFacebook('https://j3c205.p.ssafy.io/')"
+      />
+      <img
+        src="@/assets/main_img/kakaostory.png"
+        class="shareButtons"
+        @click="ShareKakaoStory('https://j3c205.p.ssafy.io/')"
+      />
 
-    <img
-      src="@/assets/main_img/blog.png"
-      class="shareButtons"
-      @click="
-        ShareNaverBlog('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
-      "
-    >
+      <img
+        src="@/assets/main_img/blog.png"
+        class="shareButtons"
+        @click="
+          ShareNaverBlog(
+            'https://j3c205.p.ssafy.io/',
+            '관싸이언스: 나의 관상은?'
+          )
+        "
+      />
 
-    <img
-      src="@/assets/main_img/kakao.png"
-      class="shareButtons"
-      @click="ShareKakaoTalk('http://j3c205.p.ssafy.io/')"
-    >
-</b-row>
+      <img
+        src="@/assets/main_img/kakao.png"
+        class="shareButtons"
+        @click="ShareKakaoTalk('https://j3c205.p.ssafy.io/')"
+      />
+    </b-row>
   </b-container>
 </template>
 
@@ -46,7 +48,7 @@ export default {
     return {
       meta: [
         { property: "og:title", content: "관싸이언스: 나의 관상은?" },
-        { property: "og:url", content: "http://j3c205.p.ssafy.io/" },
+        { property: "og:url", content: "https://j3c205.p.ssafy.io/" },
         {
           property: "og:description",
           content:
