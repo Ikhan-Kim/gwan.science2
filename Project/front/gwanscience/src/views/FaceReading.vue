@@ -4,7 +4,7 @@
     <div class="f-ys" v-if="!isCameraOpen"><h5>기본정보를 입력해주세요.</h5><br></div>
     <div class="f-ys" v-else><h5>정확한 관상 분석을 위해 <br>중앙에 얼굴이 오도록 촬영해주세요.
 </h5></div>
-
+    
     <br>
     <br>
 
@@ -39,7 +39,7 @@
     </b-container>
 
     <!-- 사진 촬영 버튼 -->
-
+    
     <!-- 📌📌📌 작동 이상 없으면 삭제하기 !! -->
     <!-- <div class="container" v-if="!isCameraOpen">
       <div class="row d-flex justify-content-center m-md-2">
@@ -70,8 +70,8 @@
     <!-- 사진촬영 버튼 -->
     <div class="container">
       <div class="row d-flex justify-content-center">
-
-          <button v-if="!isCameraOpen"
+        
+          <button v-if="!isCameraOpen" 
             class="btn-customm bg-red f-ujr m-b300" style="width: 60%"
             :class="{
               'bg-red': !isCameraOpen,
@@ -105,7 +105,7 @@
 
         <div class="camera-shoot m-b300 mt-5" v-if="isCameraOpen">
           <button v-if="isPhotoTaken == false" class="btn-customm bg-red f-ujr h4" style="width: 60%" @click="takePhoto">사진촬영</button>
-
+          
           <button v-if="isPhotoTaken == true" class="btn-customm bg-green f-ujr mr-4 h5" style="width: 30%" @click="takePhoto">다시찍기</button>
           <router-link :to="{ name: 'FaceReadingResult', params: { userInfo: userInfo } }">
           <button v-if="isPhotoTaken == true" class="btn-customm f-ujr bg-red h5" style="width: 30%">관상보기</button>

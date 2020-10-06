@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import FaceReading from "../views/FaceReading.vue";
 import NameCompatibility from "@/views/NameCompatibility";
 import FaceReadingResult from "@/views/FaceReadingResult";
+import FaceReadingDetail from "@/views/FaceReadingDetail";
 import NameCompatibilityResult from "@/views/NameCompatibilityResult";
 import LifeClock from "@/views/LifeClock";
 import LifeClockResult from "@/views/LifeClockResult";
@@ -22,12 +23,18 @@ const routes = [
     component: FaceReading,
   },
   {
+    path: "/FaceReadingDetail",
+    name: "FaceReadingDetail",
+    component: FaceReadingDetail,
+  },
+  {
     path: "/NameCompatibility",
     name: "NameCompatibility",
     component: NameCompatibility,
   },
   {
-    path: "/FaceReading/result",
+    path:
+      "/FaceReading/:eyebrowShape/:eyebrowInterval/:eyeSize/:eyeInterval/:eyeTail/:noseLength/:noseWidth/:mouthLength/:mouthThickness/:mouthTail",
     name: "FaceReadingResult",
     component: FaceReadingResult,
     props: true,

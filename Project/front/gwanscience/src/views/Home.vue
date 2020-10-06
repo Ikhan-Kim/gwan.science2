@@ -2,38 +2,34 @@
   <div>
     <img alt="logo" class="logo" src="../assets/main_img/logo.png"/>
     <div class="f-ys">관상으로 보는 내 조선시대 신분은?</div>
-    <div style="padding-top: 20%;">
+
+    <div style="padding-top: 20%">
       <div>
         <router-link to="/FaceReading">
-          <button class="main-btn f-ujr" squared variant="outline-secondary"
-          >제 ＜1＞ 법칙. 관상분석
-          </button
-          >
+          <button class="main-btn f-ujr" squared variant="outline-secondary">
+            제 ＜1＞ 법칙. 관상분석
+          </button>
         </router-link>
       </div>
       <div></div>
       <router-link to="/NameCompatibility">
-        <button class="main-btn f-ujr" squared variant="outline-secondary"
-        >제 ＜2＞ 법칙. 이름궁합
-        </button
-        >
+        <button class="main-btn f-ujr" squared variant="outline-secondary">
+          제 ＜2＞ 법칙. 이름궁합
+        </button>
       </router-link>
     </div>
-    <div>
-      <router-link to="/LifeClock" >
-        <button class="main-btn f-ujr" squared variant="outline-secondary" style="margin-bottom: 100px"
-        >제 ＜3＞ 법칙. 인생시계
-        </button
-        >
+    <div class=" m-b300">
+      <router-link to="/LifeClock">
+        <button class="main-btn f-ujr" squared variant="outline-secondary">
+          제 ＜3＞ 법칙. 인생시계
+        </button>
       </router-link>
     </div>
-
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
 </script>
 
 <style>
@@ -62,6 +58,7 @@
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 </style>
