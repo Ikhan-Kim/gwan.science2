@@ -3,11 +3,12 @@
     <div v-if="$router.history.current['path']!='/'">
   <b-navbar variant="faded" type="light" class="pl-0 mb-3">
       <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back" align="left">
-    <b-navbar-brand>
+    <b-navbar class="logo-center">
+      
       <router-link :to="{ name: 'Home' }">
       <img src="../src/assets/main_img/logo.png" class="mini-logo">
       </router-link>
-    </b-navbar-brand>
+    </b-navbar>
   </b-navbar>
     </div>
     <router-view />
@@ -131,8 +132,13 @@ img.back {
 .mini-logo {
   align-content: center;
   justify-content: center;
-  max-width: 50%;
-  max-height: 30%;
+  max-width: 120px;
+  max-height: 60px;
+  margin: 0 auto;
+}
+
+.logo-center {
+  margin: 0 auto;
 }
 
 </style>

@@ -5,23 +5,22 @@
     <div style="margin: 50px"></div>
     <b-container class="bv-example-row f-ujr">
       <b-row>
-        <b-col cols="4" class="pb-3"><h4>내 이름</h4></b-col>
-        <b-col cols="8">
+        <b-col cols="4" class="pb-3 h5">내 이름</b-col>
+        <b-col cols="7">
           <b-form-input
               v-model="name1"
-              style="width: 300px"
               type="text"
-              placeholder="본인의 이름을 입력해주세요."
+              placeholder="내 이름 입력"
           ></b-form-input>
         </b-col>
         <div class="w-100"></div>
-        <b-col cols="4" class="pb-3"><h4> 상대방 이름</h4></b-col>
-        <b-col cols="8">
+        <b-col cols="4" class="pb-3 h5">상대방 이름</b-col>
+        <b-col cols="7">
           <b-form-input
               v-model="name2"
-              style="width: 300px"
               type="text"
-              placeholder="본인의 이름을 입력해주세요."
+              placeholder="상대방 이름 입력"
+              
           ></b-form-input>
         </b-col>
         <div class="w-100"></div>

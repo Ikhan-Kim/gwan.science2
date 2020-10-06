@@ -11,25 +11,25 @@
     <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
       <b-row>
         <b-col cols="4" class="pb-3"><h4> 닉네임</h4></b-col>
-        <b-col cols="8">
+        <b-col cols="6">
           <b-form-input
           type="text"
           v-model="userInfo.nickname"
-          placeholder="닉네임을 입력해주세요."
+          placeholder="닉네임 입력"
         ></b-form-input>
         </b-col>
         <div class="w-100"></div>
         <b-col cols="4" class="pb-3"> <h4> 나이</h4></b-col>
-        <b-col cols="8">
+        <b-col cols="6">
           <b-form-input
           type="number"
           v-model="userInfo.age"
-          placeholder="나이를 입력해주세요."
+          placeholder="나이 입력"
         ></b-form-input>
         </b-col>
         <div class="w-100"></div>
         <b-col cols="4" class="pb-3"> <h4> 성별</h4></b-col>
-        <b-col cols="8">
+        <b-col cols="6">
           <b-form-radio-group
           v-model="userInfo.gender"
           :options="options"
@@ -83,27 +83,25 @@
           </button>
         <div class="camera-button"></div>
       </div>
-      <div class="row d-flex justify-content-center m-md-2">
+      <!-- <div class="row d-flex justify-content-center m-md-2"> -->
         <div class="camera-box" v-if="isCameraOpen">
           <video
             v-show="!isPhotoTaken"
             ref="camera"
             id="Taken"
-            :width="300"
-            :height="300"
+            class="img-size"
             autoplay
           ></video>
           <canvas
             v-show="isPhotoTaken"
             ref="canvas"
             id="photoTaken"
-            :width="300"
-            :height="300"
+            class="img-size"
           ></canvas>
         </div>
-      </div>
+      <!-- </div> -->
 
-        <div class="camera-shoot mt-2 mb-5" v-if="isCameraOpen">
+        <div class="camera-shoot" v-if="isCameraOpen">
           <button v-if="isPhotoTaken == false" class="btn-customm bg-red f-ujr h4" style="width: 60%" @click="takePhoto">사진촬영</button>
           
           <button v-if="isPhotoTaken == true" class="btn-customm bg-green f-ujr mr-4 h5" style="width: 30%" @click="takePhoto">다시찍기</button>
@@ -319,5 +317,11 @@ export default {
     line-height: 1.5;
     border-radius: 0.25rem;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+/* :width="300" */
+            /* :height="300" */
+.img-size {
+  width:300px;
+  height:300px;
 }
 </style>

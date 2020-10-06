@@ -1,7 +1,10 @@
 <template>
-  <div>
-    <h2>결과 공유하기</h2>
-    <button
+  <b-container class="m-0 p-4">
+    <hr>
+    <h4 class="f-ujr">결과 공유하기</h4>
+    <b-row class="flex-row">
+    <img
+      src="@/assets/main_img/twitter.png"
       class="shareButtons"
       @click="
         ShareTwitter(
@@ -10,21 +13,21 @@
         )
       "
     >
-      트위터 공유하기
-    </button>
-    <button
+ 
+    <img
+    src="@/assets/main_img/facebook.png"
       class="shareButtons"
       @click="ShareFacebook(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
     >
-      페이스북 공유하기
-    </button>
-    <button
+
+    <img
+      src="@/assets/main_img/kakaostory.png"
       class="shareButtons"
       @click="ShareKakaoStory(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
     >
-      카카오스토리 공유하기
-    </button>
-    <button
+
+    <img
+      src="@/assets/main_img/blog.png"
       class="shareButtons"
       @click="
         ShareNaverBlog(
@@ -33,15 +36,14 @@
         )
       "
     >
-      네이버 블로그 공유하기
-    </button>
-    <button
+
+    <img
+      src="@/assets/main_img/kakao.png"
       class="shareButtons"
       @click="ShareKakaoTalk(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
     >
-      카카오톡 공유하기
-    </button>
-  </div>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -91,8 +93,5 @@ export default {
 </script>
 
 <style>
-/* .shareButtons {
-  display: block;
-  margin: 25px auto 25px auto;
-} */
+
 </style>
