@@ -1,6 +1,11 @@
 <template>
   <div id="app" class="bg-img">
+    <div>
+  <b-navbar variant="faded" type="light">
       <img src="../src/assets/main_img/back.png" onclick="history.back()" class="back" align="left">
+    <b-navbar-brand href="#">BootstrapVue</b-navbar-brand>
+  </b-navbar>
+</div>
 
     <router-view />
   </div>
