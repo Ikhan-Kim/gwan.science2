@@ -14,7 +14,7 @@
     <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
       <b-row>
         <b-col cols="4" class="pb-3"><h4>나이</h4></b-col>
-        <b-col cols="8">
+        <b-col cols="6">
           <b-form-input
               type="number"
               v-model="userInfo.age"
