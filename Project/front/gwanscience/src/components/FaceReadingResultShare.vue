@@ -1,41 +1,42 @@
 <template>
-  <div>
-    <h2>결과 공유하기</h2>
-    <button
+
+  <b-container>
+    <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
+    <b-row class="flex-row">
+    <img
+      src="@/assets/main_img/twitter.png"
       class="shareButtons"
       @click="
         ShareTwitter('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
       "
     >
-      트위터 공유하기
-    </button>
-    <button
+
+    <img
+      src="@/assets/main_img/facebook.png"
       class="shareButtons"
       @click="ShareFacebook('http://j3c205.p.ssafy.io/')"
     >
-      페이스북 공유하기
-    </button>
-    <button
+    <img
+      src="@/assets/main_img/kakaostory.png"
       class="shareButtons"
       @click="ShareKakaoStory('http://j3c205.p.ssafy.io/')"
     >
-      카카오스토리 공유하기
-    </button>
-    <button
+
+    <img
+      src="@/assets/main_img/blog.png"
       class="shareButtons"
       @click="
         ShareNaverBlog('http://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
       "
     >
-      네이버 블로그 공유하기
-    </button>
-    <button
+
+    <img
+      src="@/assets/main_img/kakao.png"
       class="shareButtons"
       @click="ShareKakaoTalk('http://j3c205.p.ssafy.io/')"
     >
-      카카오톡 공유하기
-    </button>
-  </div>
+</b-row>
+  </b-container>
 </template>
 
 <script>
@@ -83,7 +84,17 @@ export default {
 
 <style>
 .shareButtons {
-  display: block;
-  margin: 25px auto 25px auto;
+  max-width: 52px;
+  max-height: 52px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 </style>

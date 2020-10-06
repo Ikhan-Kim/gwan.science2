@@ -1,44 +1,59 @@
 <template>
   <div>
-    <h1>{{ this.result.username }}님의 관상 분석 결과</h1>
-    <hr />
-    <div style="width: 500px; margin: auto">
-      <!-- <img :src="userInfo.userPhoto" /> -->
-      <h2 style="font-family: 궁서; font-weight: bold; margin-top: 30px">
-        왕의 상
-      </h2>
-      <p>용맹스럽고 위엄이 있으며 먹고 사는데 큰 지장이 없다.</p>
-      <h3 style="margin-top: 30px">눈썹, 미간</h3>
-      <h5>{{ this.result.eyebrowShape }}, {{ this.result.eeybrowInterval }}</h5>
-      <p>
-        {{ this.result.eyebrowResult }}
-      </p>
-      <h3 style="margin-top: 30px">눈</h3>
-      <h5>
-        {{ this.result.eyeSize }}, {{ this.result.eyeTail }},
-        {{ this.result.eyeInterval }}
-      </h5>
-      <p>
-        {{ this.result.eyeResult }}
-      </p>
-      <h3 style="margin-top: 30px">코</h3>
-      <h5>{{ this.result.noseLength }}, {{ this.result.noseWidth }}</h5>
-      <p>
-        {{ this.result.noseResult }}
-      </p>
-      <h3 style="margin-top: 30px">입</h3>
-      <h5>
-        {{ this.result.mouthLength }}, {{ this.result.mouthThickness }},
-        {{ this.result.mouthTail }}
-      </h5>
-      <p>{{ this.result.mouthResult }}</p>
+    <h3 class="f-ujr">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
+    <b-container id="my_job">
+      <img :src="('../assets/job_img/'+this.result.job + '.png')"/>
+      <img src="../assets/job_img/1.png" alt="내 신분" class="img-size">
+    </b-container>
+    <br>
+    <br>
+
+    <h3 class="f-ujr">나와 잘 맞는 친구는 ? </h3>
+
+    <!-- <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
+  <b-collapse visible id="collapse-3">
+    <b-card>I should start open!</b-card>
+  </b-collapse> -->
+
+    <b-container id="my_job">
+      <b-button v-b-toggle.collapse-3 class="m-1">
+        <img src="../assets/job_img/small/2.png" alt="내 신분" class="img-size">
+        <img :src="('../assets/job_img/'+getGood(this.result.job) + '.png')"/>
+      </b-button>
+      <b-collapse visible id="collapse-3">
+        <b-card class="f-cs">특징 간략히?</b-card>
+      </b-collapse>
+    </b-container>
+    <br>
+    <br>
+
+    <h3 class="f-ujr">나와 안 맞는 친구는 ? </h3>
+    <b-container id="my_job">
+      <img src="../assets/job_img/small/3.png" alt="내 신분" class="img-size">
+      <img :src="('../assets/job_img/'+getBad(this.result.job) + '.png')"/>
+
+    </b-container>
+    <br>
+    <br>
+    <FaceReadingResultShare/>
+    <hr>
+    <div class="m-b300">
+      <router-link :to="{ name: 'Home' }">
+        <button class="btn-customm f-ujr mr-4 h5 text--white"
+                style="width: 30%;  background-color: var(--secondary); color: white;">처음으로
+        </button>
+      </router-link>
+
+      <router-link :to="{ name: 'FaceReadingDetail' }">
+        <button class="btn-customm f-ujr bg-red h5" style="width: 50%">관상 상세보기</button>
+      </router-link>
     </div>
-    <FaceReadingResultShare style="margin: 50px" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+
 const URL = "http://127.0.0.1:8000/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 
@@ -63,6 +78,7 @@ export default {
         noseResult: null,
         mouthResult: null,
         totalResult: null,
+        job: null,
       },
     };
   },
@@ -87,7 +103,24 @@ export default {
       console.log(this.result);
     });
   },
+  methods: {
+    getGood(num) {
+      var arr = [11, 5, 8, 7, 13, 1, 15, 3, 2, 14, 12, 0, 10, 4, 9, 6];
+      return arr[num];
+    },
+    getBad(num) {
+      var arr = [15, 14, 3, 2, 9, 7, 11, 5, 10, 4, 8, 6, 13, 12, 1, 0];
+      return arr[num];
+    }
+  }
+
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.img-size {
+  max-height: 100%;
+  max-width: 100%;
+  background-color: white;
+}
+</style>

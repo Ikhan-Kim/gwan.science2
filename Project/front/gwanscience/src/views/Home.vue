@@ -1,7 +1,7 @@
 <template>
   <div>
-    <img alt="logo" class="logo" src="../assets/main_img/logo.png" />
-    <div class="f-ys">관상으로 보는 내 조선시대 신분은?</div>
+    <img alt="logo" class="logo" src="../assets/main_img/logo.png"/>
+    <div class="f-ys h4">관상으로 보는 내 조선시대 신분은?</div>
 
     <div style="padding-top: 20%">
       <div>
@@ -18,13 +18,14 @@
         </button>
       </router-link>
     </div>
-    <div>
-      <router-link to="/FaceReading">
+    <div class="m-b300">
+      <router-link to="/LifeClock">
         <button class="main-btn f-ujr" squared variant="outline-secondary">
           제 ＜3＞ 법칙. 인생시계
         </button>
       </router-link>
     </div>
+    <div class="m-b300"></div>
   </div>
 </template>
 
@@ -34,7 +35,7 @@
 
 <style>
 .logo {
-  padding-top: 30%;
+  padding-top: 20%;
   max-width: 80%;
   max-height: 20%;
 }
@@ -42,7 +43,8 @@
 .main-btn {
   padding-left: 10%;
   padding-right: 10%;
-  max-width: 60%;
+  max-width: 80%;
+  max-height: 20%;
   margin-bottom: 5%;
   display: inline-block;
   font-weight: 400;
