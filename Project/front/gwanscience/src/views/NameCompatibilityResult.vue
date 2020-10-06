@@ -1,4 +1,5 @@
 <template>
+  <div>
   <b-container>
     <b-row class="f-ujr" v-if="this.timedelay">
       <b-col cols="2">
@@ -75,18 +76,12 @@
         </div>
       </b-col>
     </b-row>
-    <spinner :loading="this.timedelay"></spinner>
+    <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner>
     <p class="f-ujr"> {{ this.result.name[0] }}님은 {{ this.result.name[1] }}님과의 궁합은 {{ this.result.score[0] }}% 입니다.</p>
     <p class="f-ujr"> {{ this.result.comment }}</p>
-    <!-- <div style="width: 90px; float: left"> div tag
-      <img src="@/assets/circle6.png" width="100%">
-      <div style="text-align: center; position: absolute; top: 10%; left: 13%;  font-size: 2em;">
-        <p>{{ this.result.name[0][0] }}</p>
-      </div>
-    </div> -->
-    <!-- <div style="width: 500px; margin: auto"></div> -->
-    <NameCompatibilityResultShare style="margin: 50px" />
-  </b-container>
+    </b-container>
+  <NameCompatibilityResultShare/>
+  </div>
 </template>
 
 <script>
@@ -109,6 +104,7 @@ export default {
         comment: null,
       },
       timedelay: false,
+      loadMent: '이름궁합을 게산중입니다...'
     }
   },
   props: {
@@ -192,7 +188,7 @@ export default {
       font-size: 14px;
       text-align: center;
       position: absolute;
-      top: 63%;
+      top: 77%;
       left: 50%;
       transform: translate( -50%, -50% );
     }
