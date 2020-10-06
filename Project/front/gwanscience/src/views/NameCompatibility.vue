@@ -52,14 +52,22 @@ export default {
   },
 
   methods: {
+
     inputName() {
-      this.$router.push({
-        name: "NameCompatibilityResult",
-        params: {
-          name1: this.name1,
-          name2: this.name2,
-        },
-      });
+      var pattern = /([^가-힣\x20])/i;
+      if (pattern.test(this.name1)||pattern.test(this.name2)) {
+        alert("한글이 아닙니다. (자음, 모음만 있는 한글은 처리하지 않습니다.)");
+      } else if (this.name1.length != 3 || this.name2.length != 3)
+        alert("세 글자 이름만 입력 해주세요.")
+      else {
+        this.$router.push({
+          name: "NameCompatibilityResult",
+          params: {
+            name1: this.name1,
+            name2: this.name2,
+          },
+        });
+      }
     },
   },
 };
