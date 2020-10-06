@@ -77,8 +77,8 @@
       </b-col>
     </b-row>
     <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner>
-    <p class="f-ujr"> {{ this.result.name[0] }}님은 {{ this.result.name[1] }}님과의 궁합은 {{ this.result.score[0] }}% 입니다.</p>
-    <p class="f-ujr"> {{ this.result.comment }}</p>
+    <p class="f-ujr" style="margin-top: 20px"> {{ this.result.name[0] }}님은 {{ this.result.name[1] }}님과의 궁합은 {{ this.result.score[0] }}% 입니다.</p>
+    <h5 class="f-ujr" style="color: red"> {{ this.result.comment }}</h5>
     </b-container>
   <NameCompatibilityResultShare/>
   </div>
