@@ -54,11 +54,13 @@
         </button>
       </router-link>
 
-      <router-link :to="{ name: 'FaceReadingDetail' }">
-        <button class="btn-customm f-ujr bg-red h5" style="width: 50%">
-          관상 상세보기
-        </button>
-      </router-link>
+      <button
+        class="btn-customm f-ujr bg-red h5"
+        style="width: 50%"
+        @click="goDetail()"
+      >
+        관상 상세보기
+      </button>
     </div>
   </div>
 </template>
@@ -122,6 +124,36 @@ export default {
     getBad(num) {
       var arr = [15, 14, 3, 2, 9, 7, 11, 5, 10, 4, 8, 6, 13, 12, 1, 0];
       return arr[num];
+    },
+    goDetail() {
+      axios
+        .post(
+          `http://j3c205.p.ssafy.io:8000/services/face_reading/`,
+          this.userInfo
+        )
+        .then((res) => {
+          this.result = res.data;
+          console.log("Detail", this.result);
+          this.$router.push({
+            name: "FaceReadingDetail",
+            params: {
+              eyebrowShape: this.result.eyebrowShape,
+              eyebrowInterval: this.result.eyebrowInterval,
+              eyeSize: this.result.eyeSize,
+              eyeInterval: this.result.eyeInterval,
+              eyeTail: this.result.eyeTail,
+              noseLength: this.result.noseLength,
+              noseWidth: this.result.noseWidth,
+              mouthLength: this.result.mouthLength,
+              mouthThickness: this.result.mouthThickness,
+              mouthTail: this.result.mouthTail,
+              eyebrowResult: this.result.eyebrowResult,
+            },
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
