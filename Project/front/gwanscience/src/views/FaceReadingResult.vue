@@ -128,7 +128,7 @@ export default {
     goDetail() {
       axios
         .post(
-          `http://j3c205.p.ssafy.io:8000/services/face_reading/`,
+          `http://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
