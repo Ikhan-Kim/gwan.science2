@@ -116,9 +116,9 @@
           </div>
         </b-col>
       </b-row>
-      <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner>
+      <spinner :loading="!this.timedelay" :loadingMent="this.loadMent"></spinner>
       <h5 class="f-ujr" style="margin-top: 20px">
-        {{ this.result.name[0] }}님은 {{ this.result.name[1] }}님과의
+        {{ this.result.name[0] }}님과 {{ this.result.name[1] }}님의
       </h5>
       <h5 class="f-ujr">궁합은 {{ this.result.score[0] }}% 입니다.</h5>
       <h4 class="f-ujr" style="color: red; margin-top: 30px">
