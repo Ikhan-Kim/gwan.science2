@@ -8,7 +8,7 @@
 import axios from "axios";
 import LifeClockResultComponent from "@/components/LifeClockResultComponent";
 
-const URL = "http://j3c205.p.ssafy.io:8000/api/services/life_clock/";
+const URL = "https://j3c205.p.ssafy.io:8000/api/services/life_clock/";
 
 export default {
   name: "LifeClockResult",

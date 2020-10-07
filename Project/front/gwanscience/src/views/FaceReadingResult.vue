@@ -67,7 +67,7 @@
 
 <script>
 import axios from "axios";
-const URL = "http://127.0.0.1:8000/services/face_reading/";
+const URL = "https://j3c205.p.ssafy.io:8000/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 
 export default {
