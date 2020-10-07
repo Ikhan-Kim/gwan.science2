@@ -1,47 +1,59 @@
 <template>
   <b-container class="m-0 p-2">
-    <hr>
+    <hr />
     <h5 class="f-ujr">결과 공유하기</h5>
     <b-row class="flex-row">
-    <img
-      src="@/assets/main_img/twitter.png"
-      class="shareButtons"
-      @click="
-        ShareTwitter(
-          `http://j3c205.p.ssafy.io/${name1}/${name2}`,
-          '관싸이언스: 우리의 궁합은?'
-        )
-      "
-    >
- 
-    <img
-    src="@/assets/main_img/facebook.png"
-      class="shareButtons"
-      @click="ShareFacebook(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
-    >
+      <img
+        src="@/assets/main_img/twitter.png"
+        class="shareButtons"
+        @click="
+          ShareTwitter(
+            `https://j3c205.p.ssafy.io/NameCompatibilityResult/${name1}/${name2}`,
+            '관싸이언스: 우리의 궁합은?'
+          )
+        "
+      />
 
-    <img
-      src="@/assets/main_img/kakaostory.png"
-      class="shareButtons"
-      @click="ShareKakaoStory(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
-    >
+      <img
+        src="@/assets/main_img/facebook.png"
+        class="shareButtons"
+        @click="
+          ShareFacebook(
+            `https://j3c205.p.ssafy.io/NameCompatibilityResult/${name1}/${name2}`
+          )
+        "
+      />
 
-    <img
-      src="@/assets/main_img/blog.png"
-      class="shareButtons"
-      @click="
-        ShareNaverBlog(
-          `http://j3c205.p.ssafy.io/${name1}/${name2}`,
-          '관싸이언스: 우리의 궁합은?'
-        )
-      "
-    >
+      <img
+        src="@/assets/main_img/kakaostory.png"
+        class="shareButtons"
+        @click="
+          ShareKakaoStory(
+            `https://j3c205.p.ssafy.io/NameCompatibilityResult/${name1}/${name2}`
+          )
+        "
+      />
 
-    <img
-      src="@/assets/main_img/kakao.png"
-      class="shareButtons"
-      @click="ShareKakaoTalk(`http://j3c205.p.ssafy.io/${name1}/${name2}`)"
-    >
+      <img
+        src="@/assets/main_img/blog.png"
+        class="shareButtons"
+        @click="
+          ShareNaverBlog(
+            `https://j3c205.p.ssafy.io/NameCompatibilityResult/${name1}/${name2}`,
+            '관싸이언스: 우리의 궁합은?'
+          )
+        "
+      />
+
+      <img
+        src="@/assets/main_img/kakao.png"
+        class="shareButtons"
+        @click="
+          ShareKakaoTalk(
+            `https://j3c205.p.ssafy.io/NameCompatibilityResult/${name1}/${name2}`
+          )
+        "
+      />
     </b-row>
   </b-container>
 </template>
@@ -93,5 +105,4 @@ export default {
 </script>
 
 <style>
-
 </style>
