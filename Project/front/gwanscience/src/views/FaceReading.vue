@@ -283,8 +283,8 @@ export default {
       this.timedelay = true;
       axios
         .post(
-          // `https://j3c205.p.ssafy.io/api/services/face_reading/`,
-          `http://127.0.0.1:8000/api/services/face_reading/`,
+          `https://j3c205.p.ssafy.io/api/services/face_reading/`,
+          // `http://127.0.0.1:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {

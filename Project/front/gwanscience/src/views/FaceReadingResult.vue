@@ -4,13 +4,12 @@
       조선시대, {{ this.$route.params.username }}님의 신분은 ?
     </h3>
     <b-container id="my_job">
-      <!-- <img
-        src="../assets/job_img/1.png"
+      <img
+        :src="require('../assets/job_img/' + this.result.job + '.png')"
         alt="내 신분"
         class="img-size"
         style="height: 430px"
-      /> -->
-          <img :src="require('../assets/job_img/'+this.$route.params.job+'.png')" alt="내 신분" class="img-size" style="height: 440px">
+      />
     </b-container>
     <br />
     <br />
@@ -21,7 +20,7 @@
       <img
         :src="
           require('../assets/job_img/small/' +
-            getGood(this.$route.params.job) +
+            getGood(this.result.job) +
             '.png')
         "
         alt="내 신분"
@@ -35,9 +34,7 @@
     <b-container id="my_job">
       <img
         :src="
-          require('../assets/job_img/small/' +
-            getBad(this.$route.params.job) +
-            '.png')
+          require('../assets/job_img/small/' + getBad(this.result.job) + '.png')
         "
         alt="내 신분"
         class="img-size"
@@ -68,8 +65,9 @@
 </template>
 
 <script>
-// import axios from "axios";
-// const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
+import axios from "axios";
+const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
+// const URL = "http://127.0.0.1:8000/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 
 export default {
@@ -78,7 +76,6 @@ export default {
     return {
       result: {
         username: null,
-        eyebrowShape: null,
         eyebrowInterval: null,
         eyeSize: null,
         eyeInterval: null,
@@ -100,10 +97,7 @@ export default {
     };
   },
   props: {
-    userInfo: {
-      type: Object,
-    },
-    eyebrowShape: {
+    username: {
       type: String,
     },
     eyebrowInterval: {
@@ -160,7 +154,6 @@ export default {
       this.$router.push({
         name: "FaceReadingDetail",
         params: {
-          eyebrowShape: this.result.eyebrowShape,
           eyebrowInterval: this.result.eyebrowInterval,
           eyeSize: this.result.eyeSize,
           eyeInterval: this.result.eyeInterval,
@@ -191,6 +184,35 @@ export default {
     // },
     putInfoDetail() {
       this.result = this.$route.params;
+      console.log(this.result);
+      axios
+        .get(
+          URL +
+            this.$route.params.username +
+            "/" +
+            this.$route.params.eyebrowInterval +
+            "/" +
+            this.$route.params.eyeSize +
+            "/" +
+            this.$route.params.eyeInterval +
+            "/" +
+            this.$route.params.eyeTail +
+            "/" +
+            this.$route.params.noseLength +
+            "/" +
+            this.$route.params.noseWidth +
+            "/" +
+            this.$route.params.mouthLength +
+            "/" +
+            this.$route.params.mouthThickness +
+            "/" +
+            this.$route.params.mouthTail +
+            "/"
+        )
+        .then((res) => {
+          this.result = res.data;
+          console.log("it works", this.result);
+        });
     },
   },
 };
