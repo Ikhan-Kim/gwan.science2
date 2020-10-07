@@ -74,8 +74,8 @@
 </template>
 
 <script>
-import axios from "axios";
-const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
+// import axios from "axios";
+// const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 // import spinner from "@/components/spinner.vue";
 
@@ -123,11 +123,12 @@ export default {
     }
     // SDK 초기화 여부를 판단합니다.
     console.log(window.Kakao.isInitialized());
-    axios.post(URL).then((res) => {
-      this.result = res.data;
-      console.log(this.result);
-    });
-    this.result = this.$route.params;
+    // axios.post(URL).then((res) => {
+    //   this.result = res.data;
+    //   console.log(this.result);
+    // });
+    // this.result = this.$route.params;
+    this.putInfoDetail()
   },
   methods: {
     getGood(num) {
@@ -158,6 +159,20 @@ export default {
           mouthResult: this.result.mouthResult,
         },
       });
+    },
+    // test() {
+    //   axios.post(URL)
+    //     .then(res=> {
+    //       this.result = res.data
+    //       console.log(this.result)
+          
+    //     })
+    //     .catch(err=> {
+    //       console.log(err)
+    //     })
+    // },
+    putInfoDetail() {
+      this.result = this.$route.params;
     },
   },
 };

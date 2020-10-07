@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import axios from "axios";
-const URL = "http://127.0.0.1:8000/services/face_reading/";
+// import axios from "axios";
+// const URL = "http://127.0.0.1:8000/services/face_reading/";
 
 export default {
   name: "FaceReadingDetail",
@@ -70,12 +70,12 @@ export default {
       loadMent: '관상 분석 중 ...'
     };
   },
-  created() {
-    axios.post(URL).then((res) => {
-      this.result = res.data;
-      console.log('resultDetail:',this.result);
-    });
-  }
+  // created() {
+  //   // axios.post(URL).then((res) => {
+  //   //   this.result = res.data;
+  //   //   console.log('resultDetail:',this.result);
+  //   // });
+  // }
 }
 </script>
 
