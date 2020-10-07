@@ -275,6 +275,7 @@ export default {
       axios
         .post(
           `https://j3c205.p.ssafy.io/api/services/face_reading/`,
+          // `http://127.0.0.1:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
@@ -299,6 +300,7 @@ export default {
               eyeResult: this.result.eyeResult,
               mouthResult: this.result.mouthResult,
               noseResult: this.result.noseResult,
+              job: this.result.job,
             },
           });
         })
