@@ -49,11 +49,11 @@ def face_reading(request):
     imgstr = imgstr.replace(" ", "+")
     imgstr += '='*(4-len(imgstr)%4) 
     path = str(os.path.join(settings.MEDIA_ROOT, 'facePhotos/'))
-    filename = month +day +hour +minute +"_" +user_nickname +"_" +user_age +".jpg"
+    filename = month +day +hour +minute +"_" +user_nickname +"_" +user_age
     
-    with open(path + filename, "wb") as f: # sample.jpg 이름으로 저장됩니다.
+    with open(path + filename +".jpg", "wb") as f: # sample.jpg 이름으로 저장됩니다.
         f.write(base64.b64decode(imgstr))
-        
+    
     # return Response('success')
     result_data ={
         "eyebrowShape": "숱이 짙음, 위를 향함",
