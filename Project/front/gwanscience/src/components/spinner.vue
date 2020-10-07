@@ -1,6 +1,7 @@
 <template>
   <div v-if="!loading" style="height: 500px">
-    <div class="d-flex justify-content-center mb-3" style="margin-top: 200px">
+    <div class="d-flex justify-content-center mb-3" style="margin-top: 40%"> 
+      <!-- style="margin-top: 200px" -->
       <b-spinner label="Loading..."></b-spinner>
     </div>
     <strong>{{ loadingMent }}</strong>

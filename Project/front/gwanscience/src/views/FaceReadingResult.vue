@@ -3,6 +3,7 @@
     <h3 class="f-ujr" style="margin-bottom: 30px">
       조선시대, {{ this.result.username }}님의 신분은 ?
     </h3>
+    <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner>
     <b-container id="my_job">
       <img
         src="../assets/job_img/1.png"
@@ -67,6 +68,7 @@
 import axios from "axios";
 const URL = "http://127.0.0.1:8000/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
   name: "FaceReadingResult",
@@ -91,6 +93,8 @@ export default {
         totalResult: null,
         job: null,
       },
+      timedelay: false,
+      loadMent: '관상 분석 중 ...'
     };
   },
   props: {
@@ -101,6 +105,7 @@ export default {
   metaInfo: {},
   components: {
     FaceReadingResultShare,
+    spinner,
   },
   created() {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
