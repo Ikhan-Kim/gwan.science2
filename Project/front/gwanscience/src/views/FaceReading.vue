@@ -169,6 +169,7 @@ export default {
         { value: 2, text: "여자" },
       ],
       result: {
+        username: null,
         eyebrowShape: null,
         eyebrowInterval: null,
         eyeSize: null,
@@ -266,6 +267,7 @@ export default {
           this.$router.push({
             name: "FaceReadingResult",
             params: {
+              username: this.userInfo.nickname,
               eyebrowShape: this.result.eyebrowShape,
               eyebrowInterval: this.result.eyebrowInterval,
               eyeSize: this.result.eyeSize,

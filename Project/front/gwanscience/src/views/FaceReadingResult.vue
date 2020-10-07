@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="f-ujr" style="margin-bottom: 30px">
-      조선시대, {{ this.result.username }}님의 신분은 ?
+      조선시대, {{ this.$route.params.username }}님의 신분은 ?
     </h3>
     <!-- <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner> -->
     <b-container id="my_job">
