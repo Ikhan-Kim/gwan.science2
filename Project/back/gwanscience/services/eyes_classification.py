@@ -13,7 +13,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def predict(filename):
     # target_image
-    eyes_image_path = os.path.join(BASE_DIR, 'learning/classified/eyes_size/test/big/273_eye.jpg')
+    # eyes_image_path = os.path.join(BASE_DIR, 'learning/classified/eyes_size/test/big/273_eye.jpg')
+    eyes_image_path = os.path.join(BASE_DIR, 'media/split/'+str(filename) +'_eyes.jpg')
 
     # test target_image
     # eyes_image_path = os.path.join(BASE_DIR, 'learning/classified/eyes_size/test/big/273_eye.jpg')

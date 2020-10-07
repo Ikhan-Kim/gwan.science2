@@ -22,7 +22,7 @@ def predict(filename):
     # mouth_image_path = os.path.join(BASE_DIR, 'learning/classified/lips_thickness/test/big/280_mouse.jpg')
     # mouth_image_path = os.path.join(BASE_DIR, 'learning/classified/lips_thickness/train/big/1_mouse.jpg')
 
-    mouth_image_path = os.path.join(BASE_DIR, 'learning/classified/mouth_tail/test/down/334_mouse.jpg')
+    mouth_image_path = os.path.join(BASE_DIR, 'media/split/'+str(filename) +'_mouth.jpg')
 
     image = tf.keras.preprocessing.image.load_img(
         mouth_image_path,

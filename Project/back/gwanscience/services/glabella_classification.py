@@ -13,7 +13,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def predict(filename):
     # target_image
-    glabella_image_path = os.path.join(BASE_DIR, 'learning/classified/glabella_distance/test/big/283_eyebrow.jpg')
+    glabella_image_path = os.path.join(BASE_DIR, 'media/split/'+str(filename) +'_glabella.jpg')
 
     # test target_image
     # glabella_image_path = os.path.join(BASE_DIR, 'learning/classified/glabella_distance/test/big/283_eyebrow.jpg')
