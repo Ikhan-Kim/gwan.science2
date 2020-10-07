@@ -75,7 +75,7 @@
       <div class="row d-flex justify-content-center">
         <button
           v-if="!isCameraOpen"
-          class="btn-customm bg-red f-ujr mb-3"
+          class="btn-customm bg-red f-ujr  mb-3"
           style="width: 60%"
           :class="{
             'bg-red': !isCameraOpen,
