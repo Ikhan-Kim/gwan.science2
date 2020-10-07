@@ -98,6 +98,9 @@
           :height="225"
           autoplay
         ></video>
+        <div class="example" style="width:250px" v-if="!isPhotoTaken">
+          <img src="@/assets/main_img/face_outline.png" width="58%">
+        </div>
         <canvas
           v-show="isPhotoTaken"
           ref="canvas"
@@ -328,5 +331,12 @@ export default {
 .img-size {
   width: 300px;
   height: 300px;
+}
+.example {
+text-align: center;
+position: absolute;
+top: 60%;
+left: 50%;
+transform: translate( -50%, -50% );
 }
 </style>
