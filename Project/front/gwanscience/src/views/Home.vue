@@ -2,7 +2,7 @@
   <div>
     <img alt="logo" class="logo" src="../assets/main_img/logo.png"/>
     <div class="f-ys h4">관상으로 보는 내 조선시대 신분은?</div>
-
+    <p> 버전 확인용 커밋입니다. </p>
     <div style="padding-top: 20%">
       <div>
         <router-link to="/FaceReading">
