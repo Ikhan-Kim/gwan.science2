@@ -116,8 +116,8 @@ def split_nose(name, shape, img):
     r = max(X)
 
     tmp = img.copy()
-    roi = tmp[t-15:b+15,l-15:r+15]
-    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"nose123.jpg"), roi)
+    roi = tmp[t-10:b+10,l-10:r+10]
+    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_nose.jpg"), roi)
 
 def split_eye(name, shape, img):
     X = []
@@ -134,8 +134,8 @@ def split_eye(name, shape, img):
     r = max(X)
 
     tmp = img.copy()
-    roi = tmp[t-15:b+15,l-15:r+15]
-    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"eye.jpg"), roi)
+    roi = tmp[t-10:b+10,l-10:r+10]
+    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_eye.jpg"), roi)
 
 def split_eyebrow(name, shape, img):
     X = []
@@ -152,8 +152,8 @@ def split_eyebrow(name, shape, img):
     r = max(X)
 
     tmp = img.copy()
-    roi = tmp[t-15:b+15,l-15:r+15]
-    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"eyebrow.jpg"), roi)
+    roi = tmp[t-10:b+10,l-10:r+10]
+    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_eyebrow.jpg"), roi)
 
 def split_mouse(name, shape, img):
     X = []
@@ -170,8 +170,8 @@ def split_mouse(name, shape, img):
     r = max(X)
 
     tmp = img.copy()
-    roi = tmp[t-15:b+15,l-15:r+15]
-    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"mouse.jpg"), roi)
+    roi = tmp[t-10:b+10,l-10:r+10]
+    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_mouth.jpg"), roi)
 
 def split_main(img_name):
     print(img_name)
