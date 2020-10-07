@@ -251,9 +251,12 @@ export default {
     },
 
     sendImage() {
-      console.log(this.userInfo)
+      console.log(this.userInfo);
       axios
-        .post(`http://127.0.0.1:8000/services/face_reading/`, this.userInfo)
+        .post(
+          `http://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
+          this.userInfo
+        )
         .then((res) => {
           console.log(res);
           console.log("보내짐");
