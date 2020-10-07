@@ -6,7 +6,10 @@
         src="@/assets/main_img/twitter.png"
         class="shareButtons"
         @click="
-          ShareTwitter('https://j3c205.p.ssafy.io/', '관싸이언스: 나의 관상은?')
+          ShareTwitter(
+            'https://j3c205.p.ssafy.io/FaceReading/',
+            '관싸이언스: 나의 관상은?'
+          )
         "
       />
 
@@ -44,6 +47,22 @@
 <script>
 export default {
   name: "FaceReadingResultShare",
+  data() {
+    return {
+      result: {
+        eyebrowShape: this.$parent.result.eyebrowShape,
+        eyebrowInterval: this.$parent.result.eyebrowInterval,
+        eyeSize: this.$parent.result.eyeSize,
+        eyeInterval: this.$parent.result.eyeInterval,
+        eyeTail: this.$parent.result.eyeTail,
+        noseLength: this.$parent.result.noseLength,
+        noseWidth: this.$parent.result.noseWidth,
+        mouthLength: this.$parent.result.mouthLength,
+        mouthThickness: this.$parent.result.mouthThickness,
+        mouthTail: this.$parent.result.mouthTail,
+      },
+    };
+  },
   metaInfo() {
     return {
       meta: [

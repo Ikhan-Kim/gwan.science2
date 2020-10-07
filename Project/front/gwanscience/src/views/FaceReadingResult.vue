@@ -75,7 +75,7 @@
 
 <script>
 import axios from "axios";
-const URL = "http://j3c205.p.ssafy.io:8000/api/services/face_reading/";
+const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 // import spinner from "@/components/spinner.vue";
 
@@ -140,26 +140,25 @@ export default {
     },
     detailreading() {
       this.$router.push({
-            name: "FaceReadingDetail",
-            params: {
-              eyebrowShape: this.result.eyebrowShape,
-              eyebrowInterval: this.result.eyebrowInterval,
-              eyeSize: this.result.eyeSize,
-              eyeInterval: this.result.eyeInterval,
-              eyeTail: this.result.eyeTail,
-              noseLength: this.result.noseLength,
-              noseWidth: this.result.noseWidth,
-              mouthLength: this.result.mouthLength,
-              mouthThickness: this.result.mouthThickness,
-              mouthTail: this.result.mouthTail,
-              eyebrowResult: this.result.eyebrowResult,
-              eyeResult: this.result.eyeResult,
-              noseResult: this.result.noseResult,
-              mouthResult: this.result.mouthResult,
-
-            },
-          })
-    }
+        name: "FaceReadingDetail",
+        params: {
+          eyebrowShape: this.result.eyebrowShape,
+          eyebrowInterval: this.result.eyebrowInterval,
+          eyeSize: this.result.eyeSize,
+          eyeInterval: this.result.eyeInterval,
+          eyeTail: this.result.eyeTail,
+          noseLength: this.result.noseLength,
+          noseWidth: this.result.noseWidth,
+          mouthLength: this.result.mouthLength,
+          mouthThickness: this.result.mouthThickness,
+          mouthTail: this.result.mouthTail,
+          eyebrowResult: this.result.eyebrowResult,
+          eyeResult: this.result.eyeResult,
+          noseResult: this.result.noseResult,
+          mouthResult: this.result.mouthResult,
+        },
+      });
+    },
   },
 };
 </script>
