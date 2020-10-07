@@ -4,7 +4,7 @@ def job_classification(eyes, mouth, nose, glabella):
     eyes_size, eyes_tail, eyes_distance = eyes
     lips_length, lips_thickness, mouth_tail = mouth
     nose_length, nose_width = nose
-    glabella_distance = glabella
+    glabella_distance = glabella[0]
 
     eyes_score = 0
     mouth_score = 0

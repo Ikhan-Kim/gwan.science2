@@ -135,7 +135,7 @@ def split_eye(name, shape, img):
 
     tmp = img.copy()
     roi = tmp[t-10:b+10,l-10:r+10]
-    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_eye.jpg"), roi)
+    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_eyes.jpg"), roi)
 
 def split_eyebrow(name, shape, img):
     X = []
@@ -153,7 +153,7 @@ def split_eyebrow(name, shape, img):
 
     tmp = img.copy()
     roi = tmp[t-10:b+10,l-10:r+10]
-    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_eyebrow.jpg"), roi)
+    cv2.imwrite(os.path.join(BASE_DIR, "media/split/", name+"_glabella.jpg"), roi)
 
 def split_mouse(name, shape, img):
     X = []
