@@ -4,7 +4,6 @@
     <h3 class="f-ujr" style="margin-bottom: 30px">
       조선시대, {{ this.$route.params.username }}님의 신분은 ?
     </h3>
-    <!-- <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner> -->
     <b-container id="my_job">
       <!-- <img
         src="../assets/job_img/1.png"
@@ -21,7 +20,11 @@
 
     <b-container id="my_job">
       <img
-        :src="require('../assets/job_img/small/' + getGood(1) + '.png')"
+        :src="
+          require('../assets/job_img/small/' +
+            getGood(this.$route.params.job) +
+            '.png')
+        "
         alt="내 신분"
         class="img-size"
       />
@@ -32,7 +35,11 @@
     <h3 class="f-ujr">나와 안 맞는 친구는 ?</h3>
     <b-container id="my_job">
       <img
-        :src="require('../assets/job_img/small/' + getBad(1) + '.png')"
+        :src="
+          require('../assets/job_img/small/' +
+            getBad(this.$route.params.job) +
+            '.png')
+        "
         alt="내 신분"
         class="img-size"
       />
@@ -50,18 +57,6 @@
           처음으로
         </button>
       </router-link>
-      <!-- <router-link :to="{ name: 'FaceReadingDetail', params:{
-              eyebrowShape: this.result.eyebrowShape,
-              eyebrowInterval: this.result.eyebrowInterval,
-              eyeSize: this.result.eyeSize,
-              eyeInterval: this.result.eyeInterval,
-              eyeTail: this.result.eyeTail,
-              noseLength: this.result.noseLength,
-              noseWidth: this.result.noseWidth,
-              mouthLength: this.result.mouthLength,
-              mouthThickness: this.result.mouthThickness,
-              mouthTail: this.result.mouthTail,
-      } }"> -->
       <button
         class="btn-customm f-ujr bg-red h5"
         style="width: 50%"
@@ -69,7 +64,6 @@
       >
         관상 상세보기
       </button>
-      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -78,7 +72,6 @@
 // import axios from "axios";
 // const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
-// import spinner from "@/components/spinner.vue";
 
 export default {
   name: "FaceReadingResult",
@@ -111,11 +104,40 @@ export default {
     userInfo: {
       type: Object,
     },
+    eyebrowShape: {
+      type: String,
+    },
+    eyebrowInterval: {
+      type: String,
+    },
+    eyeSize: {
+      type: String,
+    },
+    eyeInterval: {
+      type: String,
+    },
+    eyeTail: {
+      type: String,
+    },
+    noseLength: {
+      type: String,
+    },
+    noseWidth: {
+      type: String,
+    },
+    mouthLength: {
+      type: String,
+    },
+    mouthThickness: {
+      type: String,
+    },
+    mouthTail: {
+      type: String,
+    },
   },
   metaInfo: {},
   components: {
     FaceReadingResultShare,
-    // spinner,
   },
   created() {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -124,12 +146,7 @@ export default {
     }
     // SDK 초기화 여부를 판단합니다.
     console.log(window.Kakao.isInitialized());
-    // axios.post(URL).then((res) => {
-    //   this.result = res.data;
-    //   console.log(this.result);
-    // });
-    // this.result = this.$route.params;
-    this.putInfoDetail()
+    this.putInfoDetail();
   },
   methods: {
     getGood(num) {
@@ -158,6 +175,7 @@ export default {
           eyeResult: this.result.eyeResult,
           noseResult: this.result.noseResult,
           mouthResult: this.result.mouthResult,
+          job: this.result.job,
         },
       });
     },
@@ -166,7 +184,7 @@ export default {
     //     .then(res=> {
     //       this.result = res.data
     //       console.log(this.result)
-          
+
     //     })
     //     .catch(err=> {
     //       console.log(err)

@@ -102,8 +102,8 @@
           :height="225"
           autoplay
         ></video>
-        <div class="example" style="width: 250px" v-if="!isPhotoTaken">
-          <img src="@/assets/main_img/face_outline.png" width="58%" />
+        <div class="example" style="width: 300px" v-if="!isPhotoTaken">
+          <img src="@/assets/main_img/face_outline.png" width="45%" />
         </div>
         <canvas
           v-show="isPhotoTaken"
@@ -275,6 +275,7 @@ export default {
       axios
         .post(
           `https://j3c205.p.ssafy.io/api/services/face_reading/`,
+          // `http://127.0.0.1:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
@@ -299,6 +300,7 @@ export default {
               eyeResult: this.result.eyeResult,
               mouthResult: this.result.mouthResult,
               noseResult: this.result.noseResult,
+              job: this.result.job,
             },
           });
         })
