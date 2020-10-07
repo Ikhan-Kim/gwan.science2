@@ -1,50 +1,54 @@
 <template>
   <div>
     <div v-if="!this.timedelay">
-    <div class="f-ujr duru"><h3 class="pt-20">제 ＜1＞ 법칙. 관상분석</h3></div>
-    <div class="f-ys" v-if="!isCameraOpen">
-      <h5>기본정보를 입력해주세요.</h5>
+      <div class="f-ujr duru">
+        <h3 class="pt-20">제 ＜1＞ 법칙. 관상분석</h3>
+      </div>
+      <div class="f-ys" v-if="!isCameraOpen">
+        <h5>기본정보를 입력해주세요.</h5>
+        <br />
+      </div>
+      <div class="f-ys" v-else>
+        <h5>
+          정확한 관상 분석을 위해 <br />중앙에 얼굴이 오도록 촬영해주세요.
+        </h5>
+      </div>
+
       <br />
-    </div>
-    <div class="f-ys" v-else>
-      <h5>정확한 관상 분석을 위해 <br />중앙에 얼굴이 오도록 촬영해주세요.</h5>
-    </div>
+      <br />
 
-    <br />
-    <br />
+      <b-container class="bv-example-row f-ujr mb-4" v-if="!isCameraOpen">
+        <b-row>
+          <b-col cols="4" class="pb-3"><h4>닉네임</h4></b-col>
+          <b-col cols="6">
+            <b-form-input
+              type="text"
+              v-model="userInfo.nickname"
+              placeholder="닉네임 입력"
+            ></b-form-input>
+          </b-col>
+          <div class="w-100"></div>
+          <b-col cols="4" class="pb-3"> <h4>나이</h4></b-col>
+          <b-col cols="6">
+            <b-form-input
+              type="number"
+              v-model="userInfo.age"
+              placeholder="나이 입력"
+            ></b-form-input>
+          </b-col>
+          <div class="w-100"></div>
+          <b-col cols="4" class="pb-3"> <h4>성별</h4></b-col>
+          <b-col cols="6">
+            <b-form-radio-group
+              v-model="userInfo.gender"
+              :options="options"
+            ></b-form-radio-group>
+          </b-col>
+        </b-row>
+      </b-container>
 
-    <b-container class="bv-example-row f-ujr mb-4" v-if="!isCameraOpen">
-      <b-row>
-        <b-col cols="4" class="pb-3"><h4>닉네임</h4></b-col>
-        <b-col cols="6">
-          <b-form-input
-            type="text"
-            v-model="userInfo.nickname"
-            placeholder="닉네임 입력"
-          ></b-form-input>
-        </b-col>
-        <div class="w-100"></div>
-        <b-col cols="4" class="pb-3"> <h4>나이</h4></b-col>
-        <b-col cols="6">
-          <b-form-input
-            type="number"
-            v-model="userInfo.age"
-            placeholder="나이 입력"
-          ></b-form-input>
-        </b-col>
-        <div class="w-100"></div>
-        <b-col cols="4" class="pb-3"> <h4>성별</h4></b-col>
-        <b-col cols="6">
-          <b-form-radio-group
-            v-model="userInfo.gender"
-            :options="options"
-          ></b-form-radio-group>
-        </b-col>
-      </b-row>
-    </b-container>
-
-    <!-- 📌📌📌 작동 이상 없으면 삭제하기 !! -->
-    <!-- <div class="container" v-if="!isCameraOpen">
+      <!-- 📌📌📌 작동 이상 없으면 삭제하기 !! -->
+      <!-- <div class="container" v-if="!isCameraOpen">
       <div class="row d-flex justify-content-center m-md-2">
         <b-form-input
           style="width: 300px"
@@ -70,85 +74,91 @@
       </div>
     </div> -->
 
-    <!-- 사진촬영 버튼 -->
+      <!-- 사진촬영 버튼 -->
 
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <button
-          v-if="!isCameraOpen"
-          class="btn-customm bg-red f-ujr mb-3"
-          style="width: 60%"
-          :class="{
-            'bg-red': !isCameraOpen,
-            'bg-green': isCameraOpen,
-          }"
-          @click="checkInfo"
-        >
-          <span class="bg-red h4 mt-3">사진 촬영</span>
-        </button>
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <button
+            v-if="!isCameraOpen"
+            class="btn-customm bg-red f-ujr mb-3"
+            style="width: 60%"
+            :class="{
+              'bg-red': !isCameraOpen,
+              'bg-green': isCameraOpen,
+            }"
+            @click="checkInfo"
+          >
+            <span class="bg-red h4 mt-3">사진 촬영</span>
+          </button>
 
-        <!-- <input type="file" accept="image/*" capture="camera" /> -->
+          <!-- <input type="file" accept="image/*" capture="camera" /> -->
 
-        <!-- <button @click="splitFace">얼굴쪼개기</button> -->
-        <!-- <div class="camera-button"></div> -->
-      </div>
-      <!-- <div class="row d-flex justify-content-center m-md-2"> -->
-      <div class="camera-box" v-if="isCameraOpen">
-        <video
-          v-show="!isPhotoTaken"
-          ref="camera"
-          id="Taken"
-          :width="300"
-          :height="225"
-          autoplay
-        ></video>
-        <div class="example" style="width: 300px" v-if="!isPhotoTaken">
-          <img src="@/assets/main_img/face_outline.png" width="45%" />
+          <!-- <button @click="splitFace">얼굴쪼개기</button> -->
+          <!-- <div class="camera-button"></div> -->
         </div>
-        <canvas
-          v-show="isPhotoTaken"
-          ref="canvas"
-          id="photoTaken"
-          :width="300"
-          :height="225"
-        ></canvas>
-      </div>
-      <!-- </div> -->
+        <!-- <div class="row d-flex justify-content-center m-md-2"> -->
+        <input
+          type="file"
+          accept="image/*"
+          capture="camera"
+          v-if="isCameraOpen"
+        />
+        <div class="camera-box" v-if="isCameraOpen">
+          <video
+            v-show="!isPhotoTaken"
+            ref="camera"
+            id="Taken"
+            :width="300"
+            :height="225"
+            autoplay
+          ></video>
+          <div class="example" style="width: 300px" v-if="!isPhotoTaken">
+            <img src="@/assets/main_img/face_outline.png" width="45%" />
+          </div>
+          <canvas
+            v-show="isPhotoTaken"
+            ref="canvas"
+            id="photoTaken"
+            :width="300"
+            :height="225"
+          ></canvas>
+        </div>
+        <!-- </div> -->
 
-      <div class="camera-shoot mt-4 mb-5" v-if="isCameraOpen">
-        <button
-          v-if="isPhotoTaken == false"
-          class="btn-customm bg-red f-ujr h4"
-          style="width: 60%"
-          @click="takePhoto"
-        >
-          사진촬영
-        </button>
+        <div class="camera-shoot mt-4 mb-5" v-if="isCameraOpen">
+          <button
+            v-if="isPhotoTaken == false"
+            class="btn-customm bg-red f-ujr h4"
+            style="width: 60%"
+            @click="takePhoto"
+          >
+            사진촬영
+          </button>
 
-        <button
-          v-if="isPhotoTaken == true"
-          class="btn-customm bg-green f-ujr mr-4 h5"
-          style="width: 30%"
-          @click="takePhoto"
-        >
-          다시찍기
-        </button>
-        <button
-          v-if="isPhotoTaken == true"
-          class="btn-customm f-ujr bg-red h5"
-          style="width: 30%"
-          @click="sendImage()"
-        >
-          관상보기
-        </button>
-      </div>
+          <button
+            v-if="isPhotoTaken == true"
+            class="btn-customm bg-green f-ujr mr-4 h5"
+            style="width: 30%"
+            @click="takePhoto"
+          >
+            다시찍기
+          </button>
+          <button
+            v-if="isPhotoTaken == true"
+            class="btn-customm f-ujr bg-red h5"
+            style="width: 30%"
+            @click="sendImage()"
+          >
+            관상보기
+          </button>
+        </div>
 
-      <!-- <div class="row d-flex justify-content-center m-md-2">
+        <!-- <div class="row d-flex justify-content-center m-md-2">
         <div class="camera-shoot"  v-if="isPhotoTaken">
           <canvas id="userPhoto" :width="300" :height="300"></canvas>
         </div>
       </div> -->
-    </div>
+      </div>
     </div>
     <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner>
   </div>
@@ -270,11 +280,11 @@ export default {
     },
 
     sendImage() {
-      this.timedelay = true
+      this.timedelay = true;
       axios
         .post(
-          `https://j3c205.p.ssafy.io/api/services/face_reading/`,
-          // `http://127.0.0.1:8000/api/services/face_reading/`,
+          // `https://j3c205.p.ssafy.io/api/services/face_reading/`,
+          `http://127.0.0.1:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {

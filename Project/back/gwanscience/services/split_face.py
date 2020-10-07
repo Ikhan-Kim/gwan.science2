@@ -175,6 +175,7 @@ def split_mouse(name, shape, img):
 
 def split_main(img_name):
     print(img_name)
+    print(glob.glob("media/facePhotos/*.png"))
     imgs = [cv2.imread(file) for file in glob.glob("media/facePhotos/*.png")]
     detector = dlib.get_frontal_face_detector()
     predictor_path = os.path.join(BASE_DIR, 'shape_predictor_68_face_landmarks.dat')
