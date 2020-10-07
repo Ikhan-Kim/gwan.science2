@@ -14,25 +14,25 @@
 
     <b-container class="bv-example-row f-ujr mb-4" v-if="!isCameraOpen">
       <b-row>
-        <b-col cols="4" class="pb-3"><h4> 닉네임</h4></b-col>
+        <b-col cols="4" class="pb-3"><h4>닉네임</h4></b-col>
         <b-col cols="6">
           <b-form-input
-          type="text"
-          v-model="userInfo.nickname"
-          placeholder="닉네임 입력"
-        ></b-form-input>
+            type="text"
+            v-model="userInfo.nickname"
+            placeholder="닉네임 입력"
+          ></b-form-input>
         </b-col>
         <div class="w-100"></div>
-        <b-col cols="4" class="pb-3"> <h4> 나이</h4></b-col>
+        <b-col cols="4" class="pb-3"> <h4>나이</h4></b-col>
         <b-col cols="6">
           <b-form-input
-          type="number"
-          v-model="userInfo.age"
-          placeholder="나이 입력"
-        ></b-form-input>
+            type="number"
+            v-model="userInfo.age"
+            placeholder="나이 입력"
+          ></b-form-input>
         </b-col>
         <div class="w-100"></div>
-        <b-col cols="4" class="pb-3"> <h4> 성별</h4></b-col>
+        <b-col cols="4" class="pb-3"> <h4>성별</h4></b-col>
         <b-col cols="6">
           <b-form-radio-group
             v-model="userInfo.gender"
@@ -70,41 +70,42 @@
     </div> -->
 
     <!-- 사진촬영 버튼 -->
-    
+
     <div class="container">
       <div class="row d-flex justify-content-center">
-        
-          <button v-if="!isCameraOpen" 
-            class="btn-customm bg-red f-ujr" style="width: 60%"
-            :class="{
-              'bg-red': !isCameraOpen,
-              'bg-green': isCameraOpen,
-            }"
-            @click="checkInfo"
-          >
-            <span class="bg-red h4 mt-3">사진 촬영</span>
-          </button>
-          <!-- <button @click="splitFace">얼굴쪼개기</button> -->
+        <button
+          v-if="!isCameraOpen"
+          class="btn-customm bg-red f-ujr"
+          style="width: 60%"
+          :class="{
+            'bg-red': !isCameraOpen,
+            'bg-green': isCameraOpen,
+          }"
+          @click="checkInfo"
+        >
+          <span class="bg-red h4 mt-3">사진 촬영</span>
+        </button>
+        <!-- <button @click="splitFace">얼굴쪼개기</button> -->
         <div class="camera-button"></div>
       </div>
       <!-- <div class="row d-flex justify-content-center m-md-2"> -->
-        <div class="camera-box" v-if="isCameraOpen">
-          <video
-              v-show="!isPhotoTaken"
-              ref="camera"
-              id="Taken"
-              :width="300"
-              :height="225"
-              autoplay
-          ></video>
-          <canvas
-              v-show="isPhotoTaken"
-              ref="canvas"
-              id="photoTaken"
-              :width="300"
-              :height="225"
-          ></canvas>
-        </div>
+      <div class="camera-box" v-if="isCameraOpen">
+        <video
+          v-show="!isPhotoTaken"
+          ref="camera"
+          id="Taken"
+          :width="300"
+          :height="225"
+          autoplay
+        ></video>
+        <canvas
+          v-show="isPhotoTaken"
+          ref="canvas"
+          id="photoTaken"
+          :width="300"
+          :height="225"
+        ></canvas>
+      </div>
       <!-- </div> -->
 
       <div class="camera-shoot mt-4 mb-5" v-if="isCameraOpen">
@@ -129,7 +130,7 @@
           v-if="isPhotoTaken == true"
           class="btn-customm f-ujr bg-red h5"
           style="width: 30%"
-          @click="imgToBack()"
+          @click="sendImage()"
         >
           관상보기
         </button>
@@ -147,7 +148,6 @@
 <script>
 import axios from "axios";
 
-const URL = "http://127.0.0.1:8000/services/face_reading/";
 export default {
   name: "FaceReading",
   data() {
@@ -162,8 +162,8 @@ export default {
       },
       options: [
         // { value: null, text: "성별을 선택해주세요.", disabled: true },
-        {value: 1, text: "남자"},
-        {value: 2, text: "여자"},
+        { value: 1, text: "남자" },
+        { value: 2, text: "여자" },
       ],
       result: {
         eyebrowShape: null,
@@ -220,14 +220,14 @@ export default {
       });
 
       navigator.mediaDevices
-          .getUserMedia(constraints)
-          .then((stream) => {
-            this.$refs.camera.srcObject = stream;
-          })
-          .catch((err) => {
-            console.log(err);
-            alert("설정을 확인해주세요.");
-          });
+        .getUserMedia(constraints)
+        .then((stream) => {
+          this.$refs.camera.srcObject = stream;
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("설정을 확인해주세요.");
+        });
     },
     stopCameraStream() {
       let tracks = this.$refs.camera.srcObject.getTracks();
@@ -247,66 +247,33 @@ export default {
       this.tmpphoto = document
         .getElementById("photoTaken")
         .toDataURL("image/jpeg");
-      // this.tmpphoto = document.getElementById("photoTaken").toDataURL()
-      // console.log(this.tmpphoto)
-
-      // 아래 코드 수정 예정
-
-      // const context = this.$refs.canvas.getContext('2d')
-
-      // const photo = document.getElementById("photoTaken").toDataURL("image/jpeg")
-      // .replace("image/jpeg", "image/octet-stream")
-
-      // this.photo = canvas.drawImage(photo)
-      // this.photo = this.$refs.canvas.getContext('2d')
-      // this.photo = context.drawImage(this.$refs.camera, 0,0,450,300)
-      //  = context.getImageData( 0,0,450,300)
-
-      // const photo = document.getContext("2d").toDataURL("image/jpeg")
-      // const userPhoto = document.getElementById("userPhoto").getContext("2d")
-      // userPhoto.drawImage(photo, 0,0,450,300)
-
-      // const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg")
-      // .replace("image/jpeg", "image/octet-stream");
-      // const userPhoto = document.getElementById("userPhoto").getContext("2d")
-      // userPhoto.drawImage(canvas, 0, 0, 450, 300);
+      console.log(this.tmpphoto);
     },
 
-    // downloadImage() {
-    // const download = document.getElementById("downloadPhoto");
-    // const canvas = document.getElementById("photoTaken").toDataURL("image/jpeg")
-    //   .replace("image/jpeg", "image/octet-stream");
-
-    // download.setAttribute("href", canvas);
-    // }
-    imgToBack() {
-      axios.get(URL + this.userInfo.nickname).then((res) => {
-        this.result = res.data;
-        console.log(this.result);
-        this.$router.push({
-          name: "FaceReadingResult",
-          params: {
-            eyebrowShape: this.result.eyebrowShape,
-            eyebrowInterval: this.result.eyebrowInterval,
-            eyeSize: this.result.eyeSize,
-            eyeInterval: this.result.eyeInterval,
-            eyeTail: this.result.eyeTail,
-            noseLength: this.result.noseLength,
-            noseWidth: this.result.noseWidth,
-            mouthLength: this.result.mouthLength,
-            mouthThickness: this.result.mouthThickness,
-            mouthTail: this.result.mouthTail,
-            eyebrowResult: this.result.eyebrowResult,
-          },
-        });
-      });
-    },
     sendImage() {
       axios
-        .post(`http://127.0.0.1:8000/services/test`, this.tmpphoto)
+        .post(`http://127.0.0.1:8000/services/face_reading/`, this.tmpphoto)
         .then((res) => {
           console.log(res);
           console.log("보내짐");
+          this.result = res.data;
+          console.log("test", this.result);
+          this.$router.push({
+            name: "FaceReadingResult",
+            params: {
+              eyebrowShape: this.result.eyebrowShape,
+              eyebrowInterval: this.result.eyebrowInterval,
+              eyeSize: this.result.eyeSize,
+              eyeInterval: this.result.eyeInterval,
+              eyeTail: this.result.eyeTail,
+              noseLength: this.result.noseLength,
+              noseWidth: this.result.noseWidth,
+              mouthLength: this.result.mouthLength,
+              mouthThickness: this.result.mouthThickness,
+              mouthTail: this.result.mouthTail,
+              eyebrowResult: this.result.eyebrowResult,
+            },
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -353,9 +320,9 @@ export default {
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 /* :width="300" */
-            /* :height="300" */
+/* :height="300" */
 .img-size {
-  width:300px;
-  height:300px;
+  width: 300px;
+  height: 300px;
 }
 </style>

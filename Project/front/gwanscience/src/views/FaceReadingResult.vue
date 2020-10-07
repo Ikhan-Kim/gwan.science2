@@ -1,14 +1,21 @@
 <template>
   <div>
-    <h3 class="f-ujr" style="margin-bottom: 30px">조선시대, {{ this.result.username }}님의 신분은 ?</h3>
+    <h3 class="f-ujr" style="margin-bottom: 30px">
+      조선시대, {{ this.result.username }}님의 신분은 ?
+    </h3>
     <b-container id="my_job">
-      <img src="../assets/job_img/1.png" alt="내 신분" class="img-size" style="height: 430px;">
-<!--      <img :src="require('../assets/job_img/'+result.job+'.png')" alt="내 신분" class="img-size">-->
+      <img
+        src="../assets/job_img/1.png"
+        alt="내 신분"
+        class="img-size"
+        style="height: 430px;"
+      />
+      <!--      <img :src="require('../assets/job_img/'+result.job+'.png')" alt="내 신분" class="img-size">-->
     </b-container>
-    <br>
-    <br>
+    <br />
+    <br />
 
-    <h3 class="f-ujr">나와 잘 맞는 친구는 ? </h3>
+    <h3 class="f-ujr">나와 잘 맞는 친구는 ?</h3>
 
     <!-- <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
   <b-collapse visible id="collapse-3">
@@ -16,28 +23,41 @@
   </b-collapse> -->
 
     <b-container id="my_job">
-        <img :src="require('../assets/job_img/small/'+getGood(1)+'.png')" alt="내 신분" class="img-size">
+      <img
+        :src="require('../assets/job_img/small/' + getGood(1) + '.png')"
+        alt="내 신분"
+        class="img-size"
+      />
     </b-container>
-    <br>
-    <br>
+    <br />
+    <br />
 
-    <h3 class="f-ujr">나와 안 맞는 친구는 ? </h3>
+    <h3 class="f-ujr">나와 안 맞는 친구는 ?</h3>
     <b-container id="my_job">
-      <img :src="require('../assets/job_img/small/'+getBad(1)+'.png')" alt="내 신분" class="img-size">
+      <img
+        :src="require('../assets/job_img/small/' + getBad(1) + '.png')"
+        alt="내 신분"
+        class="img-size"
+      />
     </b-container>
-    <br>
-    <br>
-    <FaceReadingResultShare/>
-    <hr>
+    <br />
+    <br />
+    <FaceReadingResultShare />
+    <hr />
     <div class="m-b300">
       <router-link :to="{ name: 'Home' }">
-        <button class="btn-customm f-ujr mr-4 h5 text--white"
-                style="width: 30%;  background-color: var(--secondary); color: white;">처음으로
+        <button
+          class="btn-customm f-ujr mr-4 h5 text--white"
+          style="width: 30%;  background-color: var(--secondary); color: white;"
+        >
+          처음으로
         </button>
       </router-link>
 
       <router-link :to="{ name: 'FaceReadingDetail' }">
-        <button class="btn-customm f-ujr bg-red h5" style="width: 50%">관상 상세보기</button>
+        <button class="btn-customm f-ujr bg-red h5" style="width: 50%">
+          관상 상세보기
+        </button>
       </router-link>
     </div>
   </div>
@@ -89,7 +109,7 @@ export default {
     }
     // SDK 초기화 여부를 판단합니다.
     console.log(window.Kakao.isInitialized());
-    axios.get(URL + "test").then((res) => {
+    axios.post(URL).then((res) => {
       this.result = res.data;
       console.log(this.result);
     });
@@ -102,9 +122,8 @@ export default {
     getBad(num) {
       var arr = [15, 14, 3, 2, 9, 7, 11, 5, 10, 4, 8, 6, 13, 12, 1, 0];
       return arr[num];
-    }
-  }
-
+    },
+  },
 };
 </script>
 

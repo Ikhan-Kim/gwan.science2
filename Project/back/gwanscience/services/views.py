@@ -8,7 +8,7 @@ from .serializers import NameCompatSerializer
 from .serializers import FaceReadingInfoSerializer
 from .algo_name import algo
 from .life_clock import life_clock
-from .split_face import split_main
+# from .split_face import split_main
 
 # 사진
 import base64
@@ -28,10 +28,25 @@ from django.http import HttpResponse, JsonResponse
 def home(request):
     pass
 
-@api_view(['GET'])
-def face_reading(request, username):
+@api_view(['POST'])
+def face_reading(request):
+    image_tmp = list(request.data.keys())
+    print(image_tmp)
+    form, imgstr = image_tmp[0], image_tmp[1]
+    if len(form) > len(imgstr):
+        form, imgstr = imgstr, form
+    print(form, imgstr)
+    imgstr = imgstr.split('base64,')[1]
+    imgstr = imgstr.replace(" ", "+")
+    imgstr += '='*(4-len(imgstr)%4) 
+
+    path = str(os.path.join(settings.MEDIA_ROOT, 'facePhotos/'))
+    
+    with open(path+"sample.png", "wb") as f: # sample.png 이름으로 저장됩니다.
+        f.write(base64.b64decode(imgstr))
+        
+    # return Response('success')
     result_data ={
-        "username":username,
         "eyebrowShape": "숱이 짙음, 위를 향함",
         "eyebrowInterval": "미간이 넓음",
         "eyeSize": "작은 눈",
@@ -51,9 +66,6 @@ def face_reading(request, username):
     }
     return Response(result_data)
 
-def face_reading_reading(request):
-    pass
-
 @api_view(['GET'])
 def name_compability(request, name_1, name_2):
     result_data = {"name":[name_1,name_2], "score": [algo(name_1,name_2)[0] ,algo(name_2,name_1)[0]], "cal": [algo(name_1, name_2)[1], algo(name_2, name_1)[1]], "comment": algo(name_1,name_2)[2]}
@@ -69,62 +81,11 @@ def func_life_clock(request, age):
     result_data = {"time":time, "ment":result, "img_url":img_url}
     return Response(result_data)
 
-# @api_view(['POST'])
-# def test(request):
-#     faceImage = FaceImage()
-#     image_tmp = list(request.data.keys())
-#     print(image_tmp)
-#     print(image_tmp[0])
-#     format, imgstr = image_tmp[0], image_tmp[1]
-#     imgstr = imgstr.split('base64,')[1]
-#     imgstr += '='*(4-len(imgstr)%4) 
-#     # imgstr = imgstr.strip()
-
-#     ext = format.split('/')[-1]
-#     faceImage.user_img = ContentFile(base64.b64decode(imgstr), name='face.' + ext)
-#     faceImage.save()
-#     return Response('success')
-
-@api_view(['POST'])
-def test(request):
-    # faceImage = FaceImage()
-    print(request.data)
-    image_tmp = list(request.data.keys())
-    format, imgstr = image_tmp[0], image_tmp[1]
-    print(format)
-    print(imgstr)
-    imgstr = imgstr.split('base64,')[1]
-    imgstr += '='*(4-len(imgstr)%4) 
-    # print(imgstr)
-    number = random.randrange(1,100)
-    if isinstance(imgstr, six.string_types):
-        print('yes')
-    else:
-        print('no')
-
-    path = str(os.path.join(settings.MEDIA_ROOT, 'testImg/'))
-    filename = 'image'+str(number)+'.png'
-
-    image = open(path+filename,'wb')
-    image.write(base64.b64decode(imgstr))
-    image.close()
-    
-    return Response('success')
-
-@api_view(['GET'])
-def split(request):
-    split_main()
-    return Response('split')
 
 
+# @api_view(['GET'])
+# def split(request):
+#     split_main()
+#     return Response('split')
 
 
-
-    # print(base64.b64encode(request.data))
-
-
-    # serializer = FaceReadingInfoSerializer(data=request.data)
-    # if serializer.is_valid():
-    #     serializer.save()
-    #     return Response(serializer.data)
-    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
