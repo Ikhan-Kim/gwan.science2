@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="f-ujr" style="margin-bottom: 30px">
-      조선시대, {{ this.result.username }}님의 신분은 ?
+      조선시대, {{ this.$route.params.username }}님의 신분은 ?
     </h3>
     <!-- <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner> -->
     <b-container id="my_job">
@@ -17,11 +17,6 @@
     <br />
 
     <h3 class="f-ujr">나와 잘 맞는 친구는 ?</h3>
-
-    <!-- <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
-  <b-collapse visible id="collapse-3">
-    <b-card>I should start open!</b-card>
-  </b-collapse> -->
 
     <b-container id="my_job">
       <img
@@ -145,22 +140,26 @@ export default {
     },
     detailreading() {
       this.$router.push({
-        name: "FaceReadingDetail",
-        params: {
-          eyebrowShape: this.result.eyebrowShape,
-          eyebrowInterval: this.result.eyebrowInterval,
-          eyeSize: this.result.eyeSize,
-          eyeInterval: this.result.eyeInterval,
-          eyeTail: this.result.eyeTail,
-          noseLength: this.result.noseLength,
-          noseWidth: this.result.noseWidth,
-          mouthLength: this.result.mouthLength,
-          mouthThickness: this.result.mouthThickness,
-          mouthTail: this.result.mouthTail,
-          eyebrowResult: this.result.eyebrowResult,
-        },
-      });
-    },
+            name: "FaceReadingDetail",
+            params: {
+              eyebrowShape: this.result.eyebrowShape,
+              eyebrowInterval: this.result.eyebrowInterval,
+              eyeSize: this.result.eyeSize,
+              eyeInterval: this.result.eyeInterval,
+              eyeTail: this.result.eyeTail,
+              noseLength: this.result.noseLength,
+              noseWidth: this.result.noseWidth,
+              mouthLength: this.result.mouthLength,
+              mouthThickness: this.result.mouthThickness,
+              mouthTail: this.result.mouthTail,
+              eyebrowResult: this.result.eyebrowResult,
+              eyeResult: this.result.eyeResult,
+              noseResult: this.result.noseResult,
+              mouthResult: this.result.mouthResult,
+
+            },
+          })
+    }
   },
 };
 </script>
