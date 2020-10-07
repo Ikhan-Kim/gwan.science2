@@ -8,7 +8,7 @@ from .serializers import NameCompatSerializer
 from .serializers import FaceReadingInfoSerializer
 from .algo_name import algo
 from .life_clock import life_clock
-# from .split_face import split_main
+from .split_face import split_main
 
 # 사진
 import base64
@@ -30,7 +30,7 @@ def home(request):
 
 @api_view(['POST'])
 def face_reading(request):
-    print(request.data)
+    # print(request.data)
 
     present = datetime.now()
     month = str(present.month)
@@ -54,6 +54,7 @@ def face_reading(request):
     with open(path + filename +".jpg", "wb") as f: # sample.jpg 이름으로 저장됩니다.
         f.write(base64.b64decode(imgstr))
     
+    split_main(filename)
     # return Response('success')
     result_data ={
         "eyebrowShape": "숱이 짙음, 위를 향함",
