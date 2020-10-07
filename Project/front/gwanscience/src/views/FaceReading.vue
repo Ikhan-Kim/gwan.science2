@@ -75,7 +75,7 @@
       <div class="row d-flex justify-content-center">
         <button
           v-if="!isCameraOpen"
-          class="btn-customm bg-red f-ujr  mb-3"
+          class="btn-customm bg-red f-ujr mb-3"
           style="width: 60%"
           :class="{
             'bg-red': !isCameraOpen,
@@ -88,9 +88,9 @@
 
         <!-- <input type="file" accept="image/*" capture="camera" /> -->
         <div class="f-ys">
-            ✔ 아이폰은 일시정지 버튼 클릭 후, <br> 왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다.
-
-          </div>
+          ✔ 아이폰은 일시정지 버튼 클릭 후, <br />
+          왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다.
+        </div>
         <!-- <button @click="splitFace">얼굴쪼개기</button> -->
         <!-- <div class="camera-button"></div> -->
       </div>
@@ -104,8 +104,8 @@
           :height="225"
           autoplay
         ></video>
-        <div class="example" style="width:250px" v-if="!isPhotoTaken">
-          <img src="@/assets/main_img/face_outline.png" width="58%">
+        <div class="example" style="width: 250px" v-if="!isPhotoTaken">
+          <img src="@/assets/main_img/face_outline.png" width="58%" />
         </div>
         <canvas
           v-show="isPhotoTaken"
@@ -263,7 +263,7 @@ export default {
       console.log(this.userInfo);
       axios
         .post(
-          `https://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
+          `http://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
@@ -339,10 +339,10 @@ export default {
   height: 300px;
 }
 .example {
-text-align: center;
-position: absolute;
-top: 60%;
-left: 50%;
-transform: translate( -50%, -50% );
+  text-align: center;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

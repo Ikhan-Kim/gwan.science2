@@ -45,7 +45,7 @@
         <b-col cols="2">
           <div>
             <img src="@/assets/name_img/circle6.png" width="100%" />
-            <div class="example" style="width:100%">
+            <div class="example" style="width: 100%">
               <p>{{ this.result.name[1][2] }}</p>
             </div>
           </div>
@@ -134,7 +134,7 @@ import NameCompatibilityResultShare from "@/components/NameCompatibilityResultSh
 import spinner from "@/components/spinner.vue";
 import axios from "axios";
 
-const URL = "https://j3c205.p.ssafy.io:8000/api/services/name_compability/";
+const URL = "http://j3c205.p.ssafy.io:8000/api/services/name_compability/";
 
 export default {
   name: "NameCompatibilityResult",
@@ -148,8 +148,8 @@ export default {
         comment: null,
       },
       timedelay: false,
-      loadMent: '이름 궁합 계산중...'
-    }
+      loadMent: "이름 궁합 계산중...",
+    };
   },
   props: {
     name1: {

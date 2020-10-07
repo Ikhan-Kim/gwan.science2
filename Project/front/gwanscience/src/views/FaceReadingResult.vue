@@ -66,9 +66,13 @@
               mouthThickness: this.result.mouthThickness,
               mouthTail: this.result.mouthTail,
       } }"> -->
-        <button class="btn-customm f-ujr bg-red h5" style="width: 50%" @click="detailreading()">
-          관상 상세보기
-        </button>
+      <button
+        class="btn-customm f-ujr bg-red h5"
+        style="width: 50%"
+        @click="detailreading()"
+      >
+        관상 상세보기
+      </button>
       <!-- </router-link> -->
     </div>
   </div>
@@ -76,7 +80,7 @@
 
 <script>
 import axios from "axios";
-const URL = "https://j3c205.p.ssafy.io:8000/api/services/face_reading/";
+const URL = "http://j3c205.p.ssafy.io:8000/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 // import spinner from "@/components/spinner.vue";
 
@@ -104,7 +108,7 @@ export default {
         job: null,
       },
       timedelay: false,
-      loadMent: '관상 분석 중 ...'
+      loadMent: "관상 분석 중 ...",
     };
   },
   props: {
@@ -128,7 +132,7 @@ export default {
       this.result = res.data;
       console.log(this.result);
     });
-    this.result = this.$route.params
+    this.result = this.$route.params;
   },
   methods: {
     getGood(num) {
@@ -141,22 +145,22 @@ export default {
     },
     detailreading() {
       this.$router.push({
-            name: "FaceReadingDetail",
-            params: {
-              eyebrowShape: this.result.eyebrowShape,
-              eyebrowInterval: this.result.eyebrowInterval,
-              eyeSize: this.result.eyeSize,
-              eyeInterval: this.result.eyeInterval,
-              eyeTail: this.result.eyeTail,
-              noseLength: this.result.noseLength,
-              noseWidth: this.result.noseWidth,
-              mouthLength: this.result.mouthLength,
-              mouthThickness: this.result.mouthThickness,
-              mouthTail: this.result.mouthTail,
-              eyebrowResult: this.result.eyebrowResult,
-            },
-          })
-    }
+        name: "FaceReadingDetail",
+        params: {
+          eyebrowShape: this.result.eyebrowShape,
+          eyebrowInterval: this.result.eyebrowInterval,
+          eyeSize: this.result.eyeSize,
+          eyeInterval: this.result.eyeInterval,
+          eyeTail: this.result.eyeTail,
+          noseLength: this.result.noseLength,
+          noseWidth: this.result.noseWidth,
+          mouthLength: this.result.mouthLength,
+          mouthThickness: this.result.mouthThickness,
+          mouthTail: this.result.mouthTail,
+          eyebrowResult: this.result.eyebrowResult,
+        },
+      });
+    },
   },
 };
 </script>
