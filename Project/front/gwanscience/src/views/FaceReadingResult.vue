@@ -8,7 +8,7 @@
         src="../assets/job_img/1.png"
         alt="내 신분"
         class="img-size"
-        style="height: 430px;"
+        style="height: 430px"
       />
       <!--      <img :src="require('../assets/job_img/'+result.job+'.png')" alt="내 신분" class="img-size">-->
     </b-container>
@@ -48,7 +48,7 @@
       <router-link :to="{ name: 'Home' }">
         <button
           class="btn-customm f-ujr mr-4 h5 text--white"
-          style="width: 30%;  background-color: var(--secondary); color: white;"
+          style="width: 30%; background-color: var(--secondary); color: white"
         >
           처음으로
         </button>
@@ -128,7 +128,7 @@ export default {
     goDetail() {
       axios
         .post(
-          `http://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
+          `https://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
