@@ -87,10 +87,7 @@
         </button>
 
         <!-- <input type="file" accept="image/*" capture="camera" /> -->
-        <div class="f-ys">
-            ✔ 아이폰은 일시정지 버튼 클릭 후, <br> 왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다.
-
-          </div>
+    
         <!-- <button @click="splitFace">얼굴쪼개기</button> -->
         <!-- <div class="camera-button"></div> -->
       </div>
@@ -201,6 +198,7 @@ export default {
       } else if (this.userInfo.gender == null) {
         alert("성별을 선택해 주세요.");
       } else {
+        alert("아이폰은 일시정지 버튼 클릭 후, 왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다.")
         this.toggleCamera();
       }
     },
@@ -279,6 +277,9 @@ export default {
               mouthThickness: this.result.mouthThickness,
               mouthTail: this.result.mouthTail,
               eyebrowResult: this.result.eyebrowResult,
+              eyeResult: this.result.eyeResult,
+              mouthResult: this.result.mouthResult,
+              noseResult: this.result.noseResult,
             },
           });
         })

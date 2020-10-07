@@ -26,13 +26,13 @@
         </button>
       </router-link>
     </div>
-    <div style="padding-bottom:100px">
+    <!-- <div style="padding-bottom:100px">
       <router-link to="/Builders">
         <button class="main-btn f-ujr" squared variant="outline-secondary">
           제 ＜4＞ 법칙. 만든사람들
         </button>
       </router-link>
-    </div>
+    </div> -->
     </div>
   </div>
 </template>

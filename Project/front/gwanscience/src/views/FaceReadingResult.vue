@@ -18,11 +18,6 @@
 
     <h3 class="f-ujr">나와 잘 맞는 친구는 ?</h3>
 
-    <!-- <b-button v-b-toggle.collapse-3 class="m-1">Toggle Collapse</b-button>
-  <b-collapse visible id="collapse-3">
-    <b-card>I should start open!</b-card>
-  </b-collapse> -->
-
     <b-container id="my_job">
       <img
         :src="require('../assets/job_img/small/' + getGood(1) + '.png')"
@@ -154,6 +149,10 @@ export default {
               mouthThickness: this.result.mouthThickness,
               mouthTail: this.result.mouthTail,
               eyebrowResult: this.result.eyebrowResult,
+              eyeResult: this.result.eyeResult,
+              noseResult: this.result.noseResult,
+              mouthResult: this.result.mouthResult,
+
             },
           })
     }
