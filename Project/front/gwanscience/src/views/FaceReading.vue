@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="!this.timedelay">
     <div class="f-ujr duru"><h3 class="pt-20">제 ＜1＞ 법칙. 관상분석</h3></div>
     <div class="f-ys" v-if="!isCameraOpen">
       <h5>기본정보를 입력해주세요.</h5>
@@ -148,11 +149,14 @@
         </div>
       </div> -->
     </div>
+    </div>
+    <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import spinner from "@/components/spinner.vue";
 
 export default {
   name: "FaceReading",
@@ -160,6 +164,8 @@ export default {
     return {
       isCameraOpen: false,
       isPhotoTaken: false,
+      timedelay: false,
+      loadMent: "관상을 분석중입니다...",
       userInfo: {
         nickname: "",
         age: null,
@@ -191,6 +197,10 @@ export default {
       },
       // tmpphoto: null,
     };
+  },
+
+  components: {
+    spinner,
   },
 
   methods: {
@@ -259,14 +269,13 @@ export default {
     },
 
     sendImage() {
-      console.log(this.userInfo);
+      this.timedelay = true
       axios
         .post(
           `http://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
-          console.log(res);
           console.log("보내짐");
           this.result = res.data;
           console.log("test", this.result);
