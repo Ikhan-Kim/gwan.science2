@@ -22,6 +22,7 @@ from datetime import datetime
 # import six
 
 # 추후삭제
+import time
 from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
@@ -37,6 +38,7 @@ def face_reading(request):
     day = str(present.day)
     hour = str(present.hour)
     minute = str(present.minute)
+    second = str(present.second)
     
     user_nickname = request.data.get('nickname')
     user_age = request.data.get('age')
@@ -49,11 +51,11 @@ def face_reading(request):
     imgstr = imgstr.replace(" ", "+")
     imgstr += '='*(4-len(imgstr)%4) 
     path = str(os.path.join(settings.MEDIA_ROOT, 'facePhotos/'))
-    filename = month +day +hour +minute +"_" +user_nickname +"_" +user_age
+    filename = day +hour +minute +second +"_" +user_age
     
-    with open(path + filename +".jpg", "wb") as f: # sample.jpg 이름으로 저장됩니다.
+    with open(path+filename+".png", "wb") as f: # sample.jpg 이름으로 저장됩니다.
         f.write(base64.b64decode(imgstr))
-    
+    time.sleep(1)
     split_main(filename)
     # return Response('success')
     result_data ={
