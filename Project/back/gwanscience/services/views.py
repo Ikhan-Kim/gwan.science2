@@ -62,12 +62,13 @@ def face_reading(request):
     
     with open(path + filename +".png", "wb") as f: # sample.jpg 이름으로 저장됩니다.
         f.write(base64.b64decode(imgstr))
+        split_main(filename)
     
     # prediction
     eyes_size, eyes_tail, eyes_distance = eyes_c.predict(filename)
     lips_length, lips_thickness, mouth_tail = mouth_c.predict(filename)
     nose_length, nose_width = nose_c.predict(filename)
-    glabella_distance = glabella_c.predict(filename)
+    glabella_distance = glabella_c.predict(filename)[0]
 
     eyes = [ eyes_size, eyes_tail, eyes_distance ]
     mouth = [ lips_length, lips_thickness, mouth_tail ]
@@ -83,7 +84,7 @@ def face_reading(request):
     noseResult = ""
     mouthResult = ""
     total = ""
-
+    eyebrowInterval = ""
 
     if glabella_distance == 0:
         eyebrowInterval = "넓은 미간"
@@ -178,7 +179,6 @@ def face_reading(request):
 
     # return Response('success')
     result_data ={
-        "eyebrowShape": eyebrowShape,
         "eyebrowInterval": eyebrowInterval,
         "eyeSize": eyeSize,
         "eyeInterval": eyeInterval,
