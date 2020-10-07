@@ -3,6 +3,7 @@
     <h3 class="f-ujr" style="margin-bottom: 30px">
       조선시대, {{ this.result.username }}님의 신분은 ?
     </h3>
+    <!-- <spinner :loading="this.timedelay" :loadingMent="this.loadMent"></spinner> -->
     <b-container id="my_job">
       <img
         src="../assets/job_img/1.png"
@@ -53,14 +54,22 @@
           처음으로
         </button>
       </router-link>
-
-      <button
-        class="btn-customm f-ujr bg-red h5"
-        style="width: 50%"
-        @click="goDetail()"
-      >
-        관상 상세보기
-      </button>
+      <!-- <router-link :to="{ name: 'FaceReadingDetail', params:{
+              eyebrowShape: this.result.eyebrowShape,
+              eyebrowInterval: this.result.eyebrowInterval,
+              eyeSize: this.result.eyeSize,
+              eyeInterval: this.result.eyeInterval,
+              eyeTail: this.result.eyeTail,
+              noseLength: this.result.noseLength,
+              noseWidth: this.result.noseWidth,
+              mouthLength: this.result.mouthLength,
+              mouthThickness: this.result.mouthThickness,
+              mouthTail: this.result.mouthTail,
+      } }"> -->
+        <button class="btn-customm f-ujr bg-red h5" style="width: 50%" @click="detailreading()">
+          관상 상세보기
+        </button>
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -69,6 +78,7 @@
 import axios from "axios";
 const URL = "https://j3c205.p.ssafy.io:8000/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
+// import spinner from "@/components/spinner.vue";
 
 export default {
   name: "FaceReadingResult",
@@ -93,6 +103,8 @@ export default {
         totalResult: null,
         job: null,
       },
+      timedelay: false,
+      loadMent: '관상 분석 중 ...'
     };
   },
   props: {
@@ -103,6 +115,7 @@ export default {
   metaInfo: {},
   components: {
     FaceReadingResultShare,
+    // spinner,
   },
   created() {
     // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -115,6 +128,7 @@ export default {
       this.result = res.data;
       console.log(this.result);
     });
+    this.result = this.$route.params
   },
   methods: {
     getGood(num) {
@@ -125,16 +139,8 @@ export default {
       var arr = [15, 14, 3, 2, 9, 7, 11, 5, 10, 4, 8, 6, 13, 12, 1, 0];
       return arr[num];
     },
-    goDetail() {
-      axios
-        .post(
-          `https://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
-          this.userInfo
-        )
-        .then((res) => {
-          this.result = res.data;
-          console.log("Detail", this.result);
-          this.$router.push({
+    detailreading() {
+      this.$router.push({
             name: "FaceReadingDetail",
             params: {
               eyebrowShape: this.result.eyebrowShape,
@@ -149,12 +155,8 @@ export default {
               mouthTail: this.result.mouthTail,
               eyebrowResult: this.result.eyebrowResult,
             },
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+          })
+    }
   },
 };
 </script>

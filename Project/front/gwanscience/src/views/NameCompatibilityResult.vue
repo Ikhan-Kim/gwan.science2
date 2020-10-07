@@ -148,8 +148,8 @@ export default {
         comment: null,
       },
       timedelay: false,
-      loadMent: "이름궁합을 게산중입니다...",
-    };
+      loadMent: '이름 궁합 계산중...'
+    }
   },
   props: {
     name1: {
