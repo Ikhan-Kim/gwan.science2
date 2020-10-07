@@ -1,227 +1,137 @@
 <template>
-  <div>
-    <h3 class="f-ujr" style="margin-bottom: 30px">
-      조선시대, {{ this.$route.params.username }}님의 신분은 ?
-    </h3>
-    <b-container id="my_job">
+  <b-container>
+    <h3 class="f-ujr">내 결과 친구에게 공유하기</h3>
+    <b-row class="flex-row">
       <img
-        :src="require('../assets/job_img/' + this.result.job + '.png')"
-        alt="내 신분"
-        class="img-size"
-        style="height: 430px"
-      />
-    </b-container>
-    <br />
-    <br />
-
-    <h3 class="f-ujr">나와 잘 맞는 친구는 ?</h3>
-
-    <b-container id="my_job">
-      <img
-        :src="
-          require('../assets/job_img/small/' +
-            getGood(this.result.job) +
-            '.png')
+        src="@/assets/main_img/twitter.png"
+        class="shareButtons"
+        @click="
+          ShareTwitter(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.username}/${result.eyebrowShape}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`,
+            '관싸이언스: 나의 관상은?'
+          )
         "
-        alt="내 신분"
-        class="img-size"
       />
-    </b-container>
-    <br />
-    <br />
 
-    <h3 class="f-ujr">나와 안 맞는 친구는 ?</h3>
-    <b-container id="my_job">
       <img
-        :src="
-          require('../assets/job_img/small/' + getBad(this.result.job) + '.png')
+        src="@/assets/main_img/facebook.png"
+        class="shareButtons"
+        @click="
+          ShareFacebook(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.username}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`
+          )
         "
-        alt="내 신분"
-        class="img-size"
       />
-    </b-container>
-    <br />
-    <br />
-    <FaceReadingResultShare />
-    <hr />
-    <div class="m-b300">
-      <router-link :to="{ name: 'Home' }">
-        <button
-          class="btn-customm f-ujr mr-4 h5 text--white"
-          style="width: 30%; background-color: var(--secondary); color: white"
-        >
-          처음으로
-        </button>
-      </router-link>
-      <button
-        class="btn-customm f-ujr bg-red h5"
-        style="width: 50%"
-        @click="detailreading()"
-      >
-        관상 상세보기
-      </button>
-    </div>
-  </div>
+      <img
+        src="@/assets/main_img/kakaostory.png"
+        class="shareButtons"
+        @click="
+          ShareKakaoStory(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.username}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`
+          )
+        "
+      />
+
+      <img
+        src="@/assets/main_img/blog.png"
+        class="shareButtons"
+        @click="
+          ShareNaverBlog(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.username}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`,
+            '관싸이언스: 나의 관상은?'
+          )
+        "
+      />
+
+      <img
+        src="@/assets/main_img/kakao.png"
+        class="shareButtons"
+        @click="
+          ShareKakaoTalk(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.username}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`
+          )
+        "
+      />
+    </b-row>
+  </b-container>
 </template>
 
 <script>
-import axios from "axios";
-// const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
-const URL = "http://127.0.0.1:8000/api/services/face_reading/";
-import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
-
 export default {
-  name: "FaceReadingResult",
+  name: "FaceReadingResultShare",
   data() {
     return {
       result: {
-        username: null,
-        eyebrowInterval: null,
-        eyeSize: null,
-        eyeInterval: null,
-        eyeTail: null,
-        noseLength: null,
-        noseWidth: null,
-        mouthLength: null,
-        mouthThickness: null,
-        mouthTail: null,
-        eyebrowResult: null,
-        eyeResult: null,
-        noseResult: null,
-        mouthResult: null,
-        totalResult: null,
-        job: null,
+        username: this.$parent.result.username,
+        eyebrowShape: this.$parent.result.eyebrowShape,
+        eyebrowInterval: this.$parent.result.eyebrowInterval,
+        eyeSize: this.$parent.result.eyeSize,
+        eyeInterval: this.$parent.result.eyeInterval,
+        eyeTail: this.$parent.result.eyeTail,
+        noseLength: this.$parent.result.noseLength,
+        noseWidth: this.$parent.result.noseWidth,
+        mouthLength: this.$parent.result.mouthLength,
+        mouthThickness: this.$parent.result.mouthThickness,
+        mouthTail: this.$parent.result.mouthTail,
       },
-      timedelay: false,
-      loadMent: "관상 분석 중 ...",
     };
   },
-  props: {
-    username: {
-      type: String,
-    },
-    eyebrowInterval: {
-      type: String,
-    },
-    eyeSize: {
-      type: String,
-    },
-    eyeInterval: {
-      type: String,
-    },
-    eyeTail: {
-      type: String,
-    },
-    noseLength: {
-      type: String,
-    },
-    noseWidth: {
-      type: String,
-    },
-    mouthLength: {
-      type: String,
-    },
-    mouthThickness: {
-      type: String,
-    },
-    mouthTail: {
-      type: String,
-    },
-  },
-  metaInfo: {},
-  components: {
-    FaceReadingResultShare,
-  },
-  created() {
-    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init("461657f0b2d7529bbc498714486b6b12");
-    }
-    // SDK 초기화 여부를 판단합니다.
-    console.log(window.Kakao.isInitialized());
-    this.putInfoDetail();
+  metaInfo() {
+    return {
+      meta: [
+        { property: "og:title", content: "관싸이언스: 나의 관상은?" },
+        {
+          property: "og:url",
+          content: `https://j3c205.p.ssafy.io/FaceReading/${this.result.username}/${this.result.eyebrowShape}/${this.result.eyebrowInterval}/${this.result.eyeSize}/${this.result.eyeInterval}/${this.result.eyeTail}/${this.result.noseLength}/${this.result.noseWidth}/${this.result.mouthLength}/${this.result.mouthThickness}/${this.result.mouthTail}`,
+        },
+        {
+          property: "og:description",
+          content:
+            "왕의 상: 용맹스럽고 위엄이 있으며 먹고 사는데 큰 지장이 없다.",
+        },
+        { property: "og:image", content: "../assets/img.jpg" },
+      ],
+    };
   },
   methods: {
-    getGood(num) {
-      var arr = [11, 5, 8, 7, 13, 1, 15, 3, 2, 14, 12, 0, 10, 4, 9, 6];
-      return arr[num];
+    ShareTwitter(url, text) {
+      window.open(
+        "http://twitter.com/intent/tweet?url=" + url + "&text=" + text
+      );
     },
-    getBad(num) {
-      var arr = [15, 14, 3, 2, 9, 7, 11, 5, 10, 4, 8, 6, 13, 12, 1, 0];
-      return arr[num];
+    ShareFacebook(url) {
+      window.open("http://www.facebook.com/sharer/sharer.php?u=" + url);
     },
-    detailreading() {
-      this.$router.push({
-        name: "FaceReadingDetail",
-        params: {
-          eyebrowInterval: this.result.eyebrowInterval,
-          eyeSize: this.result.eyeSize,
-          eyeInterval: this.result.eyeInterval,
-          eyeTail: this.result.eyeTail,
-          noseLength: this.result.noseLength,
-          noseWidth: this.result.noseWidth,
-          mouthLength: this.result.mouthLength,
-          mouthThickness: this.result.mouthThickness,
-          mouthTail: this.result.mouthTail,
-          eyebrowResult: this.result.eyebrowResult,
-          eyeResult: this.result.eyeResult,
-          noseResult: this.result.noseResult,
-          mouthResult: this.result.mouthResult,
-          job: this.result.job,
-        },
+    ShareKakaoStory(url) {
+      window.open("http://story.kakao.com/share?url=" + url);
+    },
+    ShareNaverBlog(url, title) {
+      window.open(
+        "http://blog.naver.com/openapi/share?url=" + url + "&title=" + title
+      );
+    },
+    ShareKakaoTalk(url) {
+      window.Kakao.Link.sendScrap({
+        requestUrl: url,
       });
-    },
-    // test() {
-    //   axios.post(URL)
-    //     .then(res=> {
-    //       this.result = res.data
-    //       console.log(this.result)
-
-    //     })
-    //     .catch(err=> {
-    //       console.log(err)
-    //     })
-    // },
-    putInfoDetail() {
-      this.result = this.$route.params;
-      console.log(this.result);
-      axios
-        .get(
-          URL +
-            this.$route.params.username +
-            "/" +
-            this.$route.params.eyebrowInterval +
-            "/" +
-            this.$route.params.eyeSize +
-            "/" +
-            this.$route.params.eyeInterval +
-            "/" +
-            this.$route.params.eyeTail +
-            "/" +
-            this.$route.params.noseLength +
-            "/" +
-            this.$route.params.noseWidth +
-            "/" +
-            this.$route.params.mouthLength +
-            "/" +
-            this.$route.params.mouthThickness +
-            "/" +
-            this.$route.params.mouthTail +
-            "/"
-        )
-        .then((res) => {
-          this.result = res.data;
-          console.log("it works", this.result);
-        });
     },
   },
 };
 </script>
 
-<style scoped>
-.img-size {
-  max-height: 100%;
-  max-width: 100%;
-  background-color: white;
+<style>
+.shareButtons {
+  max-width: 40px;
+  max-height: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.flex-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 </style>

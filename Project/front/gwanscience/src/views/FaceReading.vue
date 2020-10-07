@@ -97,12 +97,12 @@
           <!-- <div class="camera-button"></div> -->
         </div>
         <!-- <div class="row d-flex justify-content-center m-md-2"> -->
-        <input
+        <!-- <input
           type="file"
           accept="image/*"
           capture="camera"
           v-if="isCameraOpen"
-        />
+        /> -->
         <div class="camera-box" v-if="isCameraOpen">
           <video
             v-show="!isPhotoTaken"
