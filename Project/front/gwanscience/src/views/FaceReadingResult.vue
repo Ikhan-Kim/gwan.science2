@@ -4,7 +4,12 @@
       조선시대, {{ this.$route.params.username }}님의 신분은 ?
     </h3>
     <b-container id="my_job">
-      <img :src="require('../assets/job_img/'+this.$route.params.job+'.png')" alt="내 신분" class="img-size" style="height: 430px">
+      <img
+        :src="require('../assets/job_img/' + this.$route.params.job + '.png')"
+        alt="내 신분"
+        class="img-size"
+        style="height: 430px"
+      />
     </b-container>
     <br />
     <br />
@@ -13,7 +18,11 @@
 
     <b-container id="my_job">
       <img
-        :src="require('../assets/job_img/small/' + getGood(this.$route.params.job) + '.png')"
+        :src="
+          require('../assets/job_img/small/' +
+            getGood(this.$route.params.job) +
+            '.png')
+        "
         alt="내 신분"
         class="img-size"
       />
@@ -24,7 +33,11 @@
     <h3 class="f-ujr">나와 안 맞는 친구는 ?</h3>
     <b-container id="my_job">
       <img
-        :src="require('../assets/job_img/small/' + getBad(this.$route.params.job) + '.png')"
+        :src="
+          require('../assets/job_img/small/' +
+            getBad(this.$route.params.job) +
+            '.png')
+        "
         alt="내 신분"
         class="img-size"
       />
@@ -89,6 +102,36 @@ export default {
     userInfo: {
       type: Object,
     },
+    eyebrowShape: {
+      type: String,
+    },
+    eyebrowInterval: {
+      type: String,
+    },
+    eyeSize: {
+      type: String,
+    },
+    eyeInterval: {
+      type: String,
+    },
+    eyeTail: {
+      type: String,
+    },
+    noseLength: {
+      type: String,
+    },
+    noseWidth: {
+      type: String,
+    },
+    mouthLength: {
+      type: String,
+    },
+    mouthThickness: {
+      type: String,
+    },
+    mouthTail: {
+      type: String,
+    },
   },
   metaInfo: {},
   components: {
@@ -101,7 +144,7 @@ export default {
     }
     // SDK 초기화 여부를 판단합니다.
     console.log(window.Kakao.isInitialized());
-    this.putInfoDetail()
+    this.putInfoDetail();
   },
   methods: {
     getGood(num) {
@@ -139,7 +182,7 @@ export default {
     //     .then(res=> {
     //       this.result = res.data
     //       console.log(this.result)
-          
+
     //     })
     //     .catch(err=> {
     //       console.log(err)

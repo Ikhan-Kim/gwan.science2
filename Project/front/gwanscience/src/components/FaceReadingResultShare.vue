@@ -7,7 +7,7 @@
         class="shareButtons"
         @click="
           ShareTwitter(
-            'https://j3c205.p.ssafy.io/FaceReading/',
+            `https://j3c205.p.ssafy.io/FaceReading/${result.eyebrowShape}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`,
             '관싸이언스: 나의 관상은?'
           )
         "
@@ -16,12 +16,20 @@
       <img
         src="@/assets/main_img/facebook.png"
         class="shareButtons"
-        @click="ShareFacebook('https://j3c205.p.ssafy.io/')"
+        @click="
+          ShareFacebook(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.eyebrowShape}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`
+          )
+        "
       />
       <img
         src="@/assets/main_img/kakaostory.png"
         class="shareButtons"
-        @click="ShareKakaoStory('https://j3c205.p.ssafy.io/')"
+        @click="
+          ShareKakaoStory(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.eyebrowShape}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`
+          )
+        "
       />
 
       <img
@@ -29,7 +37,7 @@
         class="shareButtons"
         @click="
           ShareNaverBlog(
-            'https://j3c205.p.ssafy.io/',
+            `https://j3c205.p.ssafy.io/FaceReading/${result.eyebrowShape}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`,
             '관싸이언스: 나의 관상은?'
           )
         "
@@ -38,7 +46,11 @@
       <img
         src="@/assets/main_img/kakao.png"
         class="shareButtons"
-        @click="ShareKakaoTalk('https://j3c205.p.ssafy.io/')"
+        @click="
+          ShareKakaoTalk(
+            `https://j3c205.p.ssafy.io/FaceReading/${result.eyebrowShape}/${result.eyebrowInterval}/${result.eyeSize}/${result.eyeInterval}/${result.eyeTail}/${result.noseLength}/${result.noseWidth}/${result.mouthLength}/${result.mouthThickness}/${result.mouthTail}`
+          )
+        "
       />
     </b-row>
   </b-container>
@@ -67,7 +79,10 @@ export default {
     return {
       meta: [
         { property: "og:title", content: "관싸이언스: 나의 관상은?" },
-        { property: "og:url", content: "https://j3c205.p.ssafy.io/" },
+        {
+          property: "og:url",
+          content: `https://j3c205.p.ssafy.io/FaceReading/${this.result.eyebrowShape}/${this.result.eyebrowInterval}/${this.result.eyeSize}/${this.result.eyeInterval}/${this.result.eyeTail}/${this.result.noseLength}/${this.result.noseWidth}/${this.result.mouthLength}/${this.result.mouthThickness}/${this.result.mouthTail}`,
+        },
         {
           property: "og:description",
           content:
