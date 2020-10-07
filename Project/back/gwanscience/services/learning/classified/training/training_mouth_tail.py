@@ -11,8 +11,8 @@ from keras_preprocessing.image import ImageDataGenerator
 
 LEARN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-train_dir = os.path.join(LEARN_DIR, 'mouse_tail/train')
-val_dir = os.path.join(LEARN_DIR, 'mouse_tail/validation')
+train_dir = os.path.join(LEARN_DIR, 'mouth_tail/train')
+val_dir = os.path.join(LEARN_DIR, 'mouth_tail/validation')
 
 # label
 training_datagen = ImageDataGenerator(rescale = 1./255)
@@ -65,7 +65,7 @@ model.summary()
 model.compile(loss = 'categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 # model.compile(loss = 'categorical_crossentropy', optimizer='Adam', metrics=['accuracy'])
 
-checkpoint_path = os.path.join(LEARN_DIR, 'training_mouse_tail_logs/cp-6-{epoch:04d}.ckpt')
+checkpoint_path = os.path.join(LEARN_DIR, 'training_mouth_tail_logs/cp-6-{epoch:04d}.ckpt')
 checkpoint_dir = os.path.dirname(checkpoint_path)
 
 ckpt_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, verbose=1, period=100)
@@ -74,7 +74,7 @@ history = model.fit(train_generator, epochs=300, steps_per_epoch=10, validation_
 
 # model.save("model_eyes_size.h5")
 
-save_path = os.path.join(LEARN_DIR,'training_mouse_tail_logs/model_mouse_tail6.h5')
+save_path = os.path.join(LEARN_DIR,'training_mouth_tail_logs/model_mouth_tail6.h5')
 model.save(save_path)
 
 # 정확도 그래프
@@ -88,7 +88,7 @@ epochs = range(len(acc))
 
 plt.plot(epochs, acc, 'r', label='Training accuracy')
 plt.plot(epochs, val_acc, 'b', label='Validation accuracy')
-plt.title('Mouse_tail Training and validation accuracy')
+plt.title('Mouth_tail Training and validation accuracy')
 plt.legend(loc=0)
 plt.figure()
 

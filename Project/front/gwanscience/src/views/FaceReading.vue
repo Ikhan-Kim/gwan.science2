@@ -182,7 +182,7 @@ export default {
         mouthResult: null,
         totalResult: null,
       },
-      tmpphoto: null,
+      // tmpphoto: null,
     };
   },
 
@@ -243,16 +243,17 @@ export default {
       context.drawImage(this.$refs.camera, 0, 0, 300, 225);
 
       // console.log(context.canvas.toDataURL());
-      this.userInfo.userPhoto = context.canvas.toDataURL();
-      this.tmpphoto = document
+      // this.userInfo.userPhoto = context.canvas.toDataURL();
+      this.userInfo.userPhoto = document
         .getElementById("photoTaken")
         .toDataURL("image/jpeg");
-      console.log(this.tmpphoto);
+      // console.log(this.tmpphoto);
     },
 
     sendImage() {
+      console.log(this.userInfo)
       axios
-        .post(`http://127.0.0.1:8000/services/face_reading/`, this.tmpphoto)
+        .post(`http://127.0.0.1:8000/services/face_reading/`, this.userInfo)
         .then((res) => {
           console.log(res);
           console.log("보내짐");
