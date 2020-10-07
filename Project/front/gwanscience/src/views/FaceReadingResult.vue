@@ -75,7 +75,7 @@
 
 <script>
 import axios from "axios";
-const URL = "https://j3c205.p.ssafy.io:8000/api/services/face_reading/";
+const URL = "https://j3c205.p.ssafy.io/api/services/face_reading/";
 import FaceReadingResultShare from "@/components/FaceReadingResultShare.vue";
 // import spinner from "@/components/spinner.vue";
 

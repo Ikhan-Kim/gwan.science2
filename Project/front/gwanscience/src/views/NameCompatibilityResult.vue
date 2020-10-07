@@ -134,7 +134,7 @@ import NameCompatibilityResultShare from "@/components/NameCompatibilityResultSh
 import spinner from "@/components/spinner.vue";
 import axios from "axios";
 
-const URL = "https://j3c205.p.ssafy.io:8000/api/services/name_compability/";
+const URL = "https://j3c205.p.ssafy.io/api/services/name_compability/";
 
 export default {
   name: "NameCompatibilityResult",

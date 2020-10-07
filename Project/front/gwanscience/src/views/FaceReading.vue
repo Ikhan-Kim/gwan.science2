@@ -264,7 +264,7 @@ export default {
       console.log(this.userInfo);
       axios
         .post(
-          `https://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
+          `https://j3c205.p.ssafy.io/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
