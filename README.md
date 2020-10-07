@@ -26,7 +26,7 @@
 
 ### **Frontend**
 
-| <img src="assets\김다영.png" style="zoom:80%;" /> | <img src="assets\고성진.png" style="zoom:80%;" /> | <img src="assets\임도현.png" style="zoom:80%;" /> |
+| <img src="assets/김다영.png" style="zoom:80%;" /> | <img src="assets/고성진.png" style="zoom:80%;" /> | <img src="assets/임도현.png" style="zoom:80%;" /> |
 | :-----------------------------------------------: | :-----------------------------------------------: | :-----------------------------------------------: |
 |                    **김다영**                     |                    **고성진**                     |                    **임도현**                     |
 
@@ -34,7 +34,7 @@
 
 ### **Backend**    
 
-| <img src="assets\김정원.png" style="zoom:80%;" /> | <img src="assets\김익한.png" style="zoom:80%;" /> | <img src="assets\김영환.png" style="zoom:80%;" /> |
+| <img src="assets/김정원.png" style="zoom:80%;" /> | <img src="assets/김익한.png" style="zoom:80%;" /> | <img src="assets/김영환.png" style="zoom:80%;" /> |
 | :-----------------------------------------------: | :-----------------------------------------------: | :-----------------------------------------------: |
 |                    **김정원**                     |                    **김익한**                     |                    **김영환**                     |
 
@@ -45,7 +45,7 @@
 
 ## 🎮 Tools / 기술스택
 
-### ![stack](assets\stack.PNG)
+### ![stack](assets/stack.PNG)
 
 ## (🔀 DB 모델링)
 
