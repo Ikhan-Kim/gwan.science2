@@ -66,13 +66,9 @@
               mouthThickness: this.result.mouthThickness,
               mouthTail: this.result.mouthTail,
       } }"> -->
-      <button
-        class="btn-customm f-ujr bg-red h5"
-        style="width: 50%"
-        @click="detailreading()"
-      >
-        관상 상세보기
-      </button>
+        <button class="btn-customm f-ujr bg-red h5" style="width: 50%" @click="detailreading()">
+          관상 상세보기
+        </button>
       <!-- </router-link> -->
     </div>
   </div>

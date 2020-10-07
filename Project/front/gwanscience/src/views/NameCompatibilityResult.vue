@@ -45,7 +45,7 @@
         <b-col cols="2">
           <div>
             <img src="@/assets/name_img/circle6.png" width="100%" />
-            <div class="example" style="width: 100%">
+            <div class="example" style="width:100%">
               <p>{{ this.result.name[1][2] }}</p>
             </div>
           </div>
