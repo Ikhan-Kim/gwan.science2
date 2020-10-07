@@ -75,7 +75,7 @@
       <div class="row d-flex justify-content-center">
         <button
           v-if="!isCameraOpen"
-          class="btn-customm bg-red f-ujr  mb-3"
+          class="btn-customm bg-red f-ujr mb-3"
           style="width: 60%"
           :class="{
             'bg-red': !isCameraOpen,
@@ -87,7 +87,7 @@
         </button>
 
         <!-- <input type="file" accept="image/*" capture="camera" /> -->
-    
+
         <!-- <button @click="splitFace">얼굴쪼개기</button> -->
         <!-- <div class="camera-button"></div> -->
       </div>
@@ -202,7 +202,9 @@ export default {
       } else if (this.userInfo.gender == null) {
         alert("성별을 선택해 주세요.");
       } else {
-        alert("아이폰은 일시정지 버튼 클릭 후, 왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다.")
+        alert(
+          "아이폰은 일시정지 버튼 클릭 후, 왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다."
+        );
         this.toggleCamera();
       }
     },
@@ -262,7 +264,7 @@ export default {
       console.log(this.userInfo);
       axios
         .post(
-          `http://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
+          `https://j3c205.p.ssafy.io:8000/api/services/face_reading/`,
           this.userInfo
         )
         .then((res) => {
