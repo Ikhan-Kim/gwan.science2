@@ -11,14 +11,14 @@
     <br>
     <br>
     <br>
-    <b-container class="bv-example-row f-ujr" v-if="!isCameraOpen">
+    <b-container class="bv-example-row f-ujr">
       <b-row>
         <b-col cols="4" class="pb-3"><h4>나이</h4></b-col>
         <b-col cols="6">
           <b-form-input
               type="number"
               v-model="userInfo.age"
-              placeholder="나이를 입력해주세요."
+              placeholder="나이 입력"
           ></b-form-input>
         </b-col>
       </b-row>
