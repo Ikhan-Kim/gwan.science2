@@ -5,7 +5,7 @@
     <!-- 탭 방식 -->
     <b-tabs card justified content-class="mt-2 mb-5" class="f-ujr">
     <b-tab title="눈썹" class="content-box" active>
-      <p class="f-ys h5 pb-3">"{{ this.$route.params.eyebrowShape }}, {{ this.$route.params.eyebrowInterval }}"</p>
+      <p class="f-ys h5 pb-3">"{{ this.$route.params.eyebrowInterval }}"</p>
       <p class="f-cs">{{ this.$route.params.eyebrowResult }}</p>
     </b-tab>
     <b-tab title="눈" class="content-box">
@@ -26,16 +26,6 @@
   <router-link :to="{ name: 'Home' }">
     <button class="btn-customm f-ujr mr-4 h5 text--white bg-red" style="width: 30%;">처음으로</button>
   </router-link>
-
-
-    <router-link :to="{ name: 'Home' }">
-      <button
-        class="btn-customm f-ujr mr-4 h5 text--white bg-red"
-        style="width: 30%;"
-      >
-        처음으로
-      </button>
-    </router-link>
   </div>
 </template>
 
@@ -49,7 +39,6 @@ export default {
     return {
       result: {
         username: null,
-        eyebrowShape: null,
         eyebrowInterval: null,
         eyeSize: null,
         eyeInterval: null,

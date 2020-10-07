@@ -24,7 +24,7 @@ const routes = [
     component: FaceReading,
   },
   {
-    path: "/FaceReadingDetail/:eyebrowShape/:eyebrowInterval/:eyeSize/:eyeInterval/:eyeTail/:noseLength/:noseWidth/:mouthLength/:mouthThickness/:mouthTail",
+    path: "/FaceReadingDetail/:eyebrowInterval/:eyeSize/:eyeInterval/:eyeTail/:noseLength/:noseWidth/:mouthLength/:mouthThickness/:mouthTail",
     name: "FaceReadingDetail",
     component: FaceReadingDetail,
   },
@@ -35,7 +35,7 @@ const routes = [
   },
   {
     path:
-      "/FaceReading/:eyebrowShape/:eyebrowInterval/:eyeSize/:eyeInterval/:eyeTail/:noseLength/:noseWidth/:mouthLength/:mouthThickness/:mouthTail",
+      "/FaceReading/:eyebrowInterval/:eyeSize/:eyeInterval/:eyeTail/:noseLength/:noseWidth/:mouthLength/:mouthThickness/:mouthTail",
     name: "FaceReadingResult",
     component: FaceReadingResult,
     props: true,

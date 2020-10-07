@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{result}}
     <h3 class="f-ujr" style="margin-bottom: 30px">
       조선시대, {{ this.$route.params.username }}님의 신분은 ?
     </h3>
@@ -11,7 +10,7 @@
         class="img-size"
         style="height: 430px"
       /> -->
-          <img :src="require('../assets/job_img/'+result.job+'.png')" alt="내 신분" class="img-size">
+          <img :src="require('../assets/job_img/'+this.$route.params.job+'.png')" alt="내 신분" class="img-size" style="height: 440px">
     </b-container>
     <br />
     <br />

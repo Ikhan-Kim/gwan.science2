@@ -179,7 +179,6 @@ export default {
       ],
       result: {
         username: null,
-        eyebrowShape: null,
         eyebrowInterval: null,
         eyeSize: null,
         eyeInterval: null,
@@ -286,7 +285,6 @@ export default {
             name: "FaceReadingResult",
             params: {
               username: this.userInfo.nickname,
-              eyebrowShape: this.result.eyebrowShape,
               eyebrowInterval: this.result.eyebrowInterval,
               eyeSize: this.result.eyeSize,
               eyeInterval: this.result.eyeInterval,
