@@ -79,13 +79,23 @@ def face_reading(request):
 
     # face_reading 
     # 변수 초기화
+    
+    eyebrowInterval = ""
+    eyeSize = ""
+    eyeInterval = ""
+    eyeTail = ""
+    noseLength = ""
+    noseWidth = ""
+    mouthLength = ""
+    mouthThickness = ""
+    mouthTail = ""
     eyebrowResult = ""
     eyeResult = ""
     noseResult = ""
-    mouthResult = ""
-    total = ""
-    eyebrowInterval = ""
+    mouthResult=  ""
 
+    print('1111111111111111111111111111111111111111111111111111111111111')
+    print(eyes, mouth, nose, glabella)
     if glabella_distance == 0:
         eyebrowInterval = "넓은 미간"
         eyebrowResult += "이해심이 넓어 대인관계가 좋음. "
@@ -141,7 +151,7 @@ def face_reading(request):
     elif nose_width == 1:
         noseWidth = "콧볼 넓이 보통"
     elif nose_width ==2:
-        nose_width = "좁은 콧볼"
+        nosewidth = "좁은 콧볼"
         noseResult += "언행이 단순하고 숨김없이 솔직 담백함. "
         
     if noseResult == "":
