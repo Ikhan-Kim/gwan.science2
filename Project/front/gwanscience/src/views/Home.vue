@@ -7,25 +7,33 @@
       <div>
         <router-link to="/FaceReading">
           <button class="main-btn f-ujr" squared variant="outline-secondary">
-            제 ＜1＞ 법칙. 관상분석
+            제 ＜1＞ 법칙. 관 상 분 석
           </button>
         </router-link>
       </div>
-      <div></div>
+      <div>
+
       <router-link to="/NameCompatibility">
         <button class="main-btn f-ujr" squared variant="outline-secondary">
-          제 ＜2＞ 법칙. 이름궁합
+          제 ＜2＞ 법칙. 이 름 궁 합
+        </button>
+      </router-link>
+     </div>
+    <div>
+      <router-link to="/LifeClock">
+        <button class="main-btn f-ujr" squared variant="outline-secondary">
+          제 ＜3＞ 법칙. 인 생 시 계
         </button>
       </router-link>
     </div>
     <div style="padding-bottom:100px">
-      <router-link to="/LifeClock">
+      <router-link to="/Builders">
         <button class="main-btn f-ujr" squared variant="outline-secondary">
-          제 ＜3＞ 법칙. 인생시계
+          제 ＜4＞ 법칙. 만든사람들
         </button>
       </router-link>
     </div>
-  
+    </div>
   </div>
 </template>
 

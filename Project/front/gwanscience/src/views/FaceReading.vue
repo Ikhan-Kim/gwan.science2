@@ -75,7 +75,7 @@
       <div class="row d-flex justify-content-center">
         <button
           v-if="!isCameraOpen"
-          class="btn-customm bg-red f-ujr"
+          class="btn-customm bg-red f-ujr  mb-3"
           style="width: 60%"
           :class="{
             'bg-red': !isCameraOpen,
@@ -85,8 +85,14 @@
         >
           <span class="bg-red h4 mt-3">사진 촬영</span>
         </button>
+
+        <!-- <input type="file" accept="image/*" capture="camera" /> -->
+        <div class="f-ys">
+            ✔ 아이폰은 일시정지 버튼 클릭 후, <br> 왼쪽 상단의 ❌ 버튼을 클릭하면 사진이 촬영 됩니다.
+
+          </div>
         <!-- <button @click="splitFace">얼굴쪼개기</button> -->
-        <div class="camera-button"></div>
+        <!-- <div class="camera-button"></div> -->
       </div>
       <!-- <div class="row d-flex justify-content-center m-md-2"> -->
       <div class="camera-box" v-if="isCameraOpen">
