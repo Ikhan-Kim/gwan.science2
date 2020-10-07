@@ -170,7 +170,7 @@ def face_reading(request):
         mouthResult += "자수성가, 경쟁심이 강함. "
     elif mouth_tail == 1:
         mouthTail = "입 꼬리 보통"
-    elif mouth_tial == 2:
+    elif mouth_tail == 2:
         mouthTail = "입 꼬리 올라감"
         mouthResult += "외향적, 사교적. "
         
