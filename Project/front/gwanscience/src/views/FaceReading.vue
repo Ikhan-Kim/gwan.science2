@@ -102,8 +102,8 @@
           :height="225"
           autoplay
         ></video>
-        <div class="example" style="width: 250px" v-if="!isPhotoTaken">
-          <img src="@/assets/main_img/face_outline.png" width="58%" />
+        <div class="example" style="width: 300px" v-if="!isPhotoTaken">
+          <img src="@/assets/main_img/face_outline.png" width="45%" />
         </div>
         <canvas
           v-show="isPhotoTaken"
