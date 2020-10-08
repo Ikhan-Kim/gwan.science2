@@ -279,7 +279,7 @@ def face_reading_get(request,user_nickname, eyebrowInterval, eyeSize, eyeInterva
     nose = [ nose_length, nose_width ]
     glabella = [ glabella_distance ]
 
-    job_data = job.job_classification2(eyes, mouth, nose, glabella)
+    job_data = job.job_classification(eyes, mouth, nose, glabella)
 
     eyebrowResult = ""
     eyeResult = ""
